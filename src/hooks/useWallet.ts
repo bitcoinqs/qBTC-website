@@ -9,7 +9,7 @@ const mockTransactions: Transaction[] = [
   {
     id: '1',
     type: 'receive',
-    amount: '0.5 BQT',
+    amount: '0.5 BQS',
     address: 'qs1q123...456',
     timestamp: '2024-03-20 15:30',
     status: 'confirmed',
@@ -18,7 +18,7 @@ const mockTransactions: Transaction[] = [
   {
     id: '2',
     type: 'send',
-    amount: '0.2 BQT',
+    amount: '0.2 BQS',
     address: 'qs1q789...012',
     timestamp: '2024-03-20 14:45',
     status: 'pending',
@@ -26,7 +26,7 @@ const mockTransactions: Transaction[] = [
   {
     id: '3',
     type: 'bridge',
-    amount: '1.0 BTC → BQT',
+    amount: '1.0 BTC → BQS',
     address: 'bc1q345...678',
     timestamp: '2024-03-20 13:15',
     status: 'confirmed',
@@ -142,7 +142,7 @@ const fetchTransactions = () => {
     const formattedTransactions = data.transactions.map((tx) => ({
       id: tx.id.toString(), // Ensure ID is a string
       type: tx.type,
-      amount: tx.amount, // Assuming amount already includes the "BQT" unit
+      amount: tx.amount, // Assuming amount already includes the "BQS" unit
       address: tx.address,
       timestamp: new Date(tx.timestamp).toLocaleString(), // Format timestamp as a readable string
       status: 'confirmed', // Default status as confirmed, adapt if needed
