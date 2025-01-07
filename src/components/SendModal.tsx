@@ -67,7 +67,7 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
         pubkey: uint8ArrayToBase64(publicKey),
       };
 
-      await axios.post(`${$apiUrl}/worker`, payload);
+      await axios.post(`https://${$apiUrl}/worker`, payload);
 
       setStep('success');
     } catch (error) {
