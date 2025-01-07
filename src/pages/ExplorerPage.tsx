@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ArrowRight, ArrowLeft, X, AlertTriangle } from 'lucide-react';
 import type { Network, Transaction } from '../types/wallet';
+const env = import.meta.env.VITE_ENV;
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 const mockTransactions: Transaction[] = [
   {
@@ -99,20 +102,61 @@ export default function ExplorerPage() {
     fetchTransactions();
   }, [network]);
 
-  const fetchTransactions = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setTransactions(mockTransactions);
-    } catch (error) {
-      setError('Failed to load transactions. Please try again later.');
-      setTransactions([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const fetchTransactions = () => {
+  const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
+
+  console.log("Initiating WebSocket for transaction updates...");
+  try {
+    const socket = new WebSocket(websocketUrl);
+
+    socket.onopen = () => {
+      console.log("WebSocket connection established for transaction updates");
+      socket.send(JSON.stringify({ network: network, update_type: "all_transactions" }));
+    };
+
+    socket.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  console.log("Received WebSocket transaction update:", data);
+
+  if (data.type === "transaction_update" && data.transactions) {
+    console.log("I GOT IT!!!");
+    // Map transactions to the required format
+    const formattedTransactions = data.transactions.map((tx) => ({
+      id: tx.id.toString(), // Ensure ID is a string
+      type: tx.type,
+      amount: tx.amount, // Assuming amount already includes the "BQS" unit
+      address: tx.address,
+      timestamp: new Date(tx.timestamp).toLocaleString(), // Format timestamp as a readable string
+      status: 'confirmed', // Default status as confirmed, adapt if needed
+      hash: tx.hash || 'N/A', // Provide default value if hash is missing
+    }));
+
+    // Update state with formatted transactions
+
+    setTransactions(formattedTransactions);
+    setIsLoading(false);
+
+
+  } else if (data.error) {
+    console.error("Error received from transactions WebSocket:", data.error);
+  }
+};
+    socket.onerror = (error) => {
+      console.error("WebSocket error for transaction updates:", error);
+      socket.close();
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket connection for transaction updates closed");
+    };
+
+    return socket;
+  } catch (error) {
+    console.error("Error initializing WebSocket for transaction updates:", error);
+    return null;
+  }
+};
 
   const handleNetworkChange = async (newNetwork: Network) => {
     if (newNetwork === 'mainnet') {
