@@ -76,7 +76,7 @@ export function useWallet() {
 
   const fetchBalance = (walletAddress, network) => {
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const websocketUrl = `${wsProtocol}//localhost:8000/ws`;
+    const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
 
     console.log("Initiating WebSocket for balance updates...");
 
@@ -121,7 +121,7 @@ export function useWallet() {
 
 const fetchTransactions = () => {
   const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const websocketUrl = `${wsProtocol}//localhost:8000/ws`;
+  const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
 
   console.log("Initiating WebSocket for transaction updates...");
   try {

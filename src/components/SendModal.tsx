@@ -4,6 +4,7 @@ import type { Network } from '../types/wallet';
 import axios from 'axios';
 import { ml_dsa87 } from '@noble/post-quantum/ml-dsa';
 import { utf8ToBytes } from '@noble/post-quantum/utils';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 type Props = {
   isOpen: boolean;
@@ -66,7 +67,7 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
         pubkey: uint8ArrayToBase64(publicKey),
       };
 
-      await axios.post('http://localhost:8000/worker', payload);
+      await axios.post(`${$apiUrl}/worker`, payload);
 
       setStep('success');
     } catch (error) {

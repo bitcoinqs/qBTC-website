@@ -64,7 +64,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
   const simulateBridgeProcess = (direction: Direction, walletAddress: string) => {
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const websocketUrl = `${wsProtocol}//localhost:8000/ws`;
+    const websocketUrl = `${wsProtocol}//`{$apiUrl}`/ws`;
 
     try {
       const socket = new WebSocket(websocketUrl);
