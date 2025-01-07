@@ -39,7 +39,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     if (selectedDirection === 'btc-to-bqs') {
       try {
         console.log(`${apiUrl}/worker`)
-        const response = await axios.post(`${apiUrl}/worker`, {
+        const response = await axios.post(`https://${apiUrl}/worker`, {
           request_type: 'get_bridge_address',
           wallet_address: walletAddress,
           network,
