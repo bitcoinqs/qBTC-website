@@ -2,7 +2,7 @@
 export const generalFAQs = [
   {
     question: "What is Bitcoin QS?",
-    answer: "Bitcoin QS is a quantum-safe Layer 2 solution for Bitcoin, designed to protect assets against future quantum computing threats while maintaining compatibility with the existing Bitcoin network."
+    answer: "Bitcoin QS is a quantum-safe Layer 2 solution for Bitcoin, designed to protect assets against  quantum computing threats while maintaining compatibility with the existing Bitcoin network."
   },
   {
     question: "How does Bitcoin QS work?",
@@ -17,22 +17,34 @@ export const generalFAQs = [
 export const technicalFAQs = [
   {
     question: "What cryptographic algorithms does Bitcoin QS use?",
-    answer: "Bitcoin QS uses NIST-approved lattice-based cryptography, specifically designed to resist attacks from both classical and quantum computers."
+    answer: "Bitcoin QS uses NIST-approved lattice-based cryptography, specifically designed to resist attacks from both classical and quantum computers. The signing scheme used in BitcoinQS is CRYSTALS-Dilithium. Dilithim is a lattice-based digital signature scheme whose security is based on the hardness of finding short vectors in lattices. The CRYSTALS-Dilithium Digital Signature Algorithm is a member of the CRYSTALS (Cryptographic Suite for Algebraic Lattices) suite of algorithms. The strength of a CRYSTALS-Dilithium key is represented by the size of its matrix of polynomials. For example, CRYSTALS-Dilithium (6,5) has a matrix size of 6x5. The larger the matrix size, the stronger the key. CRYSTALS-Dilithium keys can only be used for Digital Signature Generation and Verification."
   },
   {
     question: "How does the bridge process work?",
-    answer: "The bridge process involves locking your BTC in a secure multi-signature contract and minting an equivalent amount of BQS tokens. These tokens can be converted back to BTC at any time through the same bridge."
+    answer: "The bridge process involves sending your BTC to a deposit address  and minting an equivalent amount of BQS tokens. These tokens can be converted back to BTC at any time through the same bridge."
   },
   {
     question: "What are the transaction fees?",
     answer: "Transaction fees on the Bitcoin QS network are typically lower than Bitcoin's main chain, as our Layer 2 solution enables more efficient processing while maintaining security."
+  },
+   {
+    question: "How fast is BitcoinQS ?",
+    answer: "Transactions on BitcoinQS settle instantly on the BitcoinQS L2 with full finality and quantum security. BitcoinQS batches 10 transactions at a time, performs a Merkle Root and posts these to the Bitcoin mainnet"
+  },
+     {
+    question: "How do you ensure that nobody can re-order the BitcoinQS chain?",
+    answer: "BitcoinQS batches 10 transactions at a time, performs a Merkle Root and posts the Merkle Root  to the Bitcoin mainnet. Anyone can confirm their BitcoinQS balance is represented in the Bitcoin mainnet Merkle Root"
+  },
+  {
+    question: "If the Bitcoin Mainnet is compromised wont that affect the ordering of BitcoinQ2 L2 transactions",
+    answer: "To protect against this, BitcoinQS has a few fall back mechanisms. Firstly, the state is also written to append-only tamper-evident logs off chain using hash chaining. Furthermore we have implemented detection mechanisms to identify if there's any dispute between BQS and BTC states. Finally, we are evaluating cross-chain anchoring i.e anchoring state to multiple chains simultaneously. "
   }
 ];
 
 export const walletFAQs = [
   {
     question: "How do I store my BQS tokens?",
-    answer: "You can store BQS tokens in any Bitcoin QS-compatible wallet. We recommend using our official desktop or mobile wallets for the best security and features."
+    answer: "You can store BQS tokens in any Bitcoin QS-compatible wallet. We recommend using our official web or mobile wallets for the best security and features."
   },
   {
     question: "Are my assets safe against quantum attacks?",
@@ -40,6 +52,6 @@ export const walletFAQs = [
   },
   {
     question: "What happens if I lose my wallet?",
-    answer: "Like any cryptocurrency wallet, it's crucial to backup your recovery phrase. If you lose access to your wallet, you can restore it using your recovery phrase on any Bitcoin QS-compatible wallet."
+    answer: "Like any crypto wallet, if you lose your wallet you will risk losing any assets stored within this. It is therefore crucial to ensure that you backup your wallet"
   }
 ];
