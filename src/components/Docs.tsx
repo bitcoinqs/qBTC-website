@@ -8,11 +8,11 @@ export default function Docs() {
         <div className="text-center">
           <h2 className="text-base text-orange-500 font-semibold tracking-wide uppercase">Documentation</h2>
           <p className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl">
-            API Reference & Node Setup
+            API Reference 
           </p>
         </div>
 
-        {/* Quick Start */}
+        {/* 
         <div className="mt-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-8">Quick Start</h3>
           <div className="bg-gray-50 rounded-lg p-6">
@@ -31,7 +31,6 @@ bitcoin-qs start
           </div>
         </div>
 
-        {/* Bridge API */}
         <div className="mt-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-8">Bridge API</h3>
           <div className="space-y-8">
@@ -73,7 +72,6 @@ POST /v1/bridge/withdraw
           </div>
         </div>
 
-        {/* Node Management */}
         <div className="mt-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-8">Node Management</h3>
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -113,12 +111,12 @@ POST /v1/bridge/withdraw
               <pre className="overflow-x-auto">
                 <code className="text-sm">{`
 // Connect to WebSocket
-const ws = new WebSocket('ws://localhost:8334');
+const ws = new WebSocket('ws://api.bitcoinqs.org/ws');
 
 // Subscribe to quantum-safe transactions
 ws.send(JSON.stringify({
   method: 'subscribe',
-  params: ['qs_transactions']
+  params: ['get_all_transactions']
 }));
 
 // Listen for updates
