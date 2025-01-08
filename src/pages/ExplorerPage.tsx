@@ -182,7 +182,7 @@ export default function ExplorerPage() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -205,7 +205,15 @@ export default function ExplorerPage() {
                         {tx.toAddress.substring(0, 10)}... {/* First 10 bytes */}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">{tx.amount}</td> {/* Full amount */}
-                      <td className="px-6 py-4 whitespace-nowrap">{tx.timestamp}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          tx.status === 'confirmed'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {tx.status}
+                        </span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
