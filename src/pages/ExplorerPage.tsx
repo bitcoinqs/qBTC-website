@@ -177,7 +177,6 @@ export default function ExplorerPage() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hash</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
@@ -192,9 +191,6 @@ export default function ExplorerPage() {
                       onClick={() => setSelectedTx(tx)}
                       className="hover:bg-gray-50 cursor-pointer"
                     >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="capitalize">{tx.type}</span>
-                      </td>
                       <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
                         {tx.hash.substring(0, 8)}... {/* First 4 bytes as 8 hex characters */}
                       </td>
