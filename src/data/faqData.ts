@@ -47,6 +47,10 @@ export const walletFAQs = [
     answer: "You can store BQS tokens in any Bitcoin QS-compatible wallet. We recommend using our official web or mobile wallets for the best security and features."
   },
   {
+    question: "Do you have access to my keys?",
+    answer: "BitcoinQS is non-custodial. When you generate a BitcoinQS wallet, this happens entirely in your browser. At no point does Bitcoinqs.org have access to your keys. These remain in your possession always. When you sign a transaction you also perform this action in your browser and only send BitcoinQS the signature and your public key. This ensures that your private key is always safe"
+  },
+  {
     question: "Are my assets safe against quantum attacks?",
     answer: "Yes, all transactions and storage on the Bitcoin QS network are protected by quantum-resistant cryptography, ensuring your assets remain secure even against future quantum computers."
   },
