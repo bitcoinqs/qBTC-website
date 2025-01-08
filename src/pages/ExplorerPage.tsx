@@ -186,21 +186,29 @@ export default function ExplorerPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {paginatedTransactions.map((tx) => (
-                  <tr
-                    key={tx.id}
-                    onClick={() => setSelectedTx(tx)}
-                    className="hover:bg-gray-50 cursor-pointer"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">{tx.type}</td>
-                    <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">{tx.hash.substring(0, 16)}...</td>
-                    <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">{tx.fromAddress}</td>
-                    <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">{tx.toAddress}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{tx.amount}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{tx.timestamp}</td>
-                  </tr>
-                ))}
-              </tbody>
+                  {paginatedTransactions.map((tx) => (
+                    <tr
+                      key={tx.id}
+                      onClick={() => setSelectedTx(tx)}
+                      className="hover:bg-gray-50 cursor-pointer"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="capitalize">{tx.type}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
+                        {tx.hash.substring(0, 8)}... {/* First 4 bytes as 8 hex characters */}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
+                        {tx.fromAddress.substring(0, 10)}... {/* First 10 bytes */}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
+                        {tx.toAddress.substring(0, 10)}... {/* First 10 bytes */}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">{tx.amount}</td> {/* Full amount */}
+                      <td className="px-6 py-4 whitespace-nowrap">{tx.timestamp}</td>
+                    </tr>
+                  ))}
+                </tbody>
             </table>
           )}
         </div>
