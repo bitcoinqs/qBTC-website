@@ -100,10 +100,10 @@ const simulateBridgeProcess = (direction: Direction, walletAddress: string, brid
     };
 
     socket.onclose = () => {
-      console.log('WebSocket connection closed');
+      console.log('Bridge WebSocket connection closed');
     };
   } catch (error) {
-    console.error('Error initializing WebSocket:', error);
+    console.error('Bridge Error initializing WebSocket:', error);
   }
 };
   const handleClose = () => {
