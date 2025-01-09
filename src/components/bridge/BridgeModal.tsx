@@ -67,6 +67,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 const simulateBridgeProcess = (direction: Direction, walletAddress: string, bridgefoo: string) => {
   const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
+  console.log(`Connecting to WebSocket at: ${websocketUrl}`);
 
   console.log("In simulateBridge, bridge address is: " + bridgefoo);
 
@@ -80,19 +81,16 @@ const simulateBridgeProcess = (direction: Direction, walletAddress: string, brid
     };
 
     socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log('Received WebSocket message:', data);
-
-      if (data.step) {
-        // Update processing status directly to the latest step
+    const data = JSON.parse(event.data);
+    console.log('Received WebSocket message:', data);
+    if (data.step) {
         setProcessingStatus(data.step);
-
         if (data.step === 'complete') {
-          console.log('Bridge process completed successfully');
-          setStep('success');
-          socket.close();
+            console.log('Bridge process completed successfully');
+            setStep('success');
+            socket.close();
+            }
         }
-      }
     };
 
     socket.onerror = (error) => {
