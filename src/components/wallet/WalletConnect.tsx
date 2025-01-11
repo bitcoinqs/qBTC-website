@@ -1,6 +1,5 @@
 import React from 'react';
 import { Wallet } from 'lucide-react';
-import { useWallet } from '../../hooks/useWallet';
 import WalletGenerationModal from '../WalletGenerationModal';
 import ConnectWalletModal from '../ConnectWalletModal';
 import { useWalletContext } from '../../context/WalletContext';
@@ -10,15 +9,18 @@ type Props = {
   isGenerateModalOpen: boolean;
   onToggleConnect: () => void;
   onToggleGenerate: () => void;
+  network: string; // Pass the network as a prop
+  getNetworkColors: () => string; // Pass the network colors function as a prop
 };
 
 export function WalletConnect({
   isModalOpen,
   isGenerateModalOpen,
   onToggleConnect,
-  onToggleGenerate
+  onToggleGenerate,
+  network,
+  getNetworkColors, // Accept the function as a prop
 }: Props) {
-  const { network, getNetworkColors } = useWallet();
   const { setWallet } = useWalletContext();
 
   const handleWalletGenerated = (wallet: any) => {
@@ -35,9 +37,11 @@ export function WalletConnect({
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-sm p-8">
         <div className="text-center">
-          <Wallet className={`mx-auto h-12 w-12 ${
-            network === 'mainnet' ? 'text-orange-500' : 'text-purple-500'
-          }`} />
+          <Wallet
+            className={`mx-auto h-12 w-12 ${
+              network === 'mainnet' ? 'text-orange-500' : 'text-purple-500'
+            }`}
+          />
           <h2 className="mt-4 text-2xl font-bold text-gray-900">Wallet Not Connected</h2>
           <p className="mt-2 text-gray-500">
             Connect your wallet or generate a new one to start using the app.
@@ -62,14 +66,14 @@ export function WalletConnect({
       <WalletGenerationModal
         isOpen={isGenerateModalOpen}
         onClose={onToggleGenerate}
-        network={network}
+        network={network} // Pass network as a prop
         onGenerate={handleWalletGenerated}
       />
 
       <ConnectWalletModal
         isOpen={isModalOpen}
         onClose={onToggleConnect}
-        network={network}
+        network={network} // Pass network as a prop
         onConnect={handleWalletConnected}
       />
     </div>

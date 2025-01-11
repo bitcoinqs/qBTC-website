@@ -4,10 +4,11 @@ import type { Network, WalletFile } from '../../types/wallet';
 import type { Direction, Step, ProcessingStatus } from './types';
 import BridgeAddressDisplay from './BridgeAddressDisplay';
 import BridgeProgress from './BridgeProgress';
-import { useWallet } from '../../hooks/useWallet';
 import axios from 'axios';
+
 const env = import.meta.env.VITE_ENV;
 const apiUrl = import.meta.env.VITE_API_URL;
+
 
 type Props = {
   isOpen: boolean;
@@ -17,15 +18,10 @@ type Props = {
 };
 
 export default function BridgeModal({ isOpen, onClose, network, wallet }: Props) {
-  const { balance } = useWallet();
   const [direction, setDirection] = useState<Direction>('btc-to-bqs');
   const [step, setStep] = useState<Step>('direction');
   const [processingStatus, setProcessingStatus] = useState<ProcessingStatus>('waiting');
-  const [amount, setAmount] = useState('');
-  const [btcAddress, setBtcAddress] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [bridgeAddress, setBridgeAddress] = useState('');
-
 
   const handleStartBridge = async (selectedDirection: Direction) => {
     const walletAddress = wallet?.address || localStorage.getItem('bqs.address');
@@ -68,14 +64,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     
   };
 
-  const handleSendBQS = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!amount || !btcAddress) return;
-    setIsSubmitting(true);
-    await simulateBridgeProcess();
-  };
-
- const simulateBridgeProcess = (direction: Direction, walletAddress: string, bridgefoo: string) => {
+const simulateBridgeProcess = (direction: Direction, walletAddress: string, bridgefoo: string) => {
   const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
   console.log(`Connecting to WebSocket at: ${websocketUrl}`);
@@ -117,121 +106,56 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     console.error('Bridge Error initializing WebSocket:', error);
   }
 };
-
   const handleClose = () => {
     if (processingStatus !== 'waiting') {
       setStep('direction');
       setDirection('btc-to-bqs');
       setProcessingStatus('waiting');
-      setAmount('');
-      setBtcAddress('');
-      setIsSubmitting(false);
     }
     onClose();
   };
 
   const renderProcessingStatus = () => {
     const isBTCtoBQS = direction === 'btc-to-bqs';
-    const networkColor = network === 'mainnet' ? 'orange' : 'purple';
     
     return (
       <div className="space-y-8">
-        {isBTCtoBQS ? (
-          <>
-            <BridgeProgress status={processingStatus} network={network} />
-            <div className="text-center">
-              <div className={`animate-spin rounded-full h-12 w-12 border-b-2 border-${networkColor}-500 mx-auto mb-4`}></div>
-              <p className="text-sm text-gray-500">
-                {processingStatus === 'waiting' && 'Waiting for your deposit...'}
-                {processingStatus === 'confirmed' && 'Confirming transaction...'}
-                {processingStatus === 'exchanging' && 'Exchanging assets...'}
-                {processingStatus === 'sending' && 'Sending to destination...'}
-              </p>
-            </div>
-            <BridgeAddressDisplay
-              address={bridgeAddress}
-              label="Send BTC to this address"
-              description="Scan or copy the Bitcoin deposit address"
-            />
-          </>
-        ) : (
-          <div className="space-y-6">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex justify-between items-center">
-                <h4 className="text-sm font-medium text-gray-900">Available BQS Balance</h4>
-                <span className="text-lg font-bold text-gray-900">{balance} BQS</span>
-              </div>
-            </div>
-
-            {!isSubmitting ? (
-              <form onSubmit={handleSendBQS} className="space-y-4">
-                <div>
-                  <label htmlFor="btcAddress" className="block text-sm font-medium text-gray-700">
-                    Bitcoin Receiving Address
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="btcAddress"
-                      value={btcAddress}
-                      onChange={(e) => setBtcAddress(e.target.value)}
-                      placeholder="Enter BTC address (bc1...)"
-                      className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
-                      required
-                      pattern="^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                    Amount to Bridge
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="number"
-                      id="amount"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      placeholder="Enter amount"
-                      className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
-                      required
-                      min="0.00000001"
-                      max={parseFloat(balance)}
-                      step="0.00000001"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
-                >
-                  Bridge BQS to BTC
-                </button>
-              </form>
-            ) : (
-              <>
-                <BridgeProgress status={processingStatus} network={network} />
-                <div className="text-center">
-                  <div className={`animate-spin rounded-full h-12 w-12 border-b-2 border-${networkColor}-500 mx-auto mb-4`}></div>
-                  <p className="text-sm text-gray-500">
-                    {processingStatus === 'waiting' && 'Processing your transaction...'}
-                    {processingStatus === 'confirmed' && 'Confirming transaction...'}
-                    {processingStatus === 'exchanging' && 'Exchanging assets...'}
-                    {processingStatus === 'sending' && 'Sending to destination...'}
-                  </p>
-                </div>
-              </>
-            )}
+        {/* Bridge Progress Section */}
+        <div className="bg-white rounded-lg p-6 space-y-6">
+          <BridgeProgress status={processingStatus} />
+          
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+            <p className="text-sm text-gray-500">
+              {processingStatus === 'waiting' && 'Waiting for your deposit...'}
+              {processingStatus === 'confirmed' && 'Confirming transaction...'}
+              {processingStatus === 'exchanging' && 'Exchanging assets...'}
+              {processingStatus === 'sending' && 'Sending to destination...'}
+            </p>
           </div>
+        </div>
+
+        {/* QR Code and Address Display */}
+        {isBTCtoBQS ? (
+          <BridgeAddressDisplay
+            address={bridgeAddress}
+            label="Send BTC to this address"
+            description="Scan or copy the Bitcoin deposit address"
+          />
+        ) : (
+          <BridgeAddressDisplay
+            address={wallet.address}
+            label="Send BQS to this address"
+            description="Scan or copy the BQS deposit address"
+          />
         )}
 
+        {/* Information Notices */}
         <div className="space-y-4">
-          <div className={`bg-${networkColor}-50 border-l-4 border-${networkColor}-500 p-4`}>
+          <div className="bg-orange-50 border-l-4 border-orange-500 p-4">
             <div className="flex">
-              <AlertTriangle className={`h-5 w-5 text-${networkColor}-400`} />
-              <p className={`ml-3 text-sm text-${networkColor}-700`}>
+              <AlertTriangle className="h-5 w-5 text-orange-400" />
+              <p className="ml-3 text-sm text-orange-700">
                 Bridge transactions may take up to 60 minutes to complete.
               </p>
             </div>
@@ -244,6 +168,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
           </div>
         </div>
 
+        {/* Close Button */}
         <div className="flex justify-end">
           <button
             onClick={handleClose}
@@ -257,8 +182,6 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
   };
 
   if (!isOpen) return null;
-
-  const networkColor = network === 'mainnet' ? 'orange' : 'purple';
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -274,12 +197,12 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
           {step === 'direction' && (
             <div className="space-y-6">
               <p className="text-sm text-gray-500">
-                Choose the direction of your bridge transaction:
+                Choose the $$ direction of your bridge transaction:
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => handleStartBridge('btc-to-bqs')}
-                  className={`p-4 border rounded-lg text-center hover:border-${networkColor}-500`}
+                  className="p-4 border rounded-lg text-center hover:border-orange-500"
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
                   <span className="block font-medium">BTC to BQS</span>
@@ -287,7 +210,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
                 </button>
                 <button
                   onClick={() => handleStartBridge('bqs-to-btc')}
-                  className={`p-4 border rounded-lg text-center hover:border-${networkColor}-500`}
+                  className="p-4 border rounded-lg text-center hover:border-orange-500"
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
                   <span className="block font-medium">BQS to BTC</span>
@@ -320,18 +243,12 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
                     <dt className="text-sm text-gray-500">Status:</dt>
                     <dd className="text-sm font-medium text-green-600">Complete</dd>
                   </div>
-                  {direction === 'bqs-to-btc' && (
-                    <div className="flex justify-between">
-                      <dt className="text-sm text-gray-500">BTC Address:</dt>
-                      <dd className="text-sm text-gray-900">{btcAddress}</dd>
-                    </div>
-                  )}
                 </dl>
               </div>
               <div className="flex justify-end">
                 <button
                   onClick={handleClose}
-                  className={`px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600"
                 >
                   Close
                 </button>

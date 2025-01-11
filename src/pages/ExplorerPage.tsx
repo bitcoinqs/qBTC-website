@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ArrowRight, ArrowLeft, X, AlertTriangle } from 'lucide-react';
 import type { Network, Transaction } from '../types/wallet';
+import {websocketManager} from '../utils/WebSocketManager'
+
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

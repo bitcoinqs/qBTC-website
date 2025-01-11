@@ -1,12 +1,13 @@
 import type { TeamMember } from '../types/team';
-import myImage from '../assets/IMG_6681.jpg';
+import chris from '../assets/IMG_6681.jpg';
+import axel from '../assets/axel.png'
 
 export const coreTeam: TeamMember[] = [
   {
     name: "Christian Papathanasiou",
     role: "Chief Scientist",
     bio: "20 years cybersecurity experience for leading worldwide companies.",
-    image: myImage,
+    image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
   },
   /*{
@@ -26,18 +27,12 @@ export const coreTeam: TeamMember[] = [
 ];
 
 export const advisors: TeamMember[] = [
-  {
-    name: "Prof. David Kumar",
+ /*{ {
+    name: "Dr. Axel York Poschmann",
     role: "Technical Advisor",
-    bio: "Professor of Computer Science at Stanford, pioneer in quantum-resistant protocols.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
-    linkedin: "#"
-  },
-  {
-    name: "Lisa Thompson",
-    role: "Strategic Advisor",
-    bio: "20+ years in blockchain industry, former COO of major cryptocurrency exchange.",
-    image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
-    linkedin: "#"
-  }
+    bio: "VP Product at PQShild the leading Post Quantum company",
+    image: axel,
+    linkedin: "https://www.linkedin.com/in/dr-axel-york-poschmann/"
+  },*/
+  
 ];

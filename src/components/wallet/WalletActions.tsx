@@ -1,15 +1,14 @@
 import React from 'react';
 import { ArrowRightLeft, Send, QrCode } from 'lucide-react';
-import { useWallet } from '../../hooks/useWallet';
 
 type Props = {
+  network: string; // Add network as a prop
   onBridge: () => void;
   onSend: () => void;
   onReceive: () => void;
 };
 
-export function WalletActions({ onBridge, onSend, onReceive }: Props) {
-  const { network } = useWallet();
+export function WalletActions({ network, onBridge, onSend, onReceive }: Props) {
   const buttonColor = network === 'mainnet' 
     ? 'bg-orange-500 hover:bg-orange-600'
     : 'bg-purple-500 hover:bg-purple-600';

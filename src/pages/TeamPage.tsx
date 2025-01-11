@@ -13,13 +13,13 @@ export default function TeamPage() {
           description="Leaders in blockchain, cryptography, and quantum computing"
           members={coreTeam}
         />
-
-      {/*  <TeamSection
-          title="Advisors"
+ {/*
+      <TeamSection
+          title="Scientific Advisory Board"
           description="Industry experts guiding our strategic and technical decisions"
           members={advisors}
         />
-
+ 
         <CompanySection
           title="Backed By"
           description="Leading investors in blockchain and quantum computing"

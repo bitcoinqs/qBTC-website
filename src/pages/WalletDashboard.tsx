@@ -29,14 +29,25 @@ export default function WalletDashboard() {
     setModalState(prev => ({ ...prev, [modal]: !prev[modal] }));
   };
 
-  // If no wallet is connected, show the connect screen
+  const handleNetworkSwitch = () => {
+    setNetwork(network === 'mainnet' ? 'testnet' : 'mainnet');
+  };
+
+  const getNetworkColors = () => {
+    return network === 'mainnet'
+      ? 'bg-orange-500 hover:bg-orange-600'
+      : 'bg-purple-500 hover:bg-purple-600';
+  };
+
   if (!wallet) {
     return (
-      <WalletConnect 
+      <WalletConnect
         isModalOpen={modalState.connect}
         isGenerateModalOpen={modalState.generate}
         onToggleConnect={() => toggleModal('connect')}
         onToggleGenerate={() => toggleModal('generate')}
+        network={network}
+        getNetworkColors={getNetworkColors}
       />
     );
   }
@@ -44,13 +55,15 @@ export default function WalletDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <WalletHeader 
+        <WalletHeader
           network={network}
           balance={balance}
           address={wallet.address}
+          handleNetworkSwitch={handleNetworkSwitch}
         />
 
         <WalletActions
+          network={network}
           onBridge={() => toggleModal('bridge')}
           onSend={() => toggleModal('send')}
           onReceive={() => toggleModal('receive')}
