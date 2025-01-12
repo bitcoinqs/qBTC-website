@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { closeAllConnections } = useWallet();
+  const { closeConnectionsForWallet } = useWallet();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -30,7 +30,7 @@ export default function Navbar() {
   const handleDisconnect = () => {
     disconnect();
     const walletAddress = localStorage.getItem("bqs.address");
-    websocketManager.closeAllConnections(walletAddress);
+    websocketManager.closeConnectionsForWallet(walletAddress);
     localStorage.removeItem("bqs.address")
     localStorage.removeItem("bqs.privatekey")
     localStorage.removeItem("bqs.publickey")
