@@ -9,6 +9,17 @@ type WebSocketHandlers = {
 export const websocketManager = (() => {
   const sockets: WebSocketHandlers = {};
 
+  const closeConnectionsForWallet = (walletAddress: string) => {
+    Object.keys(sockets).forEach((url) => {
+      const socketInfo = sockets[url];
+      if (socketInfo.socket) {
+        console.log(`[WebSocketManager] Closing connection for wallet: ${walletAddress}`);
+        socketInfo.socket.close();
+        delete sockets[url]; // Clean up the socket entry
+      }
+    });
+  };
+
 
   /**
    * Get an existing WebSocket connection for the given URL.
@@ -126,6 +137,7 @@ export const websocketManager = (() => {
     subscribe,
     unsubscribe,
     send,
+    closeAllConnections,
     removeSubscription,
   };
 })();

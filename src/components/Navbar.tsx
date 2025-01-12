@@ -29,10 +29,11 @@ export default function Navbar() {
 
   const handleDisconnect = () => {
     disconnect();
+    const walletAddress = localStorage.getItem("bqs.address");
+    websocketManager.closeAllConnections(walletAddress);
     localStorage.removeItem("bqs.address")
     localStorage.removeItem("bqs.privatekey")
     localStorage.removeItem("bqs.publickey")
-    websocketManager.closeAllConnections();
     console.log("User logged out and all WebSocket connections closed.");
   };
 
