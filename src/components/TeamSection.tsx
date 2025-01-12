@@ -11,11 +11,9 @@ type Props = {
 export default function TeamSection({ title, description, members }: Props) {
   // Calculate grid columns based on number of members
   const getGridClass = (count: number) => {
-    if (count === 1) return 'md:grid-cols-1 md:max-w-sm mx-auto';
-    if (count === 2) return 'md:grid-cols-2 md:max-w-2xl mx-auto';
-    if (count === 3) return 'md:grid-cols-3 md:max-w-4xl mx-auto';
-    if (count === 4) return 'md:grid-cols-4 md:max-w-6xl mx-auto';
-    return 'md:grid-cols-4'; // For 5+ members, show 4 per row
+    if (count === 1) return 'grid-cols-1 max-w-sm mx-auto';
+    if (count === 2) return 'grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto';
+    return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'; // For 3+ members
   };
 
   return (
@@ -27,7 +25,7 @@ export default function TeamSection({ title, description, members }: Props) {
         </p>
       </div>
       
-      <div className={`grid grid-cols-2 gap-8 ${getGridClass(members.length)}`}>
+      <div className={`grid gap-8 ${getGridClass(members.length)}`}>
         {members.map((member) => (
           <TeamMemberCard key={member.name} member={member} />
         ))}
