@@ -9,6 +9,19 @@ type WebSocketHandlers = {
 export const websocketManager = (() => {
   const sockets: WebSocketHandlers = {};
 
+  const closeAllConnections = () => {
+    Object.keys(sockets).forEach((url) => {
+      const socketInfo = sockets[url];
+      if (socketInfo.socket && socketInfo.socket.readyState === WebSocket.OPEN) {
+        console.log(`[WebSocketManager] Closing connection for ${url}`);
+        socketInfo.socket.close();
+        socketInfo.socket = null; // Clean up after closing
+      }
+      socketInfo.handlers.clear(); // Clear handlers
+    });
+  };
+
+
   /**
    * Get an existing WebSocket connection for the given URL.
    */
@@ -125,6 +138,7 @@ export const websocketManager = (() => {
     subscribe,
     unsubscribe,
     send,
+    closeAllConnections,
     removeSubscription,
   };
 })();
