@@ -97,9 +97,9 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     console.log('Received WebSocket message:', data);
-    if (data.step) {
+    if (data.current_status) {
         setProcessingStatus(data.step);
-        if (data.step === 'complete') {
+        if (data.current_status === 'complete') {
             console.log('Bridge process completed successfully');
             setStep('success');
             socket.close();
