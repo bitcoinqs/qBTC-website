@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Shield, LogOut } from 'lucide-react';
 import { useWalletContext } from '../context/WalletContext';
 import { useWallet } from '../hooks/useWallet';
+import { websocketManager } from "../utils/websocketManager";
 
 export default function Navbar() {
   const { wallet, disconnect } = useWalletContext();
@@ -27,12 +28,12 @@ export default function Navbar() {
   };
 
   const handleDisconnect = () => {
+    disconnect();
     localStorage.removeItem("bqs.address")
     localStorage.removeItem("bqs.privatekey")
     localStorage.removeItem("bqs.publickey")
-    closeAllConnections();
-
-    disconnect();
+    websocketManager.closeAllConnections();
+    console.log("User logged out and all WebSocket connections closed.");
   };
 
   const renderWalletButton = () => {
