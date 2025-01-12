@@ -152,7 +152,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
               </p>
             </div>
             <BridgeAddressDisplay
-              address={bridgeAddress}
+              address={bridgeAddress || 'No address provided'}
               label="Send BTC to this address"
               description="Scan or copy the Bitcoin deposit address"
             />
