@@ -37,28 +37,33 @@ export function useWallet() {
   const handleWebSocketMessage = (data: any) => {
     console.log("[useWallet] WebSocket message received:", data);
 
-    if (data.type === 'balance_update' && data.balance !== undefined) {
-      console.log("[useWallet] Balance update:", data.balance);
-      setBalance(data.balance);
-    }
+    if (data.type === 'combined_update') {
+      console.log("[useWallet] Combined update received:", data);
 
-    if (data.type === 'transaction_update' && data.transactions) {
-      console.log("[useWallet] Transaction update:", data.transactions);
-      const formattedTransactions = data.transactions.map((tx: any) => ({
-        id: tx.id.toString(),
-        type: tx.type,
-        amount: tx.amount,
-        address: tx.address,
-        timestamp: new Date(tx.timestamp).toLocaleString(),
-        status: 'confirmed', // Default to confirmed; adapt if needed
-        hash: tx.hash || 'N/A',
-      }));
-      setTransactions(formattedTransactions);
-      setIsLoading(false);
+      // Update balance
+      if (data.balance !== undefined) {
+        console.log("[useWallet] Updating balance:", data.balance);
+        setBalance(data.balance);
+      }
+
+      // Update transactions
+      if (data.transactions) {
+        const formattedTransactions = data.transactions.map((tx: any) => ({
+          id: tx.id.toString(),
+          type: tx.type,
+          amount: tx.amount,
+          address: tx.address,
+          timestamp: new Date(tx.timestamp).toLocaleString(),
+          status: 'confirmed', // Default to confirmed; adapt if needed
+          hash: tx.hash || 'N/A',
+        }));
+        setTransactions(formattedTransactions);
+        setIsLoading(false);
+      }
     }
   };
 
-  // Manage WebSocket subscriptions for balance and transactions
+  // Manage WebSocket subscriptions for combined balance and transactions
   useEffect(() => {
     if (!wallet || !network) {
       console.log("[useWallet] No wallet or network specified; skipping WebSocket setup.");
@@ -77,34 +82,30 @@ export function useWallet() {
     currentWallet.current = wallet.address;
     currentNetwork.current = network;
 
-    console.log("[useWallet] Subscribing to WebSocket updates for balance and transactions.");
+    console.log("[useWallet] Subscribing to WebSocket updates for combined updates.");
 
-    // Subscribe to balance updates
+    // Subscribe to WebSocket messages
     websocketManager.subscribe(wsUrl, handleWebSocketMessage);
+
+    // Send a subscription request for combined updates
     websocketManager.send(wsUrl, {
       wallet_address: wallet.address,
-      update_type: 'balance',
+      update_type: 'combined_update', // Expect combined updates for balance and transactions
       network,
     });
 
-    // Subscribe to transaction updates
-    websocketManager.send(wsUrl, {
-      wallet_address: wallet.address,
-      update_type: 'transactions',
-      network,
-    });
-
-    // Start ping
+    // Start periodic pings
     startPing();
 
     return () => {
       console.log("[useWallet] Cleaning up WebSocket subscriptions.");
       websocketManager.unsubscribe(wsUrl, handleWebSocketMessage);
-      stopPing(); // Stop ping on cleanup
+      stopPing(); // Stop pings on cleanup
     };
   }, [wallet, network]);
 
   const handleNetworkSwitch = () => {
+    console.log("[useWallet] Network switched:", network);
     setNetwork(network === 'mainnet' ? 'testnet' : 'mainnet');
   };
 

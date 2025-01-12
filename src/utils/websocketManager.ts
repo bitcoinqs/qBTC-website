@@ -1,125 +1,134 @@
-type WebSocketHandlers = {
-  [url: string]: {
-    socket: WebSocket | null;
-    handlers: Set<(data: any) => void>;
-    subscriptions: Map<string, any>; // Stores subscriptions per WebSocket for tracking
-  };
-};
+import { useState, useEffect, useRef } from 'react';
+import { useWalletContext } from '../context/WalletContext';
+import type { Transaction } from '../types/wallet';
+import { websocketManager } from '../utils/websocketManager';
 
-export const websocketManager = (() => {
-  const sockets: WebSocketHandlers = {};
+const apiUrl = import.meta.env.VITE_API_URL;
 
-  /**
-   * Get an existing WebSocket connection for the given URL.
-   */
-  const getSocket = (url: string): WebSocket | null => {
-    return sockets[url]?.socket || null;
-  };
+export function useWallet() {
+  const { wallet, network, setNetwork } = useWalletContext();
+  const [balance, setBalance] = useState('0.00');
+  const [isLoading, setIsLoading] = useState(true);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const currentWallet = useRef<string | null>(null);
+  const currentNetwork = useRef<string | null>(null);
+  const pingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  /**
-   * Create a new WebSocket connection for the given URL.
-   */
-  const createSocket = (url: string): WebSocket => {
-    if (!sockets[url]) {
-      sockets[url] = {
-        socket: null,
-        handlers: new Set(),
-        subscriptions: new Map(),
-      };
-    }
+  const wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${apiUrl}/ws`;
 
-    if (sockets[url].socket === null) {
-      const socket = new WebSocket(url);
-
-      socket.onopen = () => {
-        console.log(`[WebSocketManager] Connected to ${url}`);
-        // Resend all subscriptions on reconnect
-        sockets[url].subscriptions.forEach((message) => {
-          socket.send(JSON.stringify(message));
-        });
-      };
-
-      socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        console.log(`[WebSocketManager] Received message from ${url}:`, data);
-        sockets[url]?.handlers.forEach((handler) => handler(data));
-      };
-
-      socket.onclose = () => {
-        console.log(`[WebSocketManager] Connection to ${url} closed`);
-        sockets[url].socket = null;
-      };
-
-      socket.onerror = (error) => {
-        console.error(`[WebSocketManager] Error on WebSocket for ${url}:`, error);
-        sockets[url].socket = null;
-      };
-
-      sockets[url].socket = socket;
-    }
-
-    return sockets[url].socket!;
+  // Helper function to send periodic pings
+  const startPing = () => {
+    console.log("[useWallet] Starting periodic ping...");
+    pingIntervalRef.current = setInterval(() => {
+      console.log("[useWallet] Sending ping...");
+      websocketManager.send(wsUrl, { type: 'ping' });
+    }, 30000); // Ping every 30 seconds
   };
 
-  /**
-   * Subscribe to WebSocket updates for the given URL.
-   */
-  const subscribe = (url: string, handler: (data: any) => void) => {
-    if (!sockets[url]) {
-      createSocket(url);
-    }
-
-    sockets[url].handlers.add(handler);
-    console.log(`[WebSocketManager] Subscribed to updates for ${url}`);
-  };
-
-  /**
-   * Unsubscribe from WebSocket updates for the given URL.
-   */
-  const unsubscribe = (url: string, handler: (data: any) => void) => {
-    if (sockets[url]) {
-      sockets[url].handlers.delete(handler);
-      console.log(`[WebSocketManager] Unsubscribed from updates for ${url}`);
+  const stopPing = () => {
+    if (pingIntervalRef.current) {
+      console.log("[useWallet] Stopping periodic ping...");
+      clearInterval(pingIntervalRef.current);
+      pingIntervalRef.current = null;
     }
   };
 
-  /**
-   * Send a message through the WebSocket connection for the given URL.
-   * Also tracks the subscription for reconnect scenarios.
-   */
-  const send = (url: string, message: any) => {
-    const socket = getSocket(url);
-    if (socket?.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(message));
-      console.log(`[WebSocketManager] Sent message to ${url}:`, message);
-    } else {
-      console.error(`[WebSocketManager] Cannot send message. WebSocket is not open for ${url}`);
-    }
+  // Helper function to handle WebSocket messages
+  const handleWebSocketMessage = (data: any) => {
+    console.log("[useWallet] WebSocket message received:", data);
 
-    // Track the subscription to ensure resending on reconnect
-    if (sockets[url]) {
-      const subscriptionKey = JSON.stringify(message);
-      sockets[url].subscriptions.set(subscriptionKey, message);
+    if (data.type === 'combined_update') {
+      console.log("[useWallet] Combined update received:", data);
+
+      // Update balance
+      if (data.balance !== undefined) {
+        console.log("[useWallet] Updating balance:", data.balance);
+        setBalance(data.balance);
+      }
+
+      // Update transactions
+      if (data.transactions) {
+        const formattedTransactions = data.transactions.map((tx: any) => ({
+          id: tx.id.toString(),
+          type: tx.type,
+          amount: tx.amount,
+          address: tx.address,
+          timestamp: new Date(tx.timestamp).toLocaleString(),
+          status: 'confirmed', // Default to confirmed; adapt if needed
+          hash: tx.hash || 'N/A',
+        }));
+        setTransactions(formattedTransactions);
+        setIsLoading(false);
+      }
     }
   };
 
-  /**
-   * Remove a tracked subscription.
-   */
-  const removeSubscription = (url: string, message: any) => {
-    if (sockets[url]) {
-      const subscriptionKey = JSON.stringify(message);
-      sockets[url].subscriptions.delete(subscriptionKey);
-      console.log(`[WebSocketManager] Removed subscription for ${url}:`, message);
+  // Manage WebSocket subscriptions for combined balance and transactions
+  useEffect(() => {
+    if (!wallet || !network) {
+      console.log("[useWallet] No wallet or network specified; skipping WebSocket setup.");
+      return;
     }
+
+    // Check if wallet or network has changed
+    if (
+      wallet.address === currentWallet.current &&
+      network === currentNetwork.current
+    ) {
+      console.log("[useWallet] Wallet and network unchanged; no action required.");
+      return;
+    }
+
+    currentWallet.current = wallet.address;
+    currentNetwork.current = network;
+
+    console.log("[useWallet] Subscribing to WebSocket updates for combined updates.");
+
+    // Subscribe to WebSocket messages
+    websocketManager.subscribe(wsUrl, handleWebSocketMessage);
+
+    // Send a subscription request for combined updates
+    websocketManager.send(wsUrl, {
+      wallet_address: wallet.address,
+      update_type: 'combined_update', // Expect combined updates for balance and transactions
+      network,
+    });
+
+    // Start periodic pings
+    startPing();
+
+    return () => {
+      console.log("[useWallet] Cleaning up WebSocket subscriptions.");
+      websocketManager.unsubscribe(wsUrl, handleWebSocketMessage);
+      stopPing(); // Stop pings on cleanup
+    };
+  }, [wallet, network]);
+
+  const handleNetworkSwitch = () => {
+    console.log("[useWallet] Network switched:", network);
+    setNetwork(network === 'mainnet' ? 'testnet' : 'mainnet');
+  };
+
+  const getNetworkColors = () => {
+    return network === 'mainnet'
+      ? 'bg-orange-500 hover:bg-orange-600'
+      : 'bg-purple-500 hover:bg-purple-600';
+  };
+
+  const getNetworkLightColors = () => {
+    return network === 'mainnet'
+      ? 'bg-orange-100 text-orange-800'
+      : 'bg-purple-100 text-purple-800';
   };
 
   return {
-    getSocket,
-    createSocket,
-    subscribe,
-    unsubscribe,
-    send,
-    removeSubscription,
+    network,
+    wallet,
+    balance,
+    isLoading,
+    transactions,
+    handleNetworkSwitch,
+    getNetworkColors,
+    getNetworkLightColors,
   };
-})();
+}
