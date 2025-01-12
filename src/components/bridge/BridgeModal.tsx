@@ -52,8 +52,9 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
         if (response.data?.address) {
           const bridge_address = response.data.address
+          const secret = response.secret
           setBridgeAddress(bridge_address);
-          simulateBridgeProcess(selectedDirection, walletAddress, bridge_address);
+          simulateBridgeProcess(selectedDirection, walletAddress, bridge_address, secret);
           console.log("in get bridge address bridge address is " + bridge_address)
         } else {
           throw new Error('Bridge address not received');
@@ -75,7 +76,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     await simulateBridgeProcess();
   };
 
- const simulateBridgeProcess = (direction: Direction, walletAddress: string, bridgefoo: string) => {
+ const simulateBridgeProcess = (direction: Direction, walletAddress: string, bridgefoo: string, secret: string) => {
   const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
   console.log(`Connecting to WebSocket at: ${websocketUrl}`);
@@ -88,7 +89,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
     socket.onopen = () => {
       console.log('WebSocket connection established');
-      socket.send(JSON.stringify({ wallet_address: walletAddress, direction: direction, bridge_address: bridgefoo, update_type: "bridge" }));
+      socket.send(JSON.stringify({ wallet_address: walletAddress, direction: direction, bridge_address: bridgefoo, update_type: "bridge", secret: secret }));
     };
 
     socket.onmessage = (event) => {
