@@ -52,7 +52,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
         if (response.data?.address) {
           const bridge_address = response.data.address
-          const secret = response.secret
+          const secret = response.data.secret
           setBridgeAddress(bridge_address);
           simulateBridgeProcess(selectedDirection, walletAddress, bridge_address, secret);
           console.log("in get bridge address bridge address is " + bridge_address)
@@ -82,6 +82,8 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
   console.log(`Connecting to WebSocket at: ${websocketUrl}`);
 
   console.log("In simulateBridge, bridge address is: " + bridgefoo);
+
+  console.log("Secret is " + secret)
 
   try {
     const socket = new WebSocket(websocketUrl);
