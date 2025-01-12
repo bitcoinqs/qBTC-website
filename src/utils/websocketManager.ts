@@ -137,7 +137,7 @@ export const websocketManager = (() => {
     subscribe,
     unsubscribe,
     send,
-    closeAllConnections,
+    closeConnectionsForWallet,
     removeSubscription,
   };
 })();
