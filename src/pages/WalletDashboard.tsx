@@ -6,6 +6,7 @@ import { WalletActions } from '../components/wallet/WalletActions';
 import { TransactionHistory } from '../components/wallet/TransactionHistory';
 import { WalletModals } from '../components/wallet/WalletModals';
 import type { Transaction } from '../types/wallet';
+import { useWalletContext } from '../context/WalletContext';
 
 export default function WalletDashboard() {
   const {
@@ -17,6 +18,7 @@ export default function WalletDashboard() {
   } = useWallet();
 
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+  const { setNetwork } = useWalletContext();
   const [modalState, setModalState] = useState({
     bridge: false,
     send: false,
