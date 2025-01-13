@@ -5,7 +5,7 @@ import { WalletHeader } from '../components/wallet/WalletHeader';
 import { WalletActions } from '../components/wallet/WalletActions';
 import { TransactionHistory } from '../components/wallet/TransactionHistory';
 import { WalletModals } from '../components/wallet/WalletModals';
-import type { Transaction , Network} from '../types/wallet';
+import type { Transaction } from '../types/wallet';
 
 export default function WalletDashboard() {
   const {
@@ -17,7 +17,6 @@ export default function WalletDashboard() {
   } = useWallet();
 
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
-  const [setNetwork] = useState<Network>('mainnet');
   const [modalState, setModalState] = useState({
     bridge: false,
     send: false,
@@ -30,9 +29,9 @@ export default function WalletDashboard() {
     setModalState(prev => ({ ...prev, [modal]: !prev[modal] }));
   };
 
-  const handleNetworkSwitch = () => {
+  /*const handleNetworkSwitch = () => {
     setNetwork(network === 'mainnet' ? 'testnet' : 'mainnet');
-  };
+  };*/
 
   const getNetworkColors = () => {
     return network === 'mainnet'
