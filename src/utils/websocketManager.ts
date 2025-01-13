@@ -9,6 +9,9 @@ type WebSocketHandlers = {
 export const websocketManager = (() => {
   const sockets: WebSocketHandlers = {};
 
+  /**
+   * Close all WebSocket connections for a specific wallet.
+   */
   const closeConnectionsForWallet = (walletAddress: string) => {
     Object.keys(sockets).forEach((url) => {
       const socketInfo = sockets[url];
@@ -19,7 +22,6 @@ export const websocketManager = (() => {
       }
     });
   };
-
 
   /**
    * Get an existing WebSocket connection for the given URL.
@@ -130,6 +132,28 @@ export const websocketManager = (() => {
       console.log(`[WebSocketManager] Removed subscription for ${url}:`, message);
     }
   };
+
+  /**
+   * Reinitialize WebSockets on visibility change.
+   */
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === "visible") {
+      console.log("[WebSocketManager] Document visible. Reinitializing WebSockets...");
+      Object.keys(sockets).forEach((url) => {
+        if (!sockets[url].socket || sockets[url].socket.readyState !== WebSocket.OPEN) {
+          createSocket(url);
+        } else {
+          // Resend subscriptions for existing open connections
+          sockets[url].subscriptions.forEach((message) => {
+            sockets[url].socket!.send(JSON.stringify(message));
+          });
+        }
+      });
+    }
+  };
+
+  // Listen for visibility change events
+  document.addEventListener("visibilitychange", handleVisibilityChange);
 
   return {
     getSocket,
