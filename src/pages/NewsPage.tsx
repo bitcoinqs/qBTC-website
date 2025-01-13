@@ -38,17 +38,21 @@ The paper has been peer-reviewed and accepted for publication in leading cryptog
   },*/
   {
     id: 3,
-    title: 'Bitcoin QS Testnet Results',
+    title: 'Bitcoin QS Testnet Update',
     date: 'Jan 7 2025',
     category: 'Development',
     excerpt: 'Initial testnet results show promising performance metrics for quantum-safe transactions...',
-    content: `The Bitcoin QS testnet has been running successfully for the past month, and we're excited to share the results. Our testing has shown remarkable performance and security metrics.
+    content: `The Bitcoin QS testnet is under heavy development. The team has been succesful in acheiving the following milestones:
 
-Performance Highlights:
-• Transaction processing times under 2 seconds
-• Successful quantum-resistant signature verification
-• Zero security incidents reported
-• High network stability
+Highlights:
+• Feasibility / cypher selection - Dilithium shortlisted
+• Creation of non-custodial in-browser library for signing of transactions
+• Creation of node infrastructure for transaction validation
+• Creation of web wallet using websockets for real time transaction and balance updates.
+
+We remain on track to launch the Bitcoin QS testnet on the first week of February 2025.
+
+Furthermore, we are in the process of assembling our scientific advisory board comprised of world class cryptogrpahers in Quantum Security.
 
 We've also identified areas for optimization and are implementing improvements based on community feedback.`,
     image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2232&q=80',
