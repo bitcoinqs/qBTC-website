@@ -29,9 +29,9 @@ export default function WalletDashboard() {
     setModalState(prev => ({ ...prev, [modal]: !prev[modal] }));
   };
 
-  /*const handleNetworkSwitch = () => {
+  const handleNetworkSwitch = () => {
     setNetwork(network === 'mainnet' ? 'testnet' : 'mainnet');
-  };*/
+  };
 
   const getNetworkColors = () => {
     return network === 'mainnet'
