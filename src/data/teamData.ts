@@ -27,6 +27,13 @@ export const coreTeam: TeamMember[] = [
 ];
 
 export const advisors: TeamMember[] = [
+  {
+    name: "Christian Papathanasiou",
+    role: "Chief Scientist",
+    bio: "20 years cybersecurity experience for leading worldwide companies.",
+    image: chris,
+    linkedin: "http://linkedin.com/in/papathanasiou"
+  }
  /*{ {
     name: "Dr. Axel York Poschmann",
     role: "Technical Advisor",

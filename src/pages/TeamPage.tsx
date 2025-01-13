@@ -8,18 +8,18 @@ export default function TeamPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <TeamSection
+  {/*       <TeamSection
           title="Core Team"
           description="Leaders in blockchain, cryptography, and quantum computing"
           members={coreTeam}
-        />
- {/*
+        /> */}
+
       <TeamSection
           title="Scientific Advisory Board"
           description="Industry experts guiding our strategic and technical decisions"
           members={advisors}
         />
- 
+ {/*
         <CompanySection
           title="Backed By"
           description="Leading investors in blockchain and quantum computing"
