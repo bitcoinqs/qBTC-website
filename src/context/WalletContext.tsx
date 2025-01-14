@@ -19,7 +19,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   
   const [network, setNetwork] = useState<Network>(() => {
     const saved = localStorage.getItem('network');
-    return (saved as Network) || 'mainnet';
+    return (saved as Network) || 'testnet';
   });
 
   useEffect(() => {
