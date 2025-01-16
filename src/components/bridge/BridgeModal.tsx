@@ -72,8 +72,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     
   };
 
-
-  const handleBQStoBTC = async (e: React.FormEvent) => {
+const handleBQStoBTC = async (e: React.FormEvent) => {
   e.preventDefault();
 
   if (!amount || !btcAddress) {
@@ -88,10 +87,15 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     return;
   }
 
+  // Set states to update the UI
   setDirection('bqs-to-btc');
   setStep('processing');
   setProcessingStatus('waiting');
 
+  // Debugging logs to confirm state changes
+  console.log('Direction set to:', 'bqs-to-btc');
+  console.log('Step set to:', 'processing');
+  console.log('Processing status set to:', 'waiting');
 };
 
 
@@ -234,7 +238,6 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
                 <button
                   type="submit"
-                   onClick={handleBQStoBTC}
                   className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
                 >
                   Bridge BQS to BTC
