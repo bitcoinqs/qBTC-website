@@ -117,7 +117,7 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
   const address = "bqs15pDqGiTvnCo9R7A3MNZhYnffhQD651HhP";
 
   try {
-    // Serialize the transaction
+    // Serialize the tranfsaction
     const transactionData = serializeTransaction(sender, address, amount);
     const transactionDataBytes = utf8ToBytes(transactionData);
 
