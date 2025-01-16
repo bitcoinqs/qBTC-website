@@ -77,6 +77,9 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     alert(amount)
     alert(btcAddress)
     console.log("foo")
+    setDirection(selectedDirection);
+    setStep('processing');
+    setProcessingStatus('waiting');
     if (!amount || !btcAddress) return;
     //setIsSubmitting(true);
     //await simulateBridgeProcess();
