@@ -42,7 +42,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
     console.log(selectedDirection)
 
-    if (selectedDirection === 'btc-to-bqs') {
+    if (selectedDirection === 'bqs-to-btc') {
 
       alert("hi")
     }
