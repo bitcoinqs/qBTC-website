@@ -263,52 +263,52 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
             </div>
 
             {!isSubmitting ? (
-              <form onSubmit={handleSendBQS} className="space-y-4">
-                <div>
-                  <label htmlFor="btcAddress" className="block text-sm font-medium text-gray-700">
-                    Bitcoin Receiving Address
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="btcAddress"
-                      value={btcAddress}
-                      onChange={(e) => setBtcAddress(e.target.value)}
-                      placeholder="Enter BTC address (bc1...)"
-                      className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
-                      required
-                      pattern="^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$"
-                    />
-                  </div>
-                </div>
+              <form onSubmit={handleBQStoBTC} className="space-y-4">
+  <div>
+    <label htmlFor="btcAddress" className="block text-sm font-medium text-gray-700">
+      Bitcoin Receiving Address
+    </label>
+    <div className="mt-1">
+      <input
+        type="text"
+        id="btcAddress"
+        value={btcAddress}
+        onChange={(e) => setBtcAddress(e.target.value)}
+        placeholder="Enter BTC address (bc1...)"
+        className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
+        required
+        pattern="^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$"
+      />
+    </div>
+  </div>
 
-                <div>
-                  <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                    Amount to Bridge
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="number"
-                      id="amount"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      placeholder="Enter amount"
-                      className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
-                      required
-                      min="0.00000001"
-                      max={parseFloat(balance)}
-                      step="0.00000001"
-                    />
-                  </div>
-                </div>
+  <div>
+    <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+      Amount to Bridge
+    </label>
+    <div className="mt-1">
+      <input
+        type="number"
+        id="amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        placeholder="Enter amount"
+        className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
+        required
+        min="0.00000001"
+        max={parseFloat(balance)}
+        step="0.00000001"
+      />
+    </div>
+  </div>
 
-                <button
-                  type="submit"
-                  className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
-                >
-                  Bridge BQS to BTC
-                </button>
-              </form>
+  <button
+    type="submit" // Use "submit" type for the button
+    className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
+  >
+    Bridge BQS to BTC
+  </button>
+</form>
             ) : (
               <>
                 <BridgeProgress status={processingStatus} network={network} />
