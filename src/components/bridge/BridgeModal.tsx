@@ -76,6 +76,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     e.preventDefault();
     alert(amount)
     alert(btcAddress)
+    console.log("foo")
     if (!amount || !btcAddress) return;
     //setIsSubmitting(true);
     //await simulateBridgeProcess();
