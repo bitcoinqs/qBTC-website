@@ -92,30 +92,6 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
   setStep('processing');
   setProcessingStatus('waiting');
 
-  try {
-    console.log(`${apiUrl}/worker`);
-    const response = await axios.post(`https://${apiUrl}/worker`, {
-      request_type: 'bridge_bqs_to_btc',
-      wallet_address: walletAddress,
-      btc_address: btcAddress,
-      amount,
-      network,
-      direction: 'bqs-to-btc',
-    });
-
-    if (response.data?.status === 'success') {
-      const { bridge_address, secret } = response.data;
-      console.log("Bridge address for BQS to BTC:", bridge_address);
-      console.log("Secret for BQS to BTC:", secret);
-
-      await simulateBridgeProcess('bqs-to-btc', walletAddress, bridge_address, secret);
-    } else {
-      throw new Error('Failed to initiate BQS to BTC bridging.');
-    }
-  } catch (error) {
-    console.error('Error processing BQS to BTC bridge:', error);
-    alert('Unable to process the bridge. Please try again later.');
-  }
 };
 
 
