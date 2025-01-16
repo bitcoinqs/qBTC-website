@@ -121,15 +121,14 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
     const transactionData = serializeTransaction(sender, address, amount);
     const transactionDataBytes = utf8ToBytes(transactionData);
 
-    // Convert hex keys to Uint8Array or suitable formats for signing
-    const privateKey = hexToBytes(privateKeyHex);
-    const publicKey = hexToBytes(publicKeyHex);
+     const publicKey = Uint8Array.from(Buffer.from(publicKeyHex, 'hex'));
+      const privateKey = Uint8Array.from(Buffer.from(privateKeyHex, 'hex'));
 
-    // Sign the transaction
-    const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
+      const transactionData = serializeTransaction(sender, address, amount);
+      const transactionDataBytes = utf8ToBytes(transactionData);
+      const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
 
-    // Verify the signature
-    const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
+      const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
 
     if (!isValid) {
       alert('Signature verification failed!');
