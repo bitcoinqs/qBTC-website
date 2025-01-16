@@ -223,7 +223,6 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
                 <button
                   type="submit"
-                  onClick={handleBQStoBTC}
                   className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
                 >
                   Bridge BQS to BTC
