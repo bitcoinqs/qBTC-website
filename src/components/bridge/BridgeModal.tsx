@@ -137,7 +137,7 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
 
     console.log('Signature is valid:', isValid);
 
-    // Prepare the payload for broadcasting
+    // Prepare the payload for brfoadcasting
     const payload = {
       request_type: 'broadcast_tx',
       message: uint8ArrayToBase64(transactionDataBytes),
