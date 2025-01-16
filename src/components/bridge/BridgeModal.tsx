@@ -40,6 +40,8 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     setStep('processing');
     setProcessingStatus('waiting');
 
+    console.log(selectedDirection)
+
     if (selectedDirection === 'btc-to-bqs') {
 
       alert("hi")
