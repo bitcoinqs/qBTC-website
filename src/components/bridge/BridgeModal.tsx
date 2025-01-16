@@ -77,6 +77,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     setDirection('bqs-to-btc');
     setStep('processing');
     setProcessingStatus('waiting');
+    alert("hi")
     if (!amount || !btcAddress) return;
     //setIsSubmitting(true);
     //await simulateBridgeProcess();
