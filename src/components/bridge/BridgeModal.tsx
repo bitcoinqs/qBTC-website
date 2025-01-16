@@ -154,7 +154,7 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
     // Handle success
     setProcessingStatus('complete');
     setStep('success');
-    alert('Transaction broadcasted successfully!');
+
   } catch (error) {
     console.error('Error broadcasting transaction:', error);
     alert('An error occurred while processing the transaction.');
