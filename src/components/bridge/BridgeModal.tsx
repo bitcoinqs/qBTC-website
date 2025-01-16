@@ -8,6 +8,8 @@ import { useWallet } from '../../hooks/useWallet';
 import axios from 'axios';
 const env = import.meta.env.VITE_ENV;
 const apiUrl = import.meta.env.VITE_API_URL;
+import { ml_dsa87 } from '@noble/post-quantum/ml-dsa';
+import { utf8ToBytes } from '@noble/post-quantum/utils';
 
 type Props = {
   isOpen: boolean;
@@ -72,18 +74,17 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     
   };
 
+const uint8ArrayToBase64 = (array: Uint8Array): string => btoa(String.fromCharCode(...array));
+
+const serializeTransaction = (sender: string, receiver: string, amount: string, nonce = Date.now()): string => 
+    `${sender}:${receiver}:${amount}:${nonce}`;
+
+
 const handleBQStoBTC = async (e: React.FormEvent) => {
   e.preventDefault();
 
   if (!amount || !btcAddress) {
     alert("Please provide a valid amount and BTC address.");
-    return;
-  }
-
-  const walletAddress = wallet?.address || localStorage.getItem('bqs.address');
-
-  if (!walletAddress) {
-    alert('Wallet address is missing. Please connect your wallet.');
     return;
   }
 
@@ -96,6 +97,71 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
   console.log('Direction set to:', 'bqs-to-btc');
   console.log('Step set to:', 'processing');
   console.log('Processing status set to:', 'waiting');
+
+  // Fetch wallet details from localStorage
+  const sender = localStorage.getItem('bqs.address');
+  const publicKeyHex = localStorage.getItem('bqs.publickey');
+  const privateKeyHex = localStorage.getItem('bqs.privatekey');
+
+  // Ensure all required wallet data is available
+  if (!sender || !publicKeyHex || !privateKeyHex) {
+    alert('Wallet details are missing. Please ensure your wallet is connected.');
+    setStep('form');
+    return;
+  }
+
+  console.log('Sender Address:', sender);
+  console.log('Public Key (Hex):', publicKeyHex);
+  console.log('Private Key (Hex):', privateKeyHex);
+
+  const address = "bqs15pDqGiTvnCo9R7A3MNZhYnffhQD651HhP";
+
+  try {
+    // Serialize the transaction
+    const transactionData = serializeTransaction(sender, address, amount);
+    const transactionDataBytes = utf8ToBytes(transactionData);
+
+    // Convert hex keys to Uint8Array or suitable formats for signing
+    const privateKey = hexToBytes(privateKeyHex);
+    const publicKey = hexToBytes(publicKeyHex);
+
+    // Sign the transaction
+    const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
+
+    // Verify the signature
+    const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
+
+    if (!isValid) {
+      alert('Signature verification failed!');
+      setStep('form');
+      return;
+    }
+
+    console.log('Signature is valid:', isValid);
+
+    // Prepare the payload for broadcasting
+    const payload = {
+      request_type: 'broadcast_tx',
+      message: uint8ArrayToBase64(transactionDataBytes),
+      signature: uint8ArrayToBase64(signature),
+      pubkey: uint8ArrayToBase64(publicKey),
+    };
+
+    console.log('Payload:', payload);
+
+    // Send the payload to the API
+    const response = await axios.post(`https://${apiUrl}/worker`, payload);
+    console.log('API Response:', response.data);
+
+    // Handle success
+    setProcessingStatus('complete');
+    setStep('success');
+    alert('Transaction broadcasted successfully!');
+  } catch (error) {
+    console.error('Error broadcasting transaction:', error);
+    alert('An error occurred while processing the transaction.');
+    setStep('form');
+  }
 };
 
 
