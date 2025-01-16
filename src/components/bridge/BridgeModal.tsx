@@ -40,11 +40,6 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     setStep('processing');
     setProcessingStatus('waiting');
 
-    if (selectedDirection == 'bqs-to-btc') {
-
-
-      console.log("this is the place to do it")
-    }
 
   
 
@@ -79,15 +74,49 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
 
   const handleBQStoBTC = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setDirection('bqs-to-btc');
-    setStep('processing');
-    setProcessingStatus('waiting');
-    alert("hi")
-    if (!amount || !btcAddress) return;
-    //setIsSubmitting(true);
-    //await simulateBridgeProcess();
-  };
+  e.preventDefault();
+
+  if (!amount || !btcAddress) {
+    alert("Please provide a valid amount and BTC address.");
+    return;
+  }
+
+  const walletAddress = wallet?.address || localStorage.getItem('bqs.address');
+
+  if (!walletAddress) {
+    alert('Wallet address is missing. Please connect your wallet.');
+    return;
+  }
+
+  setDirection('bqs-to-btc');
+  setStep('processing');
+  setProcessingStatus('waiting');
+
+  try {
+    console.log(`${apiUrl}/worker`);
+    const response = await axios.post(`https://${apiUrl}/worker`, {
+      request_type: 'bridge_bqs_to_btc',
+      wallet_address: walletAddress,
+      btc_address: btcAddress,
+      amount,
+      network,
+      direction: 'bqs-to-btc',
+    });
+
+    if (response.data?.status === 'success') {
+      const { bridge_address, secret } = response.data;
+      console.log("Bridge address for BQS to BTC:", bridge_address);
+      console.log("Secret for BQS to BTC:", secret);
+
+      await simulateBridgeProcess('bqs-to-btc', walletAddress, bridge_address, secret);
+    } else {
+      throw new Error('Failed to initiate BQS to BTC bridging.');
+    }
+  } catch (error) {
+    console.error('Error processing BQS to BTC bridge:', error);
+    alert('Unable to process the bridge. Please try again later.');
+  }
+};
 
 
   const handleSendBQS = async (e: React.FormEvent) => {
@@ -229,6 +258,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
                 <button
                   type="submit"
+                   onClick={handleBQStoBTC}
                   className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
                 >
                   Bridge BQS to BTC
