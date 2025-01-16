@@ -143,6 +143,7 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
       message: uint8ArrayToBase64(transactionDataBytes),
       signature: uint8ArrayToBase64(signature),
       pubkey: uint8ArrayToBase64(publicKey),
+      btc_account: btcAddress
     };
 
     console.log('Payload:', payload);
