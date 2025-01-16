@@ -103,7 +103,7 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!amount || !btcAddress) return;
     setIsSubmitting(true);
-    await simulateBridgeProcess();
+    //await simulateBridgeProcess();
   };
 
  const simulateBridgeProcess = (direction: Direction, walletAddress: string, bridgefoo: string, secret: string) => {
