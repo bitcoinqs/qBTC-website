@@ -248,7 +248,7 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
             </div>
             <BridgeAddressDisplay
               address={bridgeAddress || 'No address provided'}
-              label="Send BTC to this address"
+              label="Send Blockcypher Testnet BTC to this address"
               description="Scan or copy the Bitcoin deposit address"
             />
           </>
