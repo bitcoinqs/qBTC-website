@@ -110,6 +110,7 @@ export function useWallet() {
     setNetwork(network === 'mainnet' ? 'testnet' : 'mainnet');
   };*/
 
+  
   const handleNetworkSwitch = () => {
     if (network === 'testnet') {
       setShowMainnetAlert(true);

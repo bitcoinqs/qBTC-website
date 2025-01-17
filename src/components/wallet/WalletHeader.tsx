@@ -8,10 +8,10 @@ type Props = {
   network: Network;
   balance: string;
   address: string;
-  handleNetworkSwitch: () => void; // Pass this as a prop
 };
 
-export function WalletHeader({ network, balance, address, handleNetworkSwitch }: Props) {
+export function WalletHeader({ network, balance, address}: Props) {
+  const { handleNetworkSwitch, showMainnetAlert } = useWallet();
   return (
     <div className="mb-8">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
