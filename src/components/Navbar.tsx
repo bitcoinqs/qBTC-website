@@ -13,6 +13,8 @@ export default function Navbar() {
   const location = useLocation();
   const { closeConnectionsForWallet } = useWallet();
 
+  const isDashboard = location.pathname === '/dashboard';
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -39,9 +41,9 @@ export default function Navbar() {
   };
 
   const renderWalletButton = () => {
-    const buttonColor = network === 'mainnet' 
-      ? 'bg-orange-500 hover:bg-orange-600'
-      : 'bg-purple-500 hover:bg-purple-600';
+     const buttonColor = isDashboard
+      ? (network === 'mainnet' ? 'bg-orange-500 hover:bg-orange-600' : 'bg-purple-500 hover:bg-purple-600')
+      : 'bg-orange-500 hover:bg-orange-600';
 
     if (wallet) {
       return (
