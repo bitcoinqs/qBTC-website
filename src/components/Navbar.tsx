@@ -87,9 +87,7 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <Link to="/#features" className="text-gray-700 hover:text-orange-500">
-              Features
-            </Link>
+   
             <Link to="/security" className="text-gray-700 hover:text-orange-500">
               Security
             </Link>
@@ -102,9 +100,9 @@ export default function Navbar() {
             <Link to="/news" className="text-gray-700 hover:text-orange-500">
               News
             </Link>
-            <Link to="/exchanges" className="text-gray-700 hover:text-orange-500">
+           {/* <Link to="/exchanges" className="text-gray-700 hover:text-orange-500">
               Exchanges
-            </Link>
+            </Link> */}
             <Link to="/wallets" className="text-gray-700 hover:text-orange-500">
               Wallets
             </Link>
@@ -135,9 +133,7 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link to="/#features" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
-              Features
-            </Link>
+     
             <Link to="/security" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Security
             </Link>
