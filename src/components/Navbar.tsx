@@ -4,6 +4,7 @@ import { Menu, X, Shield, LogOut } from 'lucide-react';
 import { useWalletContext } from '../context/WalletContext';
 import { useWallet } from '../hooks/useWallet';
 import { websocketManager } from "../utils/websocketManager";
+import Clarity from '@microsoft/clarity';
 
 export default function Navbar() {
   const { wallet, disconnect } = useWalletContext();
@@ -16,6 +17,9 @@ export default function Navbar() {
   const isDashboard = location.pathname === '/dashboard';
 
   useEffect(() => {
+
+    const projectId = "pv57r64nxz"
+    Clarity.init(projectId);
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
