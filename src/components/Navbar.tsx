@@ -7,6 +7,7 @@ import { websocketManager } from "../utils/websocketManager";
 
 export default function Navbar() {
   const { wallet, disconnect } = useWalletContext();
+  const { network, getNetworkColors } = useWallet()
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
@@ -38,19 +39,23 @@ export default function Navbar() {
   };
 
   const renderWalletButton = () => {
+    const buttonColor = network === 'mainnet' 
+      ? 'bg-orange-500 hover:bg-orange-600'
+      : 'bg-purple-500 hover:bg-purple-600';
+
     if (wallet) {
       return (
         <div className="flex items-center space-x-2">
           <Link 
             to="/dashboard" 
-            className="px-4 py-2 rounded-md text-white bg-orange-500 hover:bg-orange-600"
+            className={`px-4 py-2 rounded-md text-white ${buttonColor}`}
             onClick={handleLinkClick}
           >
             Dashboard
           </Link>
           <button
             onClick={handleDisconnect}
-            className="p-2 rounded-md text-white bg-red-500 hover:bg-red-600"
+            className={`p-2 rounded-md text-white ${buttonColor}`}
             title="Disconnect wallet"
           >
             <LogOut className="h-4 w-4" />
@@ -62,7 +67,7 @@ export default function Navbar() {
     return (
       <Link 
         to="/dashboard" 
-        className="px-4 py-2 rounded-md text-white bg-orange-500 hover:bg-orange-600"
+        className={`px-4 py-2 rounded-md text-white ${buttonColor}`}
         onClick={handleLinkClick}
       >
         Launch App
@@ -97,9 +102,9 @@ export default function Navbar() {
             <Link to="/news" className="text-gray-700 hover:text-orange-500">
               News
             </Link>
-            {/* <Link to="/exchanges" className="text-gray-700 hover:text-orange-500">
+            <Link to="/exchanges" className="text-gray-700 hover:text-orange-500">
               Exchanges
-            </Link>*/}
+            </Link>
             <Link to="/wallets" className="text-gray-700 hover:text-orange-500">
               Wallets
             </Link>
@@ -145,9 +150,9 @@ export default function Navbar() {
             <Link to="/news" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               News
             </Link>
-          {/*  <Link to="/exchanges" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            {/*<Link to="/exchanges" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Exchanges
-            </Link> */}
+            </Link>*/}
             <Link to="/wallets" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Wallets
             </Link>
