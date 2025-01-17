@@ -11,6 +11,7 @@
     "start": "serve dist -s -n -L -p $PORT"
   },
   "dependencies": {
+    "@microsoft/clarity": "^1.0.0",
     "@noble/post-quantum": "^0.3.0",
     "axios": "^1.7.9",
     "bs58": "^6.0.0",
