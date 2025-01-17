@@ -140,5 +140,6 @@ export function useWallet() {
     handleNetworkSwitch,
     getNetworkColors,
     getNetworkLightColors,
+    showMainnetAlert,
   };
 }
