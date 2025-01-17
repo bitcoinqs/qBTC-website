@@ -10,6 +10,7 @@ export function useWallet() {
   const [balance, setBalance] = useState('0.00');
   const [isLoading, setIsLoading] = useState(true);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [showMainnetAlert, setShowMainnetAlert] = useState(false);
   const currentWallet = useRef<string | null>(null);
   const currentNetwork = useRef<string | null>(null);
   const pingIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -104,9 +105,18 @@ export function useWallet() {
     };
   }, [wallet, network]);
 
-  const handleNetworkSwitch = () => {
+  /*const handleNetworkSwitch = () => {
     console.log("[useWallet] Network switched:", network);
     setNetwork(network === 'mainnet' ? 'testnet' : 'mainnet');
+  };*/
+
+  const handleNetworkSwitch = () => {
+    if (network === 'testnet') {
+      setShowMainnetAlert(true);
+      setTimeout(() => setShowMainnetAlert(false), 3000);
+      return;
+    }
+    setNetwork('testnet');
   };
 
   const getNetworkColors = () => {

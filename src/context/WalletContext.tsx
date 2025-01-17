@@ -12,15 +12,13 @@ type WalletContextType = {
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: React.ReactNode }) {
+  // Force testnet as default
   const [wallet, setWallet] = useState<WalletFile | null>(() => {
     const saved = localStorage.getItem('wallet');
     return saved ? JSON.parse(saved) : null;
   });
   
-  const [network, setNetwork] = useState<Network>(() => {
-    const saved = localStorage.getItem('network');
-    return (saved as Network) || 'testnet';
-  });
+  const [network, setNetwork] = useState<Network>('testnet');
 
   useEffect(() => {
     if (wallet) {
