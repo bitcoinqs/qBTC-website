@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
 import { Calendar, FileText, BookOpen, X } from 'lucide-react';
+import bridge from '../assets/bridge.jpeg'
 
 const news = [
- /* {
+ {
     id: 1,
-    title: 'Bitcoin QS Mainnet Launch Approaching',
-    date: 'March 20, 2024',
+    title: 'Major milestone achieved in Bitcoin Quantum Resistance',
+    date: 'Jan 18 2025',
     category: 'Announcement',
-    excerpt: 'The first quantum-safe Bitcoin Layer 2 solution is preparing for its mainnet launch...',
-    content: `The Bitcoin QS team is excited to announce that our mainnet launch is approaching. After extensive testing and security audits, we're preparing to deploy the first quantum-safe Layer 2 solution for Bitcoin.
-
-Key Features of the Launch:
-• Fully operational quantum-resistant transaction signing
-• Seamless integration with existing Bitcoin wallets
-• Enhanced privacy features
-• Industry-leading security measures
-
-The launch will be phased over several weeks to ensure stability and security. Stay tuned for more updates and detailed documentation on how to participate in the network.`,
-    image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2232&q=80',
-  },
+    excerpt: 'Successful Bridge Transaction between Bitcoin and BQS Achieved',
+    content: 'Bitcoin QS has achieved a major milestone today - we have successfully tested the bridge between testnet Bitcoin and Quantum Safe Bitcoin and back. This marks a landmark achievement for us and shows that it’s technically feasible to wrap Bitcoin and make it Quantum Safe.', 
+    image: bridge,
+  },/*
   {
     id: 2,
     title: 'Research Paper: Post-Quantum Bitcoin Security',
