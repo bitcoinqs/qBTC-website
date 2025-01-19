@@ -72,7 +72,7 @@ const initializeWebSocket = () => {
 
       // Determine the update_type based on the activeTab
       const updateType =
-        activeTab === 'transactions' ? 'all_transactions' : 'l1_testnet_proofs';
+        activeTab === 'transactions' ? 'all_transactions' : 'l1_proofs_testnet';
 
       // Send the registration message with the appropriate update_type
       socket.send(JSON.stringify({ network, update_type: updateType }));
