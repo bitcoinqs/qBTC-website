@@ -340,14 +340,14 @@ export default function ExplorerPage() {
                       className="hover:bg-gray-50 cursor-pointer"
                     >
                       <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
-                        {(tx as Transaction).hash.substring(0, 16)}...
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
-                        {(tx as Transaction).sender.substring(0, 16)}...
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
-                        {(tx as Transaction).receiver.substring(0, 16)}...
-                      </td>
+                      {tx.hash ? `${tx.hash.substring(0, 16)}...` : 'N/A'}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
+                      {tx.sender ? `${tx.sender.substring(0, 16)}...` : 'N/A'}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
+                      {tx.receiver ? `${tx.receiver.substring(0, 16)}...` : 'N/A'}
+                    </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {(tx as Transaction).amount}
                       </td>
