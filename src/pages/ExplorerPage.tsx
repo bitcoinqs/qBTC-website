@@ -85,7 +85,7 @@ export default function ExplorerPage() {
             status: 'confirmed',
             hash: tx.hash,
           }));
-          setTransactions(updatedTransactions);
+          setTransactions(mockTransactions);
           setProofs(mockProofs)
           setIsLoading(false);
         } else if (data.error) {
