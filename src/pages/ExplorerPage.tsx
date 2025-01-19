@@ -27,6 +27,19 @@ export default function ExplorerPage() {
 
   const itemsPerPage = 10;
 
+
+  const transformWebSocketData = (wsData: any): Transaction[] => {
+  return wsData.transactions.map((tx: any) => ({
+    id: tx.id.toString(),
+    type: tx.sender === tx.receiver ? 'bridge' : tx.sender === 'bqs1...' ? 'send' : 'receive', // Example logic for `type`
+    amount: `${parseFloat(tx.amount.split(' ')[0]).toFixed(4)} BQT`, // Adjust token and format decimals
+    address: tx.sender === 'bqs1...' ? tx.receiver : tx.sender, // Logic for determining address
+    timestamp: tx.timestamp,
+    status: 'confirmed', // Default status as 'confirmed'; adjust if needed
+    hash: tx.hash,
+  }));
+};
+
   // Generate mock transactions
   const mockTransactions: Transaction[] = Array.from({ length: 100 }, (_, i) => ({
   id: i.toString(),
@@ -84,7 +97,8 @@ const mockProofs: Proof[] = Array.from({ length: 20 }, (_, i) => ({
             status: 'confirmed',
             hash: tx.hash,
           }));
-          setTransactions(mockTransactions);
+          const transformedData = transformWebSocketData(updatedTransactions);
+          setTransactions(transformedData);
           setProofs(mockProofs)
           setIsLoading(false);
         } else if (data.error) {
