@@ -78,12 +78,12 @@ export default function ExplorerPage() {
             id: tx.id,
             type: tx.type,
             amount: tx.amount,
-            fromAddress: tx.sender || 'N/A',
-            toAddress: tx.receiver || 'N/A',
+            sender: tx.sender || 'N/A', // Use `sender` instead of `fromAddress`
+            receiver: tx.receiver || 'N/A', // Use `receiver` instead of `toAddress`
             timestamp: new Date(tx.timestamp).toLocaleString(),
             status: tx.status,
             hash: tx.hash,
-          }));
+        }));
           setTransactions(updatedTransactions);
           setIsLoading(false);
         } else if (data.error) {
