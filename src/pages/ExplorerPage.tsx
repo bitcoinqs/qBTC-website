@@ -81,7 +81,7 @@ export default function ExplorerPage() {
             sender: tx.sender || 'N/A', // Use `sender` instead of `fromAddress`
             receiver: tx.receiver || 'N/A', // Use `receiver` instead of `toAddress`
             timestamp: new Date(tx.timestamp).toLocaleString(),
-            status: tx.status,
+            status: "confirmed",
             hash: tx.hash,
         }));
           setTransactions(updatedTransactions);
