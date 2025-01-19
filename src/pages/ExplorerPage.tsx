@@ -108,8 +108,8 @@ const initializeWebSocket = () => {
           },
           bitcoinTxHash: proof.bitcoinTxHash,
           timestamp: new Date(proof.timestamp).toISOString(),
-          transactions: proof.transactions || [],
-          status: proof.status || 'confirmed',
+          transactions: proof.transactions || [], // Full transaction details
+          status: proof.status || "confirmed",
         }));
         setL1Proofs(updatedProofs);
         setIsLoading(false);
@@ -506,58 +506,55 @@ const initializeWebSocket = () => {
 
         {/* L1 Proof Modal */}
         {selectedProof && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-2xl w-full">
-              <div className="flex justify-between items-center p-6 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">L1 Proof Details</h3>
-                <button
-                  onClick={() => setSelectedProof(null)}
-                  className="text-gray-400 hover:text-gray-500"
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="bg-white rounded-lg max-w-2xl w-full">
+      <div className="flex justify-between items-center p-6 border-b border-gray-200">
+        <h3 className="text-lg font-medium text-gray-900">L1 Proof Details</h3>
+        <button
+          onClick={() => setSelectedProof(null)}
+          className="text-gray-400 hover:text-gray-500"
+        >
+          <X className="h-6 w-6" />
+        </button>
+      </div>
+      <div className="p-6">
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-500">Merkle Root</label>
+            <p className="mt-1 text-sm font-mono break-all text-gray-900">{selectedProof.merkleRoot}</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-500">Bitcoin Transaction Hash</label>
+            <p className="mt-1 text-sm font-mono break-all text-gray-900">{selectedProof.bitcoinTxHash}</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-500 mb-2">Included Transactions</label>
+            <div className="bg-gray-50 rounded-lg divide-y divide-gray-200">
+              {selectedProof.transactions.map((tx: Transaction) => (
+                <div
+                  key={tx.id}
+                  className="p-4 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => {
+                    setSelectedTransaction(tx);
+                    setSelectedProof(null);
+                  }}
                 >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-              <div className="p-6">
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-500">Merkle Root</label>
-                    <p className="mt-1 text-sm font-mono break-all text-gray-900">{selectedProof.merkleRoot}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="font-mono text-sm">{tx.hash.substring(0, 16)}...</span>
+                    <span className="text-sm text-gray-500">{tx.amount}</span>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-500">Bitcoin Transaction Hash</label>
-                    <p className="mt-1 text-sm font-mono break-all text-gray-900">{selectedProof.bitcoinTxHash}</p>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-500 mb-2">Included Transactions</label>
-                    <div className="bg-gray-50 rounded-lg divide-y divide-gray-200">
-                      {selectedProof.transactions.map((txId) => {
-                        const tx = getTransactionById(txId);
-                        return tx ? (
-                          <div 
-                            key={tx.id} 
-                            className="p-4 hover:bg-gray-100 cursor-pointer"
-                            onClick={() => {
-                              setSelectedTransaction(tx);
-                              setSelectedProof(null);
-                            }}
-                          >
-                            <div className="flex justify-between items-center">
-                              <span className="font-mono text-sm">{tx.hash.substring(0, 16)}...</span>
-                              <span className="text-sm text-gray-500">{tx.amount}</span>
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              {new Date(tx.timestamp).toLocaleString()}
-                            </div>
-                          </div>
-                        ) : null;
-                      })}
-                    </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {new Date(tx.timestamp).toLocaleString()}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-        )}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
       </div>
     </div>
   );
