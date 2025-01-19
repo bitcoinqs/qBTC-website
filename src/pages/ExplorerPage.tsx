@@ -341,6 +341,7 @@ const initializeWebSocket = () => {
                     </>
                   ) : (
                     <>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BitcoinQS Block</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Merkle Root</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bitcoin TX</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
@@ -400,6 +401,9 @@ const initializeWebSocket = () => {
                       onClick={() => setSelectedProof(proof as L1Proof)}
                       className="hover:bg-gray-50 cursor-pointer"
                     >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {proof.blockHeight}
+                    </td>
                       <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
                         {(proof as L1Proof).merkleRoot.substring(0, 16)}...
                       </td>
