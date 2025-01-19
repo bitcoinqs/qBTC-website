@@ -48,6 +48,7 @@ export default function ExplorerPage() {
   const itemsPerPage = 10;
 
   useEffect(() => {
+    console.log(activeTab)
     if (activeTab === 'transactions') {
       const socket = initializeWebSocket();
     } else {
