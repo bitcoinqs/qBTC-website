@@ -29,24 +29,23 @@ export default function ExplorerPage() {
 
   // Generate mock transactions
   const mockTransactions: Transaction[] = Array.from({ length: 100 }, (_, i) => ({
-    id: i.toString(),
-    type: ['send', 'receive', 'bridge'][Math.floor(Math.random() * 3)] as Transaction['type'],
-    amount: `${(Math.random() * 10).toFixed(4)} BQT`,
-    address: `qs1q${Math.random().toString(36).substring(2, 15)}`,
-    timestamp: new Date(Date.now() - Math.random() * 10000000000).toISOString(),
-    status: Math.random() > 0.3 ? 'confirmed' : 'pending',
-    hash: `0x${Math.random().toString(36).substring(2, 40)}`
-  }));
+  id: i.toString(),
+  type: ['send', 'receive', 'bridge'][Math.floor(Math.random() * 3)] as Transaction['type'],
+  amount: `${(Math.random() * 10).toFixed(4)} BQT`,
+  address: `qs1q${Math.random().toString(36).substring(2, 15)}`,
+  timestamp: new Date(Date.now() - Math.random() * 10000000000).toISOString(),
+  status: Math.random() > 0.3 ? 'confirmed' : 'pending',
+  hash: `0x${Math.random().toString(36).substring(2, 40)}`,
+}));
 
-  // Generate mock proofs
-  const mockProofs: Proof[] = Array.from({ length: 20 }, (_, i) => ({
-    id: i.toString(),
-    merkleRoot: `0x${Math.random().toString(36).substring(2, 40)}`,
-    btcTxHash: `0x${Math.random().toString(36).substring(2, 40)}`,
-    timestamp: new Date(Date.now() - Math.random() * 10000000000).toISOString(),
-    status: Math.random() > 0.2 ? 'confirmed' : 'failure',
-    transactions: mockTransactions.slice(0, 5)
-  }));
+const mockProofs: Proof[] = Array.from({ length: 20 }, (_, i) => ({
+  id: i.toString(),
+  merkleRoot: `0x${Math.random().toString(36).substring(2, 40)}`,
+  btcTxHash: `0x${Math.random().toString(36).substring(2, 40)}`,
+  timestamp: new Date(Date.now() - Math.random() * 10000000000).toISOString(),
+  status: Math.random() > 0.2 ? 'confirmed' : 'failure',
+  transactions: mockTransactions.slice(0, 5), // Ensure mock proofs always include transactions
+}));
 
   useEffect(() => {
     const socket = initializeWebSocket();
@@ -138,16 +137,17 @@ export default function ExplorerPage() {
     }
   };
 
-  const filteredItems = activeTab === 'proof' 
-    ? proofs.filter(proof =>
-        proof.merkleRoot.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        proof.btcTxHash.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredItems =
+  activeTab === "proof"
+    ? proofs.filter((proof) =>
+        [proof.merkleRoot, proof.btcTxHash]
+          .filter(Boolean) // Ensure the values exist
+          .some((field) => field.toLowerCase().includes(searchQuery.toLowerCase()))
       )
-    : transactions.filter(tx =>
-        tx.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tx.hash.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tx.amount.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tx.type.toLowerCase().includes(searchQuery.toLowerCase())
+    : transactions.filter((tx) =>
+        [tx.address, tx.hash, tx.amount, tx.type]
+          .filter(Boolean) // Ensure the values exist
+          .some((field) => field.toLowerCase().includes(searchQuery.toLowerCase()))
       );
 
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
