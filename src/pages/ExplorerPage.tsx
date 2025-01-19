@@ -71,27 +71,48 @@ export default function ExplorerPage() {
       };
 
       socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        console.log("Received WebSocket update:", data);
+  const data = JSON.parse(event.data);
+  console.log("Received WebSocket update:", data);
 
-        if (data.type === "transaction_update" && data.transactions) {
-          const updatedTransactions = data.transactions.map((tx: any) => ({
-            id: tx.id,
-            type: tx.type,
-            amount: tx.amount,
-            sender: tx.sender || 'N/A', // Use `sender` instead of `fromAddress`
-            receiver: tx.receiver || 'N/A', // Use `receiver` instead of `toAddress`
-            timestamp: new Date(tx.timestamp).toLocaleString(),
-            status: "confirmed",
-            hash: tx.hash,
-        }));
-          setTransactions(updatedTransactions);
-          setIsLoading(false);
-        } else if (data.error) {
-          console.error("WebSocket error:", data.error);
-          setError(data.error);
-        }
-      };
+  if (data.type === "transaction_update" && data.transactions) {
+    const updatedTransactions = data.transactions.map((tx: any) => ({
+      id: tx.id,
+      type: tx.type,
+      amount: tx.amount,
+      sender: tx.sender || 'N/A',
+      receiver: tx.receiver || 'N/A',
+      timestamp: new Date(tx.timestamp).toLocaleString(),
+      status: "confirmed",
+      hash: tx.hash,
+    }));
+    setTransactions(updatedTransactions);
+    setIsLoading(false);
+  }
+
+  if (data.type === "l1proof_update" && data.proofs) {
+    // Parse the L1 proofs data from the WebSocket message
+    const updatedProofs = data.proofs.map((proof: any) => ({
+      blockHeight: proof.blockHeight,
+      merkleRoot: proof.merkleRoot,
+      merkleProof: {
+        index: 0, // Defaulting to 0 as this isn't provided by the backend
+        hash: proof.merkleRoot, // Use the merkleRoot for now
+        siblings: [], // Siblings are empty as not included in backend data
+      },
+      bitcoinTxHash: proof.bitcoinTxHash,
+      timestamp: new Date(proof.timestamp).toISOString(),
+      transactions: proof.transactions || [], // Ensure transactions array exists
+      status: proof.status || 'confirmed',
+    }));
+
+    // Update the L1 Proofs state
+    setL1Proofs(updatedProofs);
+    setIsLoading(false);
+  } else if (data.error) {
+    console.error("WebSocket error:", data.error);
+    setError(data.error);
+  }
+};
 
       socket.onerror = (error) => {
         console.error("WebSocket error:", error);
