@@ -84,7 +84,7 @@ const mockProofs: Proof[] = Array.from({ length: 20 }, (_, i) => ({
             status: 'confirmed',
             hash: tx.hash,
           }));
-          setTransactions(mockTransactions);
+          setTransactions(updatedTransactions);
           setProofs(mockProofs)
           setIsLoading(false);
         } else if (data.error) {
