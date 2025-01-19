@@ -97,8 +97,7 @@ const mockProofs: Proof[] = Array.from({ length: 20 }, (_, i) => ({
             status: 'confirmed',
             hash: tx.hash,
           }));
-          const transformedData = transformWebSocketData(updatedTransactions);
-          setTransactions(transformedData);
+          setTransactions(mockTransactions);
           setProofs(mockProofs)
           setIsLoading(false);
         } else if (data.error) {
