@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowRight, ArrowLeft, X, AlertTriangle, GitMerge } from 'lucide-react';
+import { Search, ArrowRight, ArrowLeft, X, AlertTriangle } from 'lucide-react';
 import type { Network } from '../types/wallet';
+import { websocketManager } from '../utils/WebSocketManager'; // WebSocket manager import
 const apiUrl = import.meta.env.VITE_API_URL;
 
 type Transaction = {
@@ -44,73 +45,41 @@ export default function ExplorerPage() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    console.log(activeTab);
-    const socket = initializeWebSocket();
+    const updateType = activeTab === 'transactions' ? 'all_transactions' : 'l1_proofs_testnet';
+    const unsubscribe = websocketManager.subscribe(network, updateType, handleWebSocketMessage);
+
     return () => {
-      socket?.close();
+      unsubscribe();
     };
   }, [network, activeTab]);
 
-  const initializeWebSocket = () => {
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
-
-    try {
-      const socket = new WebSocket(websocketUrl);
-
-      socket.onopen = () => {
-        setIsLoading(true);
-        console.log("WebSocket connection established");
-        const updateType =
-          activeTab === 'transactions' ? 'all_transactions' : 'l1_proofs_testnet';
-        socket.send(JSON.stringify({ network, update_type: updateType }));
-      };
-
-      socket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        console.log("Received WebSocket update:", data);
-
-        if (data.type === "transaction_update" && data.transactions) {
-          const updatedTransactions = data.transactions.map((tx: any) => ({
-            id: tx.id,
-            hash: tx.hash,
-            sender: tx.sender || 'N/A',
-            receiver: tx.receiver || 'N/A',
-            amount: tx.amount,
-            timestamp: new Date(tx.timestamp).toLocaleString(),
-            status: tx.status || 'confirmed',
-          }));
-          setTransactions(updatedTransactions);
-        } else if (data.type === "l1proof_update" && data.proofs) {
-          const updatedProofs = data.proofs.map((proof: any) => ({
-            blockHeight: proof.blockHeight,
-            merkleRoot: proof.merkleRoot,
-            merkleProof: proof.merkleProof,
-            bitcoinTxHash: proof.bitcoinTxHash,
-            transactions: proof.transactions,
-            timestamp: new Date(proof.timestamp).toLocaleString(),
-            status: proof.status || 'confirmed',
-          }));
-          setL1Proofs(updatedProofs);
-        } else if (data.error) {
-          console.error("WebSocket error:", data.error);
-        }
-
-        setIsLoading(false);
-      };
-
-      socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
-      };
-
-      socket.onclose = () => {
-        console.log("WebSocket connection closed");
-      };
-
-      return socket;
-    } catch (error) {
-      console.error("Failed to initialize WebSocket:", error);
-      return null;
+  const handleWebSocketMessage = (data: any) => {
+    if (data.type === 'transaction_update' && data.transactions) {
+      const updatedTransactions = data.transactions.map((tx: any) => ({
+        id: tx.id,
+        hash: tx.hash,
+        sender: tx.sender || 'N/A',
+        receiver: tx.receiver || 'N/A',
+        amount: tx.amount,
+        timestamp: new Date(tx.timestamp).toLocaleString(),
+        status: tx.status || 'confirmed',
+      }));
+      setTransactions(updatedTransactions);
+      setIsLoading(false);
+    } else if (data.type === 'l1proof_update' && data.proofs) {
+      const updatedProofs = data.proofs.map((proof: any) => ({
+        blockHeight: proof.blockHeight,
+        merkleRoot: proof.merkleRoot,
+        merkleProof: proof.merkleProof,
+        bitcoinTxHash: proof.bitcoinTxHash,
+        transactions: proof.transactions,
+        timestamp: new Date(proof.timestamp).toLocaleString(),
+        status: proof.status || 'confirmed',
+      }));
+      setL1Proofs(updatedProofs);
+      setIsLoading(false);
+    } else if (data.error) {
+      console.error("WebSocket error:", data.error);
     }
   };
 
@@ -122,10 +91,6 @@ export default function ExplorerPage() {
     setShowMainnetAlert(false);
     setNetwork(newNetwork);
     setCurrentPage(1);
-  };
-
-  const getTransactionById = (id: string) => {
-    return transactions.find(tx => tx.id === id);
   };
 
   const filteredItems = activeTab === 'transactions'
@@ -147,9 +112,10 @@ export default function ExplorerPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      {/* Header and Network Selector */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-semibold text-gray-900 mb-8">Explorer</h1>
+
+        {/* Network Selector */}
         <div className="border-b border-gray-200 mb-6">
           <nav className="-mb-px flex space-x-8">
             <button
@@ -174,6 +140,35 @@ export default function ExplorerPage() {
             </button>
           </nav>
         </div>
+
+        {/* Tab Selector */}
+        <div className="mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="-mb-px flex space-x-8">
+              <button
+                onClick={() => setActiveTab('transactions')}
+                className={`${
+                  activeTab === 'transactions'
+                    ? 'border-orange-500 text-orange-600'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+              >
+                Transactions
+              </button>
+              <button
+                onClick={() => setActiveTab('l1proofs')}
+                className={`${
+                  activeTab === 'l1proofs'
+                    ? 'border-orange-500 text-orange-600'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+              >
+                L1 Proofs
+              </button>
+            </nav>
+          </div>
+        </div>
+
         {/* Content Table */}
         <div className="bg-white shadow-sm rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
@@ -212,13 +207,13 @@ export default function ExplorerPage() {
                   paginatedItems.map((tx) => (
                     <tr key={tx.id} className="hover:bg-gray-50 cursor-pointer">
                       <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
-                        {tx.hash ? `${tx.hash.substring(0, 16)}...` : 'N/A'}
+                        {tx.hash.substring(0, 16)}...
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
-                        {tx.sender ? `${tx.sender.substring(0, 16)}...` : 'N/A'}
+                        {tx.sender.substring(0, 16)}...
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap font-mono text-sm">
-                        {tx.receiver ? `${tx.receiver.substring(0, 16)}...` : 'N/A'}
+                        {tx.receiver.substring(0, 16)}...
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">{tx.amount}</td>
                       <td className="px-6 py-4 whitespace-nowrap">{tx.timestamp}</td>
