@@ -47,89 +47,94 @@ export default function ExplorerPage() {
 
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    console.log(activeTab)
-    if (activeTab === 'transactions') {
-      const socket = initializeWebSocket();
-    } else {
-      fetchL1Proofs();
-    }
-  }, [network, activeTab]);
+useEffect(() => {
+  console.log(activeTab);
+  const socket = initializeWebSocket();
 
-
-  const initializeWebSocket = () => {
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
-
-    try {
-      const socket = new WebSocket(websocketUrl);
-
-      socket.onopen = () => {
-        setIsLoading(true);
-        console.log("WebSocket connection established");
-        socket.send(JSON.stringify({ network, update_type: "all_transactions" }));
-      };
-
-      socket.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log("Received WebSocket update:", data);
-
-  if (data.type === "transaction_update" && data.transactions) {
-    const updatedTransactions = data.transactions.map((tx: any) => ({
-      id: tx.id,
-      type: tx.type,
-      amount: tx.amount,
-      sender: tx.sender || 'N/A',
-      receiver: tx.receiver || 'N/A',
-      timestamp: new Date(tx.timestamp).toLocaleString(),
-      status: "confirmed",
-      hash: tx.hash,
-    }));
-    setTransactions(updatedTransactions);
-    setIsLoading(false);
-  }
-
-  if (data.type === "l1proof_update" && data.proofs) {
-    // Parse the L1 proofs data from the WebSocket message
-    const updatedProofs = data.proofs.map((proof: any) => ({
-      blockHeight: proof.blockHeight,
-      merkleRoot: proof.merkleRoot,
-      merkleProof: {
-        index: 0, // Defaulting to 0 as this isn't provided by the backend
-        hash: proof.merkleRoot, // Use the merkleRoot for now
-        siblings: [], // Siblings are empty as not included in backend data
-      },
-      bitcoinTxHash: proof.bitcoinTxHash,
-      timestamp: new Date(proof.timestamp).toISOString(),
-      transactions: proof.transactions || [], // Ensure transactions array exists
-      status: proof.status || 'confirmed',
-    }));
-
-    // Update the L1 Proofs state
-    setL1Proofs(updatedProofs);
-    setIsLoading(false);
-  } else if (data.error) {
-    console.error("WebSocket error:", data.error);
-    setError(data.error);
-  }
-};
-
-      socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
-        setError("WebSocket connection failed");
-      };
-
-      socket.onclose = () => {
-        console.log("WebSocket connection closed");
-      };
-
-      return socket;
-    } catch (error) {
-      console.error("Failed to initialize WebSocket:", error);
-      setError("Failed to connect to WebSocket");
-      return null;
+  return () => {
+    // Ensure the WebSocket is closed when the component unmounts or dependencies change
+    if (socket) {
+      socket.close();
     }
   };
+}, [network, activeTab]);
+
+const initializeWebSocket = () => {
+  const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
+
+  try {
+    const socket = new WebSocket(websocketUrl);
+
+    socket.onopen = () => {
+      setIsLoading(true);
+      console.log("WebSocket connection established");
+
+      // Determine the update_type based on the activeTab
+      const updateType =
+        activeTab === 'transactions' ? 'all_transactions' : 'l1_testnet_proofs';
+
+      // Send the registration message with the appropriate update_type
+      socket.send(JSON.stringify({ network, update_type: updateType }));
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("Received WebSocket update:", data);
+
+      if (data.type === "transaction_update" && data.transactions) {
+        const updatedTransactions = data.transactions.map((tx: any) => ({
+          id: tx.id,
+          type: tx.type,
+          amount: tx.amount,
+          sender: tx.sender || 'N/A',
+          receiver: tx.receiver || 'N/A',
+          timestamp: new Date(tx.timestamp).toLocaleString(),
+          status: "confirmed",
+          hash: tx.hash,
+        }));
+        setTransactions(updatedTransactions);
+        setIsLoading(false);
+      }
+
+      if (data.type === "l1proof_update" && data.proofs) {
+        const updatedProofs = data.proofs.map((proof: any) => ({
+          blockHeight: proof.blockHeight,
+          merkleRoot: proof.merkleRoot,
+          merkleProof: {
+            index: 0,
+            hash: proof.merkleRoot,
+            siblings: [],
+          },
+          bitcoinTxHash: proof.bitcoinTxHash,
+          timestamp: new Date(proof.timestamp).toISOString(),
+          transactions: proof.transactions || [],
+          status: proof.status || 'confirmed',
+        }));
+        setL1Proofs(updatedProofs);
+        setIsLoading(false);
+      } else if (data.error) {
+        console.error("WebSocket error:", data.error);
+        setError(data.error);
+      }
+    };
+
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+      setError("WebSocket connection failed");
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    return socket;
+  } catch (error) {
+    console.error("Failed to initialize WebSocket:", error);
+    setError("Failed to connect to WebSocket");
+    return null;
+  }
+};
 
 
   const fetchTransactions = async () => {
