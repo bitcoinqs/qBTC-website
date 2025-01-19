@@ -86,6 +86,7 @@ export default function ExplorerPage() {
             hash: tx.hash,
           }));
           setTransactions(updatedTransactions);
+          setProofs(mockProofs)
           setIsLoading(false);
         } else if (data.error) {
           console.error("WebSocket error:", data.error);
