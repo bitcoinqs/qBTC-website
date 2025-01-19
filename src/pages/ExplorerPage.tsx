@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ArrowRight, ArrowLeft, X, AlertTriangle, GitMerge } from 'lucide-react';
 import type { Network } from '../types/wallet';
+import {websocketManager} from '../utils/WebSocketManager'
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 type Transaction = {
   id: string;
@@ -46,11 +49,66 @@ export default function ExplorerPage() {
 
   useEffect(() => {
     if (activeTab === 'transactions') {
-      fetchTransactions();
+      const socket = initializeWebSocket();
     } else {
       fetchL1Proofs();
     }
   }, [network, activeTab]);
+
+
+  const initializeWebSocket = () => {
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const websocketUrl = `${wsProtocol}//${apiUrl}/ws`;
+
+    try {
+      const socket = new WebSocket(websocketUrl);
+
+      socket.onopen = () => {
+        setIsLoading(true);
+        console.log("WebSocket connection established");
+        socket.send(JSON.stringify({ network, update_type: "all_transactions" }));
+      };
+
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log("Received WebSocket update:", data);
+
+        if (data.type === "transaction_update" && data.transactions) {
+          const updatedTransactions = data.transactions.map((tx: any) => ({
+            id: tx.id,
+            type: tx.type,
+            amount: tx.amount,
+            fromAddress: tx.sender || 'N/A',
+            toAddress: tx.receiver || 'N/A',
+            timestamp: new Date(tx.timestamp).toLocaleString(),
+            status: tx.status,
+            hash: tx.hash,
+          }));
+          setTransactions(updatedTransactions);
+          setIsLoading(false);
+        } else if (data.error) {
+          console.error("WebSocket error:", data.error);
+          setError(data.error);
+        }
+      };
+
+      socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        setError("WebSocket connection failed");
+      };
+
+      socket.onclose = () => {
+        console.log("WebSocket connection closed");
+      };
+
+      return socket;
+    } catch (error) {
+      console.error("Failed to initialize WebSocket:", error);
+      setError("Failed to connect to WebSocket");
+      return null;
+    }
+  };
+
 
   const fetchTransactions = async () => {
     setIsLoading(true);
