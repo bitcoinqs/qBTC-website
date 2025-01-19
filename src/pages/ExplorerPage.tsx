@@ -528,9 +528,18 @@ const initializeWebSocket = () => {
             <p className="mt-1 text-sm font-mono break-all text-gray-900">{selectedProof.merkleRoot}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-500">Bitcoin Transaction Hash</label>
-            <p className="mt-1 text-sm font-mono break-all text-gray-900">{selectedProof.bitcoinTxHash}</p>
-          </div>
+  <label className="block text-sm font-medium text-gray-500">Bitcoin Transaction Hash</label>
+  <p className="mt-1 text-sm font-mono break-all text-gray-900">
+    <a 
+      href={`https://live.blockcypher.com/${network === 'testnet' ? 'bcy' : 'btc'}/tx/${selectedProof.bitcoinTxHash}`} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="text-blue-500 hover:underline"
+    >
+      {selectedProof.bitcoinTxHash}
+    </a>
+  </p>
+</div>
           <div>
             <label className="block text-sm font-medium text-gray-500 mb-2">Included Transactions</label>
             <div className="bg-gray-50 rounded-lg divide-y divide-gray-200">
