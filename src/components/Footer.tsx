@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Twitter, Sender } from 'lucide-react';
+import { Github, Twitter, Send } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
             <span className="sr-only">Twitter</span>
             <Twitter className="h-6 w-6" />
           </a>
-           <a href="https://t.me/bitcoinqs" className="text-gray-400 hover:text-gray-500">
+          <a href="https://t.me/bitcoinqs" className="text-gray-400 hover:text-gray-500">
             <span className="sr-only">Telegram</span>
             <Send className="h-6 w-6" />
           </a>
