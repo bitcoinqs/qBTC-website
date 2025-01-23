@@ -276,7 +276,7 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
         placeholder="Enter BTC address (bc1...)"
         className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
         required
-        pattern="^(bc1|[13]|C)[a-km-zA-HJ-NP-Z0-9]{25,39}$"
+        pattern="^[a-zA-Z0-9]{10,}$"
       />
     </div>
   </div>
