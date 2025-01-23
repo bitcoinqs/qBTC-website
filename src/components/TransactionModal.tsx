@@ -67,6 +67,14 @@ export default function TransactionModal({ transaction, isOpen, onClose }: Props
               <p className="mt-1 text-sm font-mono break-all text-gray-900">{transaction.address}</p>
             </div>
 
+           <div>
+              <label className="block text-sm font-medium text-gray-500">
+               Transaction Hash
+              </label>
+              <p className="mt-1 text-sm font-mono break-all text-gray-900">{transaction.hash}</p>
+            </div>
+
+
             <div>
               <label className="block text-sm font-medium text-gray-500">Timestamp</label>
               <p className="mt-1 text-sm text-gray-900">{transaction.timestamp}</p>
