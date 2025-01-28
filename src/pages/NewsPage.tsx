@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { Calendar, FileText, BookOpen, X } from 'lucide-react';
 import bridge from '../assets/bridge.jpeg'
+import anchor from '../assets/anchor.PNG'
 
 const news = [
- {
+   {
     id: 1,
+    title: 'Devnet state successsfully anchored to Bitcoin L1 ',
+    date: 'Jan 28 2025',
+    category: 'Announcement',
+    excerpt: 'Successful L1 anchoring transaction performed',
+    content: 'BitcoinQS is proud to announce a significant milestone with the successful anchoring of its state to Bitcoin L1, enhancing transparency and accountability as we advance quantum-safe technologies. This brings us closer to launch of Quantum Safe Bitcoin testnet end of January. The devnet L1 transaction hash is on blockcyper Testnet.     b83b3ea0865c0e0f71338c25e0ebe1eb8b36df59a3fd4bcad2341bad02f9103b    The L1 roots can be explored on blockcypher testnet.', 
+    image: anchor,
+  },
+ {
+    id: 2,
     title: 'Major milestone achieved in Bitcoin Quantum Resistance',
     date: 'Jan 18 2025',
     category: 'Announcement',
