@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, FileText, BookOpen, X } from 'lucide-react';
 import bridge from '../assets/bridge.jpeg'
-import anchor from '../assets/anchor.PNG'
+import anchor from '../assets/anchor.jpeg'
 
 const news = [
    {
