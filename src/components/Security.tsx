@@ -1,11 +1,11 @@
 import React from 'react';
-import { Shield, Lock, Network, Server, AlertTriangle, Code } from 'lucide-react';
+import { Shield, Lock, Network, Server, AlertTriangle, Code, Coins, Clock, LineChart as ChartLine } from 'lucide-react';
 
 export default function Security() {
   return (
     <div className="bg-gray-50 overflow-hidden" id="security">
       <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        {/* Main Security Section */}
+        {/* Original Security Section */}
         <div className="text-center mb-16">
           <h2 className="text-base text-orange-500 font-semibold tracking-wide uppercase">Security</h2>
           <p className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl">
@@ -52,34 +52,6 @@ export default function Security() {
                 </div>
               </div>
             </div>
-
-            {/* Code Example */}
-            <div className="mt-8 bg-gray-900 rounded-lg p-6 overflow-x-auto">
-              <div className="flex items-center mb-4">
-                <Code className="h-5 w-5 text-orange-500 mr-2" />
-                <span className="text-orange-500 font-medium">Current Bitcoin Signing (Vulnerable)</span>
-              </div>
-              <pre className="text-sm text-gray-300">
-                <code>{`const signature = secp256k1.sign(messageHash, privateKey); // Vulnerable to quantum attacks`}</code>
-              </pre>
-            </div>
-          </div>
-
-          {/* Warning Box */}
-          <div className="max-w-6xl mx-auto mt-8">
-            <div className="bg-red-50 border-l-4 border-red-500 p-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <AlertTriangle className="h-5 w-5 text-red-400" />
-                </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-800">Critical Security Risk</h3>
-                  <div className="mt-2 text-sm text-red-700">
-                    <p>Bitcoin's current cryptographic foundation relies on algorithms that NIST considers obsolete by 2035. This poses a significant risk to the entire Bitcoin ecosystem as quantum computing advances.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -111,7 +83,7 @@ export default function Security() {
                     <p className="text-gray-600">Layer 2 Quantum Protection</p>
                   </div>
                   <div className="p-3 bg-white rounded-lg shadow-sm">
-                    <p className="text-gray-600">Lattice-Based Cryptography</p>
+                    <p className="text-gray-600">Crystallis Dilithium</p>
                   </div>
                   <div className="p-3 bg-white rounded-lg shadow-sm">
                     <p className="text-gray-600">Quantum-Resistant Foundation</p>
@@ -133,41 +105,148 @@ export default function Security() {
           </div>
         </div>
 
-        {/* Technical Details */}
-        <div className="mt-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8">Technical Implementation</h3>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Current Vulnerabilities</h4>
-              <ul className="space-y-4 text-gray-600">
-                <li>• SHA-256 (Released 2001) - Vulnerable to quantum attacks</li>
-                <li>• ECDSA/secp256k1 (Released 1997) - Will be broken by quantum computers</li>
-                <li>• NIST mandates transition from current algorithms by 2035</li>
-                <li>• $1.8T economy at risk from quantum advancement</li>
-              </ul>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Bitcoin QS Solution</h4>
-              <ul className="space-y-4 text-gray-600">
-                <li>• Implements NIST-approved lattice-based cryptography</li>
-                <li>• Quantum-resistant Layer 2 protection</li>
-                <li>• Future-proof security architecture</li>
-                <li>• Preserves and protects Bitcoin's value</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        {/* Security Model Section */}
+        <div className="mb-16">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">Security Model & Future Inflation Mechanism</h2>
+            
+            <div className="prose prose-orange max-w-none">
+              <p className="lead">
+                BitcoinQS is designed as a <strong>1:1 Bitcoin-pegged quantum-safe layer</strong> that ensures users can redeem BQS for BTC at any time. The system does not introduce new supply via mining, unlike Bitcoin L1, but rather <strong>collects fees through transactions</strong>. This model ensures a <strong>fixed supply</strong>, where BQS in circulation is always backed by BTC locked on the Bitcoin main chain.
+              </p>
 
-        {/* Call to Action */}
-        <div className="mt-12 bg-orange-50 border-l-4 border-orange-500 p-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <Shield className="h-5 w-5 text-orange-400" />
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-orange-800">Protect Your Bitcoin</h3>
-              <div className="mt-2 text-sm text-orange-700">
-                <p>Don't wait until quantum computers threaten your assets. Start securing your Bitcoin with quantum-resistant protection today.</p>
+              <div className="bg-orange-50 border-l-4 border-orange-500 p-4 my-8">
+                <div className="flex">
+                  <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0" />
+                  <p className="ml-3 text-orange-700">
+                    We need to <strong>prepare for a future scenario</strong> where <strong>Bitcoin L1 is no longer trusted</strong>, while BitcoinQS continues as a standalone chain. At that point, the peg mechanism would <strong>break</strong>, and we would need a way to introduce controlled <strong>supply inflation</strong> to mimic mining rewards <strong>without proof-of-work (PoW)</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="text-2xl font-bold mt-12 mb-6">Current Security Model (While Peg Exists)</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="flex items-center mb-4">
+                    <Shield className="h-6 w-6 text-orange-500 mr-2" />
+                    <h4 className="font-semibold">Validators</h4>
+                  </div>
+                  <p className="text-gray-600">
+                    Independent entities that validate BQS transactions and ensure consistency between Bitcoin L1 and BQS.
+                  </p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="flex items-center mb-4">
+                    <Lock className="h-6 w-6 text-orange-500 mr-2" />
+                    <h4 className="font-semibold">Bitcoin L1 Anchoring</h4>
+                  </div>
+                  <p className="text-gray-600">
+                    Every BQS transaction is periodically anchored to Bitcoin, ensuring immutability and transparency.
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="text-2xl font-bold mt-12 mb-6">Future Security Model (When Bitcoin L1 Becomes Untrusted)</h3>
+
+              <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+                <h4 className="text-xl font-semibold mb-4">Fee-Based Staking (Replacing Mining)</h4>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <Coins className="h-5 w-5 text-orange-500 mt-1 mr-3 flex-shrink-0" />
+                    <p className="text-gray-600">
+                      Instead of miners securing the network, <strong>validators stake BQS to participate in block validation</strong>.
+                    </p>
+                  </div>
+                  <div className="flex items-start">
+                    <Clock className="h-5 w-5 text-orange-500 mt-1 mr-3 flex-shrink-0" />
+                    <p className="text-gray-600">
+                      Validators earn both transaction fees and inflation rewards through a controlled issuance of new BQS.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h4 className="text-xl font-bold mb-4">Controlled Inflation Model</h4>
+              
+              <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phase</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">New BQS Issuance per Year</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reduction Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Year 1-4</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">2% of Total Supply</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">50% Halving Every 4 Years</td>
+                    </tr>
+                    <tr>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Year 5-8</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">1% of Total Supply</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">50% Halving</td>
+                    </tr>
+                    <tr>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Year 9-12</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">0.5% of Total Supply</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">50% Halving</td>
+                    </tr>
+                    <tr>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Year 13+</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">0.25% of Total Supply</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Stabilized at Low Inflation</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3 className="text-2xl font-bold mt-12 mb-6">Security Model Explanation for Users</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 className="text-lg font-semibold mb-4">For Users Today (Pegged to Bitcoin)</h4>
+                  <ul className="space-y-2 text-gray-600">
+                    <li>• BitcoinQS is 100% backed by BTC</li>
+                    <li>• Validators ensure transaction consistency</li>
+                    <li>• Anchoring to Bitcoin ensures immutability</li>
+                    <li>• Post-Quantum Cryptography protects against future threats</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 className="text-lg font-semibold mb-4">For Users in the Future (No Bitcoin Peg)</h4>
+                  <ul className="space-y-2 text-gray-600">
+                    <li>• BQS becomes self-sovereign</li>
+                    <li>• Security via staking-based model</li>
+                    <li>• Transaction Fees + Controlled Inflation</li>
+                    <li>• Algorithmically controlled issuance</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-8 text-white mt-12">
+                <h3 className="text-2xl font-bold mb-4">Final Thoughts</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <Shield className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
+                    <span>BitcoinQS remains pegged <strong>1:1 to BTC</strong> as long as Bitcoin L1 is functional.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Lock className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
+                    <span>Once Bitcoin L1 is no longer viable, BQS transitions into a <strong>staking-based economy</strong> with <strong>controlled inflation</strong>.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Network className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
+                    <span>The security model shifts from Bitcoin anchoring to a <strong>validator-based consensus model</strong>.</span>
+                  </li>
+                </ul>
+                <p className="mt-6 text-lg font-medium">
+                  🚀 BitcoinQS is built for both the present and the future of decentralized, quantum-safe finance.
+                </p>
               </div>
             </div>
           </div>
