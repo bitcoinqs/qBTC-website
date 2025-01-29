@@ -111,14 +111,14 @@ export default function Security() {
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Security Model & Future Inflation Mechanism</h2>
             
             <div className="prose prose-orange max-w-none">
-              <p className="lead">
+              <p className="lead text-justify">
                 BitcoinQS is designed as a <strong>1:1 Bitcoin-pegged quantum-safe layer</strong> that ensures users can redeem BQS for BTC at any time. The system does not introduce new supply via mining, unlike Bitcoin L1, but rather <strong>collects fees through transactions</strong>. This model ensures a <strong>fixed supply</strong>, where BQS in circulation is always backed by BTC locked on the Bitcoin main chain.
               </p>
 
               <div className="bg-orange-50 border-l-4 border-orange-500 p-4 my-8">
                 <div className="flex">
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0" />
-                  <p className="ml-3 text-orange-700">
+                  <p className="ml-3 text-orange-700 text-justify">
                     We need to <strong>prepare for a future scenario</strong> where <strong>Bitcoin L1 is no longer trusted</strong>, while BitcoinQS continues as a standalone chain. At that point, the peg mechanism would <strong>break</strong>, and we would need a way to introduce controlled <strong>supply inflation</strong> to mimic mining rewards <strong>without proof-of-work (PoW)</strong>.
                   </p>
                 </div>
@@ -132,7 +132,7 @@ export default function Security() {
                     <Shield className="h-6 w-6 text-orange-500 mr-2" />
                     <h4 className="font-semibold">Validators</h4>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify">
                     Independent entities that validate BQS transactions and ensure consistency between Bitcoin L1 and BQS.
                   </p>
                 </div>
@@ -142,7 +142,7 @@ export default function Security() {
                     <Lock className="h-6 w-6 text-orange-500 mr-2" />
                     <h4 className="font-semibold">Bitcoin L1 Anchoring</h4>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-justify">
                     Every BQS transaction is periodically anchored to Bitcoin, ensuring immutability and transparency.
                   </p>
                 </div>
@@ -155,13 +155,13 @@ export default function Security() {
                 <div className="space-y-4">
                   <div className="flex items-start">
                     <Coins className="h-5 w-5 text-orange-500 mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-justify">
                       Instead of miners securing the network, <strong>validators stake BQS to participate in block validation</strong>.
                     </p>
                   </div>
                   <div className="flex items-start">
                     <Clock className="h-5 w-5 text-orange-500 mt-1 mr-3 flex-shrink-0" />
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-justify">
                       Validators earn both transaction fees and inflation rewards through a controlled issuance of new BQS.
                     </p>
                   </div>
@@ -209,7 +209,7 @@ export default function Security() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <h4 className="text-lg font-semibold mb-4">For Users Today (Pegged to Bitcoin)</h4>
-                  <ul className="space-y-2 text-gray-600">
+                  <ul className="space-y-2 text-gray-600 text-justify">
                     <li>• BitcoinQS is 100% backed by BTC</li>
                     <li>• Validators ensure transaction consistency</li>
                     <li>• Anchoring to Bitcoin ensures immutability</li>
@@ -219,7 +219,7 @@ export default function Security() {
                 
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <h4 className="text-lg font-semibold mb-4">For Users in the Future (No Bitcoin Peg)</h4>
-                  <ul className="space-y-2 text-gray-600">
+                  <ul className="space-y-2 text-gray-600 text-justify">
                     <li>• BQS becomes self-sovereign</li>
                     <li>• Security via staking-based model</li>
                     <li>• Transaction Fees + Controlled Inflation</li>
@@ -233,18 +233,18 @@ export default function Security() {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <Shield className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                    <span>BitcoinQS remains pegged <strong>1:1 to BTC</strong> as long as Bitcoin L1 is functional.</span>
+                    <span className="text-justify">BitcoinQS remains pegged <strong>1:1 to BTC</strong> as long as Bitcoin L1 is functional.</span>
                   </li>
                   <li className="flex items-start">
                     <Lock className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                    <span>Once Bitcoin L1 is no longer viable, BQS transitions into a <strong>staking-based economy</strong> with <strong>controlled inflation</strong>.</span>
+                    <span className="text-justify">Once Bitcoin L1 is no longer viable, BQS transitions into a <strong>staking-based economy</strong> with <strong>controlled inflation</strong>.</span>
                   </li>
                   <li className="flex items-start">
                     <Network className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                    <span>The security model shifts from Bitcoin anchoring to a <strong>validator-based consensus model</strong>.</span>
+                    <span className="text-justify">The security model shifts from Bitcoin anchoring to a <strong>validator-based consensus model</strong>.</span>
                   </li>
                 </ul>
-                <p className="mt-6 text-lg font-medium">
+                <p className="mt-6 text-lg font-medium text-justify">
                   🚀 BitcoinQS is built for both the present and the future of decentralized, quantum-safe finance.
                 </p>
               </div>
