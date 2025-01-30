@@ -29,7 +29,7 @@ async function encryptPrivateKey(privateKeyHex, password) {
     const salt = window.crypto.getRandomValues(new Uint8Array(16)); // Salt for key derivation
     const iv = window.crypto.getRandomValues(new Uint8Array(12)); // Initialization Vector for AES-GCM
 
-    // Derive encryption key from password
+    // 🔹 Derive encryption key from password
     const keyMaterial = await window.crypto.subtle.importKey(
         "raw", new TextEncoder().encode(password), { name: "PBKDF2" }, false, ["deriveKey"]
     );
@@ -42,22 +42,21 @@ async function encryptPrivateKey(privateKeyHex, password) {
         ["encrypt"]
     );
 
-    // Convert private key to bytes
+    // 🔹 Convert private key to bytes
     const privateKeyBytes = new TextEncoder().encode(privateKeyHex);
 
-    // Encrypt the private key
+    // 🔹 Encrypt the private key
     const encryptedData = await window.crypto.subtle.encrypt(
         { name: "AES-GCM", iv },
         aesKey,
         privateKeyBytes
     );
 
-    // Store encrypted key, salt, and IV in localStorage
-    localStorage.setItem("bqs.encryptedPrivateKey", Buffer.from(encryptedData).toString("base64"));
-    localStorage.setItem("bqs.salt", Buffer.from(salt).toString("base64"));
-    localStorage.setItem("bqs.iv", Buffer.from(iv).toString("base64"));
-
-    console.log("Private Key Encrypted and Stored Securely!");
+    return {
+        encryptedPrivateKey: Buffer.from(new Uint8Array(encryptedData)).toString("base64"),
+        salt: Buffer.from(salt).toString("base64"),
+        iv: Buffer.from(iv).toString("base64"),
+    };
 }
 
 // Decrypt private key using AES-GCM
@@ -159,21 +158,27 @@ async function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Ar
     const secretKeyHex = uint8ArrayToHex(secretKey);
     const address = deriveQSafeAddress(publicKey);
 
-    // Await the encryption result before storing it
-    const { encryptedPrivateKey, salt, iv } = await encryptPrivateKey(secretKeyHex, password);
+    // 🔹 Await the encryption function
+    const encryptionResult = await encryptPrivateKey(secretKeyHex, password);
 
-    // Store values in localStorage
+    // 🔹 Ensure encryptionResult is valid before storing
+    if (!encryptionResult || !encryptionResult.encryptedPrivateKey) {
+        console.error("Encryption failed: No encrypted key returned.");
+        throw new Error("Encryption failed.");
+    }
+
+    // 🔹 Store values in localStorage
     localStorage.setItem('bqs.address', address);
     localStorage.setItem('bqs.publickey', publicKeyHex);
-    localStorage.setItem('bqs.encryptedPrivateKey', encryptedPrivateKey);
-    localStorage.setItem('bqs.salt', salt);
-    localStorage.setItem('bqs.iv', iv);
+    localStorage.setItem('bqs.encryptedPrivateKey', encryptionResult.encryptedPrivateKey);
+    localStorage.setItem('bqs.salt', encryptionResult.salt);
+    localStorage.setItem('bqs.iv', encryptionResult.iv);
 
     return address;
 }
 
 
-  const generateWallet = async () => {
+const generateWallet = async () => {
     setIsGenerating(true);
     setError(null);
 
@@ -186,10 +191,12 @@ async function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Ar
         const seed = randomBytes(32);
         const keys = ml_dsa87.keygen(seed);
 
-        // Await the storage of keys
+        const password = getUserPassword(); // 🔹 Retrieve user password
+
+        // 🔹 Await key storage
         const address = await storeKeysInLocalStorage(keys.publicKey, keys.secretKey, password);
 
-        // Retrieve the stored encrypted values
+        // 🔹 Retrieve the stored encrypted values (AFTER storage is completed)
         const storedEncryptedPrivateKey = localStorage.getItem("bqs.encryptedPrivateKey") || "";
         const storedSalt = localStorage.getItem("bqs.salt") || "";
         const storedIV = localStorage.getItem("bqs.iv") || "";
@@ -216,7 +223,6 @@ async function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Ar
 
         console.log('Wallet generated and downloaded successfully:', wallet);
     } catch (error) {
-        setIsGenerating(false);
         console.error('Failed to generate wallet:', error);
     } finally {
         setIsGenerating(false);
