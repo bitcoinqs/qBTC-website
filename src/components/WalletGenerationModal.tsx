@@ -191,7 +191,6 @@ const generateWallet = async () => {
         const seed = randomBytes(32);
         const keys = ml_dsa87.keygen(seed);
 
-        const password = getUserPassword(); // 🔹 Retrieve user password
 
         // 🔹 Await key storage
         const address = await storeKeysInLocalStorage(keys.publicKey, keys.secretKey, password);
