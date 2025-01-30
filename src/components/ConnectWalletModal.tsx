@@ -36,7 +36,7 @@ export default function ConnectWalletModal({ isOpen, onClose, network, onConnect
         localStorage.setItem("bqs.publickey", wallet.publicKey);
         localStorage.setItem("bqs.encryptedPrivateKey", wallet.encryptedPrivateKey);
         localStorage.setItem("bqs.salt", wallet.PrivateKeySalt)
-        localStorage.setItem("bqs.iv", PrivateKeyIV)
+        localStorage.setItem("bqs.iv", wallet.PrivateKeyIV)
 
       onConnect(wallet);
       onClose();
