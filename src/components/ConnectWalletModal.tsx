@@ -26,13 +26,15 @@ export default function ConnectWalletModal({ isOpen, onClose, network, onConnect
       const wallet = JSON.parse(text) as WalletFile;
 
       // Validate wallet file
-      if (!wallet.address || !wallet.publicKey || !wallet.privateKey) {
+      if (!wallet.address) {
         throw new Error('Invalid wallet file format');
       }
 
         localStorage.setItem("bqs.address", wallet.address);
         localStorage.setItem("bqs.publickey", wallet.publicKey);
-        localStorage.setItem("bqs.privatekey", wallet.privateKey);
+        localStorage.setItem("bqs.encryptedPrivateKey", wallet.encryptedPrivateKey);
+        localStorage.setItem("bqs.salt", wallet.salt)
+        localStorage.setItem("bqs.iv", iv)
 
       onConnect(wallet);
       onClose();
