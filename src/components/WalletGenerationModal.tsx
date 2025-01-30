@@ -168,19 +168,6 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
     return address;
   }
 
-  function getKeysFromLocalStorage(): { publicKey: Uint8Array; secretKey: Uint8Array } {
-    const publicKeyHex = localStorage.getItem('bqs.publickey');
-    const secretKeyHex = localStorage.getItem('bqs.privatekey');
-
-    if (!publicKeyHex || !secretKeyHex) {
-      throw new Error('Keys not found in localStorage');
-    }
-
-    return {
-      publicKey: hexToUint8Array(publicKeyHex),
-      secretKey: hexToUint8Array(secretKeyHex),
-    };
-  }
 
   const generateWallet = async () => {
     setIsGenerating(true);
@@ -199,7 +186,9 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
       const wallet: WalletFile = {
         address,
         publicKey: uint8ArrayToHex(keys.publicKey),
-        privateKey: uint8ArrayToHex(keys.secretKey),
+        encryptedPrivateKey: localStorage.getItem("bqs.encryptedPrivateKey"), //uint8ArrayToHex(keys.secretKey),
+        PrivateKeySalt: localStorage.getItem("bqs.salt"),
+        PrivateKeyIV: localStorage.getItem("bqs.iv")
         network,
       };
 
@@ -209,7 +198,7 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `bitcoinqs-wallet-${network}-${new Date().getTime()}.json`;
+      a.download = `bitcoinqs-wallet-${new Date().getTime()}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
