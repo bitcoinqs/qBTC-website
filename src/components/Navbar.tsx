@@ -42,6 +42,7 @@ export default function Navbar() {
     localStorage.removeItem("bqs.encryptedPrivateKey")
     localStorage.removeItem("bqs.salt")
     localStorage.removeItem("bqs.iv")
+    localStorage.removeItem("bqs.publickey")
     console.log("User logged out and all WebSocket connections closed.");
   };
 
