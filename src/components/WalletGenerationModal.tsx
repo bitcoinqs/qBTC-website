@@ -102,6 +102,13 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const handleClose = () => {
+    setPassword('');
+    setConfirmPassword('');
+    setError(null);
+    onClose();
+  };
+
   const validatePassword = () => {
     if (password.length < 8) {
       setError('Password must be at least 8 characters long');
