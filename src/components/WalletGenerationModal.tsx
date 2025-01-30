@@ -186,8 +186,6 @@ async function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Ar
         const seed = randomBytes(32);
         const keys = ml_dsa87.keygen(seed);
 
-        const password = getUserPassword(); // Make sure password is securely retrieved
-
         // Await the storage of keys
         const address = await storeKeysInLocalStorage(keys.publicKey, keys.secretKey, password);
 
