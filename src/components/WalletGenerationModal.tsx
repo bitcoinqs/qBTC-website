@@ -188,7 +188,7 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
         publicKey: uint8ArrayToHex(keys.publicKey),
         encryptedPrivateKey: localStorage.getItem("bqs.encryptedPrivateKey"), //uint8ArrayToHex(keys.secretKey),
         PrivateKeySalt: localStorage.getItem("bqs.salt"),
-        PrivateKeyIV: localStorage.getItem("bqs.iv")
+        PrivateKeyIV: localStorage.getItem("bqs.iv"),
         network,
       };
 
