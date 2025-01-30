@@ -178,6 +178,7 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
     setError(null)
 
     if (!validatePassword()) {
+      setIsGenerating(false);
       return;
     }
 
@@ -209,6 +210,7 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
 
       console.log('Wallet generated and downloaded successfully:', wallet);
     } catch (error) {
+      setIsGenerating(false);
       console.error('Failed to generate wallet:', error);
     } finally {
       setIsGenerating(false);
