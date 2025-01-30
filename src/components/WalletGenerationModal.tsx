@@ -154,19 +154,23 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
     return byteArray;
   }
 
-  function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Array): string {
+  function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Array, password: string): string {
     const publicKeyHex = uint8ArrayToHex(publicKey);
     const secretKeyHex = uint8ArrayToHex(secretKey);
     const address = deriveQSafeAddress(publicKey);
 
-    encryptPrivateKey(secretKeyHex,password)
+    // Encrypt the private key and store results
+    const { encryptedPrivateKey, salt, iv } = encryptPrivateKey(secretKeyHex, password);
 
+    // Store values in localStorage
     localStorage.setItem('bqs.address', address);
     localStorage.setItem('bqs.publickey', publicKeyHex);
-    //localStorage.setItem('bqs.privatekey', secretKeyHex);
+    localStorage.setItem('bqs.encryptedPrivateKey', encryptedPrivateKey);
+    localStorage.setItem('bqs.salt', salt);
+    localStorage.setItem('bqs.iv', iv);
 
     return address;
-  }
+}
 
 
   const generateWallet = async () => {
