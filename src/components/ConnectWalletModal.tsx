@@ -25,6 +25,10 @@ export default function ConnectWalletModal({ isOpen, onClose, network, onConnect
       const text = await file.text();
       const wallet = JSON.parse(text) as WalletFile;
 
+      console.log("***** ALERT ******")
+
+      console.log(wallet)
+
       // Validate wallet file
       if (!wallet.address) {
         throw new Error('Invalid wallet file format');
