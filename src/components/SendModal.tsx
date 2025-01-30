@@ -28,6 +28,8 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [passwordAttempts, setPasswordAttempts] = useState(0);
 
+  const sender = localStorage.getItem("bqs.address")
+
 
 
   const fees = useMemo(() => {
