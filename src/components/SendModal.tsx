@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { X, Send, AlertTriangle, CheckCircle, Info } from 'lucide-react';
+import { X, Send, AlertTriangle, CheckCircle, Info, Eye, EyeOff  } from 'lucide-react';
 import type { Network } from '../types/wallet';
 import { useWallet } from '../hooks/useWallet';
 import axios from 'axios';
