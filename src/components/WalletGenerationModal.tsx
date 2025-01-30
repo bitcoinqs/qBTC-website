@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Download } from 'lucide-react';
+import { X, Download,Eye, EyeOff, AlertTriangle } from 'lucide-react';
 import type { Network, WalletFile } from '../types/wallet';
 import { ml_dsa87 } from '@noble/post-quantum/ml-dsa';
 import { utf8ToBytes, randomBytes } from '@noble/post-quantum/utils';
