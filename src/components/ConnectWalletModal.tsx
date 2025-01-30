@@ -28,7 +28,7 @@ export default function ConnectWalletModal({ isOpen, onClose, network, onConnect
       console.log("***** ALERT ******")
 
       console.log(wallet)
-
+alert(wallet)
       // Validate wallet file
       if (!wallet.address) {
         throw new Error('Invalid wallet file format');
