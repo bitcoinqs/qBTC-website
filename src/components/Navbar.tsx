@@ -39,8 +39,9 @@ export default function Navbar() {
     const walletAddress = localStorage.getItem("bqs.address");
     websocketManager.closeConnectionsForWallet(walletAddress);
     localStorage.removeItem("bqs.address")
-    localStorage.removeItem("bqs.privatekey")
-    localStorage.removeItem("bqs.publickey")
+    localStorage.removeItem("bqs.encryptedPrivateKey")
+    localStorage.removeItem("bqs.salt")
+    localStorage.removeItem("bqs.iv")
     console.log("User logged out and all WebSocket connections closed.");
   };
 
