@@ -154,13 +154,13 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
     return byteArray;
   }
 
-  function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Array, password: string): string {
+async function storeKeysInLocalStorage(publicKey: Uint8Array, secretKey: Uint8Array, password: string): Promise<string> {
     const publicKeyHex = uint8ArrayToHex(publicKey);
     const secretKeyHex = uint8ArrayToHex(secretKey);
     const address = deriveQSafeAddress(publicKey);
 
-    // Encrypt the private key and store results
-    const { encryptedPrivateKey, salt, iv } = encryptPrivateKey(secretKeyHex, password);
+    // Await the encryption result before storing it
+    const { encryptedPrivateKey, salt, iv } = await encryptPrivateKey(secretKeyHex, password);
 
     // Store values in localStorage
     localStorage.setItem('bqs.address', address);
@@ -175,47 +175,55 @@ export default function WalletGenerationModal({ isOpen, onClose, network, onGene
 
   const generateWallet = async () => {
     setIsGenerating(true);
-    setError(null)
+    setError(null);
 
     if (!validatePassword()) {
-      setIsGenerating(false);
-      return;
+        setIsGenerating(false);
+        return;
     }
 
     try {
-      const seed = randomBytes(32);
-      const keys = ml_dsa87.keygen(seed);
+        const seed = randomBytes(32);
+        const keys = ml_dsa87.keygen(seed);
 
-      const address = storeKeysInLocalStorage(keys.publicKey, keys.secretKey);
+        const password = getUserPassword(); // Make sure password is securely retrieved
 
-      const wallet: WalletFile = {
-        address,
-        publicKey: uint8ArrayToHex(keys.publicKey),
-        encryptedPrivateKey: localStorage.getItem("bqs.encryptedPrivateKey"), //uint8ArrayToHex(keys.secretKey),
-        PrivateKeySalt: localStorage.getItem("bqs.salt"),
-        PrivateKeyIV: localStorage.getItem("bqs.iv"),
-      };
+        // Await the storage of keys
+        const address = await storeKeysInLocalStorage(keys.publicKey, keys.secretKey, password);
 
-      onGenerate(wallet);
+        // Retrieve the stored encrypted values
+        const storedEncryptedPrivateKey = localStorage.getItem("bqs.encryptedPrivateKey") || "";
+        const storedSalt = localStorage.getItem("bqs.salt") || "";
+        const storedIV = localStorage.getItem("bqs.iv") || "";
 
-      const blob = new Blob([JSON.stringify(wallet, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `bitcoinqs-wallet-${new Date().getTime()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+        const wallet: WalletFile = {
+            address,
+            publicKey: uint8ArrayToHex(keys.publicKey),
+            encryptedPrivateKey: storedEncryptedPrivateKey,
+            PrivateKeySalt: storedSalt,
+            PrivateKeyIV: storedIV,
+        };
 
-      console.log('Wallet generated and downloaded successfully:', wallet);
+        onGenerate(wallet);
+
+        const blob = new Blob([JSON.stringify(wallet, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `bitcoinqs-wallet-${new Date().getTime()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        console.log('Wallet generated and downloaded successfully:', wallet);
     } catch (error) {
-      setIsGenerating(false);
-      console.error('Failed to generate wallet:', error);
+        setIsGenerating(false);
+        console.error('Failed to generate wallet:', error);
     } finally {
-      setIsGenerating(false);
+        setIsGenerating(false);
     }
-  };
+};
 
   if (!isOpen) return null;
 
