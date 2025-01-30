@@ -23,7 +23,12 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
   const [step, setStep] = useState<Step>('form');
   const [amount, setAmount] = useState('');
   const [address, setAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [passwordAttempts, setPasswordAttempts] = useState(0);
+
+
 
   const fees = useMemo(() => {
     return {
@@ -58,6 +63,115 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
     setStep('confirm');
   };
 
+const handlePasswordSubmit = async () => {
+  if (!password) {
+    setError('Please enter your wallet password');
+    return;
+  }
+
+  setStep('processing');
+
+  try {
+    // Retrieve encrypted values from local storage
+    const encryptedDataBase64 = localStorage.getItem("bqs.encryptedPrivateKey");
+    const saltBase64 = localStorage.getItem("bqs.salt");
+    const ivBase64 = localStorage.getItem("bqs.iv");
+    const publicKeyHex = localStorage.getItem("bqs.publickey");
+
+    if (!encryptedDataBase64 || !saltBase64 || !ivBase64 || !publicKeyHex) {
+      throw new Error("Wallet data missing! Ensure you have stored the encrypted keys.");
+    }
+
+    // Convert stored Base64 values back to Uint8Array
+    const encryptedData = Buffer.from(encryptedDataBase64, "base64");
+    const salt = Buffer.from(saltBase64, "base64");
+    const iv = Buffer.from(ivBase64, "base64");
+
+    // Derive decryption key from password
+    const keyMaterial = await window.crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(password),
+      { name: "PBKDF2" },
+      false,
+      ["deriveKey"]
+    );
+
+    const aesKey = await window.crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+      keyMaterial,
+      { name: "AES-GCM", length: 256 },
+      true,
+      ["decrypt"]
+    );
+
+    let privateKeyHex;
+    try {
+      // Attempt to decrypt private key
+      const decryptedData = await window.crypto.subtle.decrypt(
+        { name: "AES-GCM", iv },
+        aesKey,
+        encryptedData
+      );
+
+      privateKeyHex = new TextDecoder().decode(decryptedData).trim();
+
+      if (!privateKeyHex || privateKeyHex.length === 0) {
+        throw new Error("Decryption failed. Invalid password.");
+      }
+    } catch (decryptionError) {
+      console.error("Decryption error:", decryptionError);
+      setPasswordAttempts(prev => prev + 1);
+      const attemptsLeft = 3 - passwordAttempts;
+      if (attemptsLeft <= 0) {
+        setError("Too many failed attempts. Please try again later.");
+        setStep("error");
+      } else {
+        setError(`Incorrect password. ${attemptsLeft} attempts remaining.`);
+        setStep("password");
+      }
+      return;
+    }
+
+    console.log("Private Key Decrypted Successfully:", privateKeyHex);
+
+    // Convert the decrypted key into Uint8Array format
+    const publicKey = Uint8Array.from(Buffer.from(publicKeyHex, 'hex'));
+    const privateKey = Uint8Array.from(Buffer.from(privateKeyHex, 'hex'));
+
+    // Simulate signing and verification to ensure the private key is valid
+    const transactionData = serializeTransaction(sender, address, amount);
+    const transactionDataBytes = utf8ToBytes(transactionData);
+    const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
+    const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
+
+    if (!isValid) {
+      setError('Signature verification failed!');
+      setStep('error');
+      return;
+    }
+
+    console.log("Signature Verified:", isValid);
+
+    // Construct API request
+    const payload = {
+      request_type: "broadcast_tx",
+      message: uint8ArrayToBase64(transactionDataBytes),
+      signature: uint8ArrayToBase64(signature),
+      pubkey: uint8ArrayToBase64(publicKey),
+    };
+
+    await axios.post(`https://${apiUrl}/worker`, payload);
+
+    setStep("success");
+  } catch (error) {
+    console.error("Transaction error:", error);
+    setError("Transaction failed. Please try again.");
+    setStep("error");
+  }
+};
+
+
+
   const handleConfirm = async () => {
 
     if (hasInsufficientFunds) {
@@ -66,58 +180,18 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
       return;
     }
 
-    setStep('processing');
+    setStep('password');
 
-    try {
-      const sender = localStorage.getItem('bqs.address');
-      const publicKeyHex = localStorage.getItem('bqs.publickey');
-      const privateKeyHex = localStorage.getItem('bqs.privatekey');
+  }
 
-      if (!sender || !address || !amount || !publicKeyHex || !privateKeyHex) {
-        setError('Missing transaction details or keys.');
-        setStep('error');;
-        return;
-      }
-
-      const publicKey = Uint8Array.from(Buffer.from(publicKeyHex, 'hex'));
-      const privateKey = Uint8Array.from(Buffer.from(privateKeyHex, 'hex'));
-
-      const transactionData = serializeTransaction(sender, address, amount);
-      const transactionDataBytes = utf8ToBytes(transactionData);
-      const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
-
-      const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
-
-      if (!isValid) {
-        setError('Signature verification failed!');
-        setStep('error');
-        return;
-      }
-      console.log(isValid)
-
-      
-      const payload = {
-        request_type: 'broadcast_tx',
-        message: uint8ArrayToBase64(transactionDataBytes),
-        signature: uint8ArrayToBase64(signature),
-        pubkey: uint8ArrayToBase64(publicKey),
-      };
-
-      await axios.post(`https://${apiUrl}/worker`, payload);
-
-      setStep('success');
-    } catch (error) {
-      console.error('Send failed:', error);
-      setError('Transaction failed. Please try again.');
-      setStep('error');
-    }
-  };
+    
 
   const handleClose = () => {
     setStep('form');
     setAmount('');
     setAddress('');
     setError(null);
+    setPasswordAttempts(0);
     onClose();
   };
 
@@ -129,6 +203,7 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
         <div className="flex justify-between items-center p-6 border-b border-gray-200">
           <h3 className="text-lg font-medium text-gray-900">
             {step === 'confirm' && 'Confirm Transaction'}
+            {step === 'password' && 'Enter Wallet Password'}
             {step === 'processing' && 'Processing Transaction'}
             {step === 'success' && 'Transaction Complete'}
             {step === 'error' && 'Transaction Failed'}
@@ -279,6 +354,71 @@ export default function SendModal({ isOpen, onClose, network }: Props) {
                   }`}
                 >
                   Confirm Send
+                </button>
+              </div>
+            </div>
+          )}
+
+          {step === 'password' && (
+            <div className="space-y-6">
+              <p className="text-sm text-gray-500">
+                Please enter your wallet password to decrypt your wallet and sign the transaction.
+              </p>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Wallet Password
+                </label>
+                <div className="mt-1 relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    required
+                    className="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 px-3 flex items-center"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-400" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-400" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {error && (
+                <div className="bg-red-50 border-l-4 border-red-500 p-4">
+                  <div className="flex">
+                    <AlertTriangle className="h-5 w-5 text-red-400" />
+                    <div className="ml-3">
+                      <p className="text-sm text-red-700">{error}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex justify-end space-x-4">
+                <button
+                  onClick={() => setStep('confirm')}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={handlePasswordSubmit}
+                  className={`inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                    network === 'mainnet'
+                      ? 'bg-orange-500 hover:bg-orange-600'
+                      : 'bg-purple-500 hover:bg-purple-600'
+                  }`}
+                >
+                  Sign & Send
                 </button>
               </div>
             </div>
