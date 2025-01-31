@@ -227,11 +227,6 @@ const uint8ArrayToBase64 = (array: Uint8Array): string => btoa(String.fromCharCo
 const serializeTransaction = (sender: string, receiver: string, amount: string, nonce = Date.now()): string => 
     `${sender}:${receiver}:${amount}:${nonce}`;
 
-
-
-  
-
-
   const handleSendBQS = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!amount || !btcAddress) return;
@@ -292,6 +287,9 @@ const serializeTransaction = (sender: string, receiver: string, amount: string, 
       setAmount('');
       setBtcAddress('');
       setIsSubmitting(false);
+      setPassword('');
+      setError(null);
+      setPasswordAttempts(0);
     }
     onClose();
   };
