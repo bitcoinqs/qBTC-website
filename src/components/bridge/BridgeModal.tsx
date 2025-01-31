@@ -172,6 +172,8 @@ const handlePasswordSubmit = async () => {
 
     console.log("Private Key Decrypted Successfully:", privateKeyHex);
 
+    const sender = lcoalStorage.getItem("bqs.address")
+
     try {
       // Serialize the transaction
       const transactionData = serializeTransaction(sender, address, amount);
