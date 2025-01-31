@@ -150,6 +150,7 @@ const handlePasswordSubmit = async () => {
       }
     } catch (decryptionError) {
       console.error("Decryption error:", decryptionError);
+
       setPasswordAttempts((prev) => prev + 1);
       const attemptsLeft = 3 - (passwordAttempts + 1);
 
@@ -161,7 +162,7 @@ const handlePasswordSubmit = async () => {
         setStep("password");
       }
 
-      // Ensure the modal re-renders with error
+      // 🔹 Force re-render by toggling processing status
       setProcessingStatus("error");
       setIsSubmitting(false);
       return;
