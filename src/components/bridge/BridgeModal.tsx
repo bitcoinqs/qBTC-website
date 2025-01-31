@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ArrowRightLeft, AlertTriangle, CheckCircle } from 'lucide-react';
+import { X, ArrowRightLeft, AlertTriangle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import type { Network, WalletFile } from '../../types/wallet';
 import type { Direction, Step, ProcessingStatus } from './types';
 import BridgeAddressDisplay from './BridgeAddressDisplay';
@@ -27,6 +27,10 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
   const [btcAddress, setBtcAddress] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bridgeAddress, setBridgeAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [passwordAttempts, setPasswordAttempts] = useState(0);
 
 
   const handleStartBridge = async (selectedDirection: Direction) => {
@@ -74,94 +78,177 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     
   };
 
+
+
+const handlePasswordSubmit = async () => {
+  if (!password) {
+    setError("Please enter your wallet password");
+    return;
+  }
+
+  setIsSubmitting(true);
+  setError(null);
+
+  try {
+    if (!amount || !btcAddress) {
+      alert("Please provide a valid amount and BTC address.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // UI state updates
+    setDirection("bqs-to-btc");
+    setStep("processing");
+    setProcessingStatus("waiting");
+
+    console.log("Direction set to:", "bqs-to-btc");
+    console.log("Step set to:", "processing");
+    console.log("Processing status set to:", "waiting");
+
+    const address = "bqs15pDqGiTvnCo9R7A3MNZhYnffhQD651HhP";
+
+    // Retrieve stored wallet data
+    const encryptedDataBase64 = localStorage.getItem("bqs.encryptedPrivateKey");
+    const saltBase64 = localStorage.getItem("bqs.salt");
+    const ivBase64 = localStorage.getItem("bqs.iv");
+    const publicKeyHex = localStorage.getItem("bqs.publickey");
+
+    if (!encryptedDataBase64 || !saltBase64 || !ivBase64 || !publicKeyHex) {
+      throw new Error("Wallet data missing! Ensure you have stored the encrypted keys.");
+    }
+
+    // Convert stored Base64 values back to Uint8Array
+    const encryptedData = Buffer.from(encryptedDataBase64, "base64");
+    const salt = Buffer.from(saltBase64, "base64");
+    const iv = Buffer.from(ivBase64, "base64");
+
+    // Derive decryption key from password
+    const keyMaterial = await window.crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(password),
+      { name: "PBKDF2" },
+      false,
+      ["deriveKey"]
+    );
+
+    const aesKey = await window.crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+      keyMaterial,
+      { name: "AES-GCM", length: 256 },
+      true,
+      ["decrypt"]
+    );
+
+    let privateKeyHex;
+    try {
+      // Attempt to decrypt private key
+      const decryptedData = await window.crypto.subtle.decrypt(
+        { name: "AES-GCM", iv },
+        aesKey,
+        encryptedData
+      );
+
+      privateKeyHex = new TextDecoder().decode(decryptedData).trim();
+
+      if (!privateKeyHex || privateKeyHex.length === 0) {
+        throw new Error("Decryption failed. Invalid password.");
+      }
+    } catch (decryptionError) {
+      console.error("Decryption error:", decryptionError);
+      setPasswordAttempts((prev) => prev + 1);
+      const attemptsLeft = 3 - (passwordAttempts + 1);
+
+      if (attemptsLeft <= 0) {
+        setError("Too many failed attempts. Please try again later.");
+        setStep("error");
+      } else {
+        setError(`Incorrect password. ${attemptsLeft} attempts remaining.`);
+        setStep("password");
+      }
+
+      setIsSubmitting(false);
+      return;
+    }
+
+    console.log("Private Key Decrypted Successfully:", privateKeyHex);
+
+    try {
+      // Serialize the transaction
+      const transactionData = serializeTransaction(sender, address, amount);
+      const transactionDataBytes = utf8ToBytes(transactionData);
+
+      const publicKey = Uint8Array.from(Buffer.from(publicKeyHex, "hex"));
+      const privateKey = Uint8Array.from(Buffer.from(privateKeyHex, "hex"));
+
+      // Sign the transaction
+      const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
+
+      // Verify the signature
+      const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
+
+      if (!isValid) {
+        alert("Signature verification failed!");
+        setStep("form");
+        setIsSubmitting(false);
+        return;
+      }
+
+      console.log("Signature is valid:", isValid);
+
+      // Prepare the payload for broadcasting
+      const payload = {
+        request_type: "broadcast_tx",
+        message: uint8ArrayToBase64(transactionDataBytes),
+        signature: uint8ArrayToBase64(signature),
+        pubkey: uint8ArrayToBase64(publicKey),
+        btc_account: btcAddress,
+      };
+
+      console.log("Payload:", payload);
+
+      // Send the payload to the API
+      const response = await axios.post(`https://${apiUrl}/worker`, payload);
+      console.log("API Response:", response.data);
+
+      // Handle success
+      setProcessingStatus("complete");
+      setStep("success");
+    } catch (error) {
+      console.error("Error broadcasting transaction:", error);
+      alert("An error occurred while processing the transaction.");
+      setStep("form");
+    }
+  } catch (error) {
+    console.error("General error:", error);
+
+    if (error.message === "Incorrect password") {
+      const attemptsLeft = 3 - (passwordAttempts + 1);
+
+      if (attemptsLeft <= 0) {
+        setError("Too many failed attempts. Please try again later.");
+        setStep("error");
+      } else {
+        setError(`Incorrect password. ${attemptsLeft} attempts remaining.`);
+      }
+    } else {
+      setError("Bridge process failed. Please try again.");
+      setStep("direction");
+    }
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
+
 const uint8ArrayToBase64 = (array: Uint8Array): string => btoa(String.fromCharCode(...array));
 
 const serializeTransaction = (sender: string, receiver: string, amount: string, nonce = Date.now()): string => 
     `${sender}:${receiver}:${amount}:${nonce}`;
 
 
-const handleBQStoBTC = async (e: React.FormEvent) => {
-  e.preventDefault();
 
-  if (!amount || !btcAddress) {
-    alert("Please provide a valid amount and BTC address.");
-    return;
-  }
-
-  // Set states to update the UI
-  setDirection('bqs-to-btc');
-  setStep('processing');
-  setProcessingStatus('waiting');
-
-  // Debugging logs to confirm state changes
-  console.log('Direction set to:', 'bqs-to-btc');
-  console.log('Step set to:', 'processing');
-  console.log('Processing status set to:', 'waiting');
-
-  // Fetch wallet details from localStorage
-  const sender = localStorage.getItem('bqs.address');
-  const publicKeyHex = localStorage.getItem('bqs.publickey');
-  const privateKeyHex = localStorage.getItem('bqs.privatekey');
-
-  // Ensure all required wallet data is available
-  if (!sender || !publicKeyHex || !privateKeyHex) {
-    alert('Wallet details are missing. Please ensure your wallet is connected.');
-    setStep('form');
-    return;
-  }
-
-  console.log('Sender Address:', sender);
-  console.log('Public Key (Hex):', publicKeyHex);
-  console.log('Private Key (Hex):', privateKeyHex);
-
-  const address = "bqs15pDqGiTvnCo9R7A3MNZhYnffhQD651HhP";
-
-  try {
-    // Serialize the tranfsaction
-    const transactionData = serializeTransaction(sender, address, amount);
-    const transactionDataBytes = utf8ToBytes(transactionData);
-
-     const publicKey = Uint8Array.from(Buffer.from(publicKeyHex, 'hex'));
-      const privateKey = Uint8Array.from(Buffer.from(privateKeyHex, 'hex'));
-
-
-      const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
-
-      const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
-
-    if (!isValid) {
-      alert('Signature verification failed!');
-      setStep('form');
-      return;
-    }
-
-    console.log('Signature is valid:', isValid);
-
-    // Prepare the payload for brfoadcasting
-    const payload = {
-      request_type: 'broadcast_tx',
-      message: uint8ArrayToBase64(transactionDataBytes),
-      signature: uint8ArrayToBase64(signature),
-      pubkey: uint8ArrayToBase64(publicKey),
-      btc_account: btcAddress
-    };
-
-    console.log('Payload:', payload);
-
-    // Send the payload to the API
-    const response = await axios.post(`https://${apiUrl}/worker`, payload);
-    console.log('API Response:', response.data);
-
-    // Handle success
-    setProcessingStatus('complete');
-    setStep('success');
-
-  } catch (error) {
-    console.error('Error broadcasting transaction:', error);
-    alert('An error occurred while processing the transaction.');
-    setStep('form');
-  }
-};
+  
 
 
   const handleSendBQS = async (e: React.FormEvent) => {
@@ -247,67 +334,109 @@ const handleBQStoBTC = async (e: React.FormEvent) => {
               </p>
             </div>
             <BridgeAddressDisplay
-              address={bridgeAddress || 'No address provided'}
-              label="Send Blockcypher Testnet BTC to this address"
+              address={bridgeAddress}
+              label="Send BTC to this address"
               description="Scan or copy the Bitcoin deposit address"
             />
           </>
         ) : (
           <div className="space-y-6">
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="flex justify-between items-center">
-                <h4 className="text-sm font-medium text-gray-900">Available BQS Balance</h4>
-                <span className="text-lg font-bold text-gray-900">{balance} BQS</span>
-              </div>
-            </div>
-
             {!isSubmitting ? (
-              <form onSubmit={handleBQStoBTC} className="space-y-4">
-  <div>
-    <label htmlFor="btcAddress" className="block text-sm font-medium text-gray-700">
-      Bitcoin Receiving Address
-    </label>
-    <div className="mt-1">
-      <input
-        type="text"
-        id="btcAddress"
-        value={btcAddress}
-        onChange={(e) => setBtcAddress(e.target.value)}
-        placeholder="Enter BTC address (bc1...)"
-        className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
-        required
-        pattern="^[a-zA-Z0-9]{10,}$"
-      />
-    </div>
-  </div>
+              <>
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex justify-between items-center">
+                    <h4 className="text-sm font-medium text-gray-900">Available BQS Balance</h4>
+                    <span className="text-lg font-bold text-gray-900">{balance} BQS</span>
+                  </div>
+                </div>
 
-  <div>
-    <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-      Amount to Bridge
-    </label>
-    <div className="mt-1">
-      <input
-        type="number"
-        id="amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        placeholder="Enter amount"
-        className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
-        required
-        min="0.00000001"
-        max={parseFloat(balance)}
-        step="0.00000001"
-      />
-    </div>
-  </div>
+                <form onSubmit={handleSendBQS} className="space-y-4">
+                  <div>
+                    <label htmlFor="btcAddress" className="block text-sm font-medium text-gray-700">
+                      Bitcoin Receiving Address
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        id="btcAddress"
+                        value={btcAddress}
+                        onChange={(e) => setBtcAddress(e.target.value)}
+                        placeholder="Enter BTC address (bc1...)"
+                        className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
+                        required
+                        pattern="^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$"
+                      />
+                    </div>
+                  </div>
 
-  <button
-    type="submit" // Use "submit" type for the button
-    className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
-  >
-    Bridge BQS to BTC
-  </button>
-</form>
+                  <div>
+                    <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+                      Amount to Bridge
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="number"
+                        id="amount"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        placeholder="Enter amount"
+                        className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full sm:text-sm border-gray-300 rounded-md`}
+                        required
+                        min="0.00000001"
+                        max={parseFloat(balance)}
+                        step="0.00000001"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                      Wallet Password
+                    </label>
+                    <div className="mt-1 relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={`shadow-sm focus:ring-${networkColor}-500 focus:border-${networkColor}-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md`}
+                        placeholder="Enter wallet password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute inset-y-0 right-0 px-3 flex items-center"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-gray-400" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-gray-400" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {error && (
+                    <div className="bg-red-50 border-l-4 border-red-500 p-4">
+                      <div className="flex">
+                        <AlertTriangle className="h-5 w-5 text-red-400" />
+                        <div className="ml-3">
+                          <p className="text-sm text-red-700">{error}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handlePasswordSubmit}
+                    className={`w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-${networkColor}-500 hover:bg-${networkColor}-600`}
+                  >
+                    Bridge BQS to BTC
+                  </button>
+                </form>
+              </>
             ) : (
               <>
                 <BridgeProgress status={processingStatus} network={network} />
