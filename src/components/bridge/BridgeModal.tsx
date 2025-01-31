@@ -91,12 +91,11 @@ const handlePasswordSubmit = async () => {
 
   try {
     if (!amount || !btcAddress) {
-      alert("Please provide a valid amount and BTC address.");
+      setError("Please provide a valid amount and BTC address.");
       setIsSubmitting(false);
       return;
     }
 
-    // UI state updates
     setDirection("bqs-to-btc");
     setStep("processing");
     setProcessingStatus("waiting");
@@ -107,7 +106,6 @@ const handlePasswordSubmit = async () => {
 
     const address = "bqs15pDqGiTvnCo9R7A3MNZhYnffhQD651HhP";
 
-    // Retrieve stored wallet data
     const encryptedDataBase64 = localStorage.getItem("bqs.encryptedPrivateKey");
     const saltBase64 = localStorage.getItem("bqs.salt");
     const ivBase64 = localStorage.getItem("bqs.iv");
@@ -117,12 +115,10 @@ const handlePasswordSubmit = async () => {
       throw new Error("Wallet data missing! Ensure you have stored the encrypted keys.");
     }
 
-    // Convert stored Base64 values back to Uint8Array
     const encryptedData = Buffer.from(encryptedDataBase64, "base64");
     const salt = Buffer.from(saltBase64, "base64");
     const iv = Buffer.from(ivBase64, "base64");
 
-    // Derive decryption key from password
     const keyMaterial = await window.crypto.subtle.importKey(
       "raw",
       new TextEncoder().encode(password),
@@ -141,7 +137,6 @@ const handlePasswordSubmit = async () => {
 
     let privateKeyHex;
     try {
-      // Attempt to decrypt private key
       const decryptedData = await window.crypto.subtle.decrypt(
         { name: "AES-GCM", iv },
         aesKey,
@@ -166,38 +161,35 @@ const handlePasswordSubmit = async () => {
         setStep("password");
       }
 
+      // Ensure the modal re-renders with error
+      setProcessingStatus("error");
       setIsSubmitting(false);
       return;
     }
 
     console.log("Private Key Decrypted Successfully:", privateKeyHex);
 
-    const sender = lcoalStorage.getItem("bqs.address")
+    const sender = localStorage.getItem("bqs.address");
 
     try {
-      // Serialize the transaction
       const transactionData = serializeTransaction(sender, address, amount);
       const transactionDataBytes = utf8ToBytes(transactionData);
 
       const publicKey = Uint8Array.from(Buffer.from(publicKeyHex, "hex"));
       const privateKey = Uint8Array.from(Buffer.from(privateKeyHex, "hex"));
 
-      // Sign the transaction
       const signature = ml_dsa87.sign(privateKey, transactionDataBytes);
-
-      // Verify the signature
       const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
 
       if (!isValid) {
-        alert("Signature verification failed!");
-        setStep("form");
+        setError("Signature verification failed!");
+        setStep("password");
         setIsSubmitting(false);
         return;
       }
 
       console.log("Signature is valid:", isValid);
 
-      // Prepare the payload for broadcasting
       const payload = {
         request_type: "broadcast_tx",
         message: uint8ArrayToBase64(transactionDataBytes),
@@ -208,34 +200,20 @@ const handlePasswordSubmit = async () => {
 
       console.log("Payload:", payload);
 
-      // Send the payload to the API
       const response = await axios.post(`https://${apiUrl}/worker`, payload);
       console.log("API Response:", response.data);
 
-      // Handle success
       setProcessingStatus("complete");
       setStep("success");
     } catch (error) {
       console.error("Error broadcasting transaction:", error);
-      alert("An error occurred while processing the transaction.");
+      setError("An error occurred while processing the transaction.");
       setStep("form");
     }
   } catch (error) {
     console.error("General error:", error);
-
-    if (error.message === "Incorrect password") {
-      const attemptsLeft = 3 - (passwordAttempts + 1);
-
-      if (attemptsLeft <= 0) {
-        setError("Too many failed attempts. Please try again later.");
-        setStep("error");
-      } else {
-        setError(`Incorrect password. ${attemptsLeft} attempts remaining.`);
-      }
-    } else {
-      setError("Bridge process failed. Please try again.");
-      setStep("direction");
-    }
+    setError("Bridge process failed. Please try again.");
+    setStep("password");
   } finally {
     setIsSubmitting(false);
   }
