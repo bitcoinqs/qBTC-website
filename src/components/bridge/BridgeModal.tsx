@@ -161,6 +161,7 @@ const handlePasswordSubmit = async () => {
       } */
 
       // 🔹 Force re-render by toggling processing status
+      setError(`Incorrect password.`);
       setProcessingStatus("waiting");
       setIsSubmitting(false);
       return;
