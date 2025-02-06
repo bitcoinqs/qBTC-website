@@ -149,7 +149,7 @@ const handlePasswordSubmit = async () => {
     } catch (decryptionError) {
       console.error("Decryption error:", decryptionError);
 
-      setPasswordAttempts((prev) => prev + 1);
+    /*  setPasswordAttempts((prev) => prev + 1);
       const attemptsLeft = 3 - (passwordAttempts + 1);
 
       if (attemptsLeft <= 0) {
@@ -158,7 +158,7 @@ const handlePasswordSubmit = async () => {
       } else {
         setError(`Incorrect password. ${attemptsLeft} attempts remaining.`);
         setStep("password");
-      }
+      } */
 
       // 🔹 Force re-render by toggling processing status
       setProcessingStatus("waiting");
