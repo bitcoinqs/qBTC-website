@@ -17,6 +17,9 @@ export default function BalanceDisplay({ balance, network, address }: Props) {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // ✅ Convert balance and check if it's effectively zero (including "0e-8")
+  const formattedBalance = parseFloat(balance) === 0 ? "0.00" : balance;
+
   const networkColors = network === 'mainnet' 
     ? 'border-orange-500 text-orange-500'
     : 'border-purple-500 text-purple-500';
@@ -28,7 +31,7 @@ export default function BalanceDisplay({ balance, network, address }: Props) {
           <div>
             <p className="text-sm font-medium text-gray-500">Available Balance</p>
             <div className="mt-1 flex items-center">
-              <h2 className="text-3xl font-bold text-gray-900">{balance}</h2>
+              <h2 className="text-3xl font-bold text-gray-900">{formattedBalance}</h2>
               <span className="ml-2 text-lg text-gray-500">BQS</span>
             </div>
           </div>
