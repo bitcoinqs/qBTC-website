@@ -183,6 +183,7 @@ const handlePasswordSubmit = async () => {
       const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
 
       if (!isValid) {
+        alert("hi")
         setError("Signature verification failed!");
         setStep("password");
         setIsSubmitting(false);
