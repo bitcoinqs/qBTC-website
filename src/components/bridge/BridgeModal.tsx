@@ -100,9 +100,7 @@ const handlePasswordSubmit = async () => {
     setStep("processing");
     setProcessingStatus("waiting");
 
-    console.log("Direction set to:", "bqs-to-btc");
-    console.log("Step set to:", "processing");
-    console.log("Processing status set to:", "waiting");
+
 
     const address = "bqs15pDqGiTvnCo9R7A3MNZhYnffhQD651HhP";
 
@@ -163,7 +161,7 @@ const handlePasswordSubmit = async () => {
       }
 
       // 🔹 Force re-render by toggling processing status
-      setProcessingStatus("error");
+      setProcessingStatus("waiting");
       setIsSubmitting(false);
       return;
     }
@@ -183,7 +181,6 @@ const handlePasswordSubmit = async () => {
       const isValid = ml_dsa87.verify(publicKey, transactionDataBytes, signature);
 
       if (!isValid) {
-        alert("hi")
         setError("Signature verification failed!");
         setStep("password");
         setIsSubmitting(false);
