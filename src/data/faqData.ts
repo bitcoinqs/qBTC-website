@@ -38,6 +38,10 @@ export const technicalFAQs = [
   {
     question: "If the Bitcoin Mainnet is compromised wont that affect the ordering of BitcoinQ2 L2 transactions",
     answer: "To protect against this, BitcoinQS has a few fall back mechanisms. Firstly, the state is also written to append-only tamper-evident logs off chain using hash chaining. Furthermore we have implemented detection mechanisms to identify if there's any dispute between BQS and BTC states. Finally, we are evaluating cross-chain anchoring i.e anchoring state to multiple chains simultaneously. "
+  },
+  {
+  question: "What happens if Bitcoin L1 is hacked, wont Bitcoin become worthless and wont therefore BitcoinQS be worthless too?",
+  answer: "BitcoinQS employs a dual-hedging strategy to maintain both USD purchasing power and 1:1 Bitcoin redemption. To protect against Bitcoin price drops, it utilizes BTC-backed stablecoin loans, put options, and perpetual futures. To ensure 1:1 BTC redemption, it maintains a dedicated BTC reserve, implements delta-neutral hedging, and dynamically rebalances its holdings. This ensures that users can always withdraw the exact amount of Bitcoin they deposited, regardless of market fluctuations."
   }
 ];
 
