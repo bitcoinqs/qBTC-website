@@ -17,7 +17,7 @@ export const generalFAQs = [
 export const technicalFAQs = [
   {
     question: "What cryptographic algorithms does Bitcoin QS use?",
-    answer: "Bitcoin QS uses NIST-approved lattice-based cryptography, specifically designed to resist attacks from both classical and quantum computers. The signing scheme used in BitcoinQS is CRYSTALS-Dilithium. Dilithim is a lattice-based digital signature scheme whose security is based on the hardness of finding short vectors in lattices. The CRYSTALS-Dilithium Digital Signature Algorithm is a member of the CRYSTALS (Cryptographic Suite for Algebraic Lattices) suite of algorithms. The strength of a CRYSTALS-Dilithium key is represented by the size of its matrix of polynomials. For example, CRYSTALS-Dilithium (6,5) has a matrix size of 6x5. The larger the matrix size, the stronger the key. CRYSTALS-Dilithium keys can only be used for Digital Signature Generation and Verification."
+    answer: "Bitcoin QS uses NIST-approved lattice-based cryptography, specifically designed to resist attacks from both classical and quantum computers. The signing scheme used in BitcoinQS is NIST ML-DSA. ML-DSA is a lattice-based digital signature scheme whose security is based on the hardness of finding short vectors in lattices. ML-DSA Digital Signature Algorithm is a member of the CRYSTALS (Cryptographic Suite for Algebraic Lattices) suite of algorithms. The strength of a ML-DSA key is represented by the size of its matrix of polynomials. For example, ML-DSA (6,5) has a matrix size of 6x5. The larger the matrix size, the stronger the key. ML-DSA keys can only be used for Digital Signature Generation and Verification."
   },
   {
     question: "How does the bridge process work?",
@@ -39,10 +39,10 @@ export const technicalFAQs = [
     question: "If the Bitcoin Mainnet is compromised wont that affect the ordering of BitcoinQ2 L2 transactions",
     answer: "To protect against this, BitcoinQS has a few fall back mechanisms. Firstly, the state is also written to append-only tamper-evident logs off chain using hash chaining. Furthermore we have implemented detection mechanisms to identify if there's any dispute between BQS and BTC states. Finally, we are evaluating cross-chain anchoring i.e anchoring state to multiple chains simultaneously. "
   },
-  {
+ /* {
   question: "What happens if Bitcoin L1 is hacked, wont Bitcoin become worthless and wont therefore BitcoinQS be worthless too?",
   answer: "BitcoinQS employs a dual-hedging strategy to maintain both USD purchasing power and 1:1 Bitcoin redemption. To protect against Bitcoin price drops, it utilizes BTC-backed stablecoin loans, put options, and perpetual futures. To ensure 1:1 BTC redemption, it maintains a dedicated BTC reserve, implements delta-neutral hedging, and dynamically rebalances its holdings. This ensures that users can always withdraw the exact amount of Bitcoin they deposited, regardless of market fluctuations."
-  }
+  } */
 ];
 
 export const walletFAQs = [

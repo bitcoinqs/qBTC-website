@@ -83,7 +83,7 @@ export default function Security() {
                     <p className="text-gray-600">Layer 2 Quantum Protection</p>
                   </div>
                   <div className="p-3 bg-white rounded-lg shadow-sm">
-                    <p className="text-gray-600">Crystallis Dilithium</p>
+                    <p className="text-gray-600">NIST ML-DSA</p>
                   </div>
                   <div className="p-3 bg-white rounded-lg shadow-sm">
                     <p className="text-gray-600">Quantum-Resistant Foundation</p>
@@ -99,7 +99,7 @@ export default function Security() {
                 <span className="text-emerald-500 font-medium">Bitcoin QS Quantum-Safe Signing</span>
               </div>
               <pre className="text-sm text-gray-300">
-                <code>{`const signature = crystalsDilithium.sign(messageHash, privateKey); // Quantum-resistant`}</code>
+                <code>{`const signature = ml-dsa.sign(messageHash, privateKey); // Quantum-resistant`}</code>
               </pre>
             </div>
           </div>
