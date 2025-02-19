@@ -99,9 +99,9 @@ export default function Navbar() {
             <Link to="/security" className="text-gray-700 hover:text-orange-500">
               Security
             </Link>
-            <Link to="/docs" className="text-gray-700 hover:text-orange-500">
+            {/* <Link to="/docs" className="text-gray-700 hover:text-orange-500">
               Docs
-            </Link>
+            </Link>*/}
             <Link to="/explorer" className="text-gray-700 hover:text-orange-500">
               Explorer
             </Link>
@@ -145,9 +145,9 @@ export default function Navbar() {
             <Link to="/security" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Security
             </Link>
-            <Link to="/docs" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+           {/* <Link to="/docs" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Docs
-            </Link>
+            </Link> */}
             <Link to="/explorer" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Explorer
             </Link>
