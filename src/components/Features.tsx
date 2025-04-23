@@ -8,20 +8,22 @@ const features = [
     icon: Shield,
   },
   {
-    name: 'Lightning-Fast Transactions',
-    description: 'Experience near-instant settlements with our Layer 2 scaling solution.',
-    icon: Zap,
+    name: 'Quantum Computing Ready',
+    description: 'Built to withstand attacks from future quantum computers.',
+    icon: Cpu,
   },
-  {
+    {
     name: 'Enhanced Privacy',
     description: 'Advanced privacy features to protect your transactions and identity.',
     icon: Lock,
   },
   {
-    name: 'Quantum Computing Ready',
-    description: 'Built to withstand attacks from future quantum computers.',
-    icon: Cpu,
+    name: 'Lightning-Fast Transactions',
+    description: 'Experience near-instant settlements with our Layer 2 scaling solution.',
+    icon: Zap,
   },
+
+
 ];
 
 export default function Features() {
@@ -34,7 +36,7 @@ export default function Features() {
             The Next Generation of Bitcoin Security
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            Bitcoin QS combines cutting-edge quantum resistance with the reliability of Bitcoin's Layer 2 scaling.
+            qBTC combines cutting-edge quantum resistance with the reliability of Bitcoin's Proof of Work.
           </p>
         </div>
 
