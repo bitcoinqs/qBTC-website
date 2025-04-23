@@ -25,7 +25,7 @@ export default function FAQPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h1>
           <p className="mt-4 text-xl text-gray-500">
-            Find answers to common questions about Bitcoin QS
+            Find answers to common questions about qBTC
           </p>
         </div>
 
