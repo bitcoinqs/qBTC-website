@@ -90,7 +90,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center" onClick={handleLinkClick}>
               <Shield className="h-8 w-8 text-orange-500" />
-              <span className="ml-2 text-xl font-bold text-gray-900">Bitcoin QS</span>
+              <span className="ml-2 text-xl font-bold text-gray-900">qBTC</span>
             </Link>
           </div>
 
