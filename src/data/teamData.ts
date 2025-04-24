@@ -33,7 +33,7 @@ export const advisors: TeamMember[] = [
     bio: "20 years cybersecurity experience for leading worldwide companies.",
     image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
-  }
+  },
   { 
     name: "Dr. Axel York Poschmann",
     role: "Technical Advisor",
