@@ -34,12 +34,12 @@ export const advisors: TeamMember[] = [
     image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
   }
- /*{ {
+  { 
     name: "Dr. Axel York Poschmann",
     role: "Technical Advisor",
     bio: "VP Product at PQShild the leading Post Quantum company",
     image: axel,
     linkedin: "https://www.linkedin.com/in/dr-axel-york-poschmann/"
-  },*/
+  },
   
 ];
