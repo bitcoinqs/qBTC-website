@@ -114,9 +114,9 @@ export default function Navbar() {
             <Link to="/wallets" className="text-gray-700 hover:text-orange-500">
               Wallets
             </Link>
-         {/*   <Link to="/team" className="text-gray-700 hover:text-orange-500">
+            <Link to="/team" className="text-gray-700 hover:text-orange-500">
               Team
-            </Link> */}
+            </Link> 
             <Link to="/faq" className="text-gray-700 hover:text-orange-500">
               FAQ
             </Link>
@@ -160,9 +160,9 @@ export default function Navbar() {
             <Link to="/wallets" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Wallets
             </Link>
-         {/*   <Link to="/team" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+           <Link to="/team" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Team
-            </Link> */}
+            </Link>
             <Link to="/faq" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               FAQ
             </Link>
