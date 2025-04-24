@@ -30,7 +30,7 @@ export default function App() {
             <Route path="/wallets" element={<WalletsPage />} />
             <Route path="/dashboard" element={<WalletDashboard />} />
             <Route path="/faq" element={<FAQPage />} />
-            <Route path="/team" element={<TeamPage /} />
+            <Route path="/team" element={<TeamPage />} />
           </Routes>
           <Footer />
         </div>
