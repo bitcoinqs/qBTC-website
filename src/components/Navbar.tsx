@@ -90,9 +90,9 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center" onClick={handleLinkClick}>
-              <logo className="h-8 w-8 text-orange-500" />
-              <span className="ml-2 text-xl font-bold text-gray-900">qBTC</span>
-            </Link>
+            <img src={logo} alt="qBTC" className="h-8 w-8" />
+            <span className="ml-2 text-xl font-bold text-gray-900">qBTC</span>
+          </Link>
           </div>
 
           <div className="hidden md:flex md:items-center md:space-x-8">
