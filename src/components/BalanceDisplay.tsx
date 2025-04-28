@@ -32,7 +32,7 @@ export default function BalanceDisplay({ balance, network, address }: Props) {
             <p className="text-sm font-medium text-gray-500">Available Balance</p>
             <div className="mt-1 flex items-center">
               <h2 className="text-3xl font-bold text-gray-900">{formattedBalance}</h2>
-              <span className="ml-2 text-lg text-gray-500">BQS</span>
+              <span className="ml-2 text-lg text-gray-500">qBTC</span>
             </div>
           </div>
           <Coins className={`h-8 w-8 ${network === 'mainnet' ? 'text-orange-500' : 'text-purple-500'}`} />
