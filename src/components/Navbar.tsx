@@ -5,6 +5,7 @@ import { useWalletContext } from '../context/WalletContext';
 import { useWallet } from '../hooks/useWallet';
 import { websocketManager } from "../utils/websocketManager";
 import Clarity from '@microsoft/clarity';
+import logo from '../assets/logo.svg'
 
 export default function Navbar() {
   const { wallet, disconnect } = useWalletContext();
@@ -89,7 +90,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center" onClick={handleLinkClick}>
-              <Shield className="h-8 w-8 text-orange-500" />
+              <Logo className="h-8 w-8 text-orange-500" />
               <span className="ml-2 text-xl font-bold text-gray-900">qBTC</span>
             </Link>
           </div>
