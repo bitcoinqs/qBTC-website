@@ -27,8 +27,8 @@ export default function TeamPage() {
         />
 
         <CompanySection
-          title="Our Partners"
-          description="Working together to build the future of quantum-safe Bitcoin"
+          title=""
+          description=""
           companies={partners}
         /> 
 

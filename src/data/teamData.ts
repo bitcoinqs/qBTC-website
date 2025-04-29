@@ -5,7 +5,7 @@ import joe from '../assets/team/joe.png';
 import rick from '../assets/team/rick.jpg';
 import jameson from '../assets/team/jameson.jpg';
 import gmoney from '../assets/team/gmoney.jpg';
-import dnaImage from '../assets/dna.jpg';
+
 export const coreTeam: TeamMember[] = [
   
   {
@@ -34,6 +34,13 @@ export const coreTeam: TeamMember[] = [
     bio: "Jameson has been building multisig wallets since 2015. In addition to Casa he also founded Mensa's Bitcoin Special Interest Group, the Triangle Bitcoin & Business meetup, and several open source Bitcoin projects. He enjoys researching various aspects of the ecosystem and giving presentations about what he has learned the hard way while trying to write robust software that can withstand both adversaries and unsophisticated users.",
     image: jameson,
     linkedin: "#"
+  },
+  { 
+    name: "Dr. Axel York Poschmann",
+    role: "Technical Advisor",
+    bio: "VP Product at PQShild the leading Post Quantum company",
+    image: axel,
+    linkedin: "https://www.linkedin.com/in/dr-axel-york-poschmann/"
   }
 ];
 
@@ -44,13 +51,6 @@ export const advisors: TeamMember[] = [
     bio: "20 years cybersecurity experience for leading worldwide companies.",
     image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
-  },
-  { 
-    name: "Dr. Axel York Poschmann",
-    role: "Technical Advisor",
-    bio: "VP Product at PQShild the leading Post Quantum company",
-    image: axel,
-    linkedin: "https://www.linkedin.com/in/dr-axel-york-poschmann/"
-  },
+  }
   
 ];
