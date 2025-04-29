@@ -1,6 +1,6 @@
 import type { TeamMember } from '../types/team';
-import chris from '../assets/IMG_6681.jpg';
-import axel from '../assets/axel.png'
+import chris from '../assets/team/chris.jpg';
+import axel from '../assets/team/axel.png'
 
 export const coreTeam: TeamMember[] = [
   {
@@ -10,20 +10,27 @@ export const coreTeam: TeamMember[] = [
     image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
   },
-  /*{
-    name: "Michael Rodriguez",
-    role: "Chief Technology Officer",
-    bio: "Led development of multiple Layer 2 scaling solutions at Ethereum Foundation.",
-    image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
-    linkedin: "#"
+  {
+    name: "Joe Ross",
+    role: "Strategic Advisor",
+    bio: "Joe Ross is a technologist and strategic advisor at the forefront of Web3 innovation. Drawing on over a decade of hands-on experience in distributed systems, cryptography, and on-chain governance, he translates deep technical insight and rigorous game-theoretic thinking into practical guidance for founders. Joe has partnered with dozens of early-stage teams, shaping token-economic frameworks, product architectures, and go-to-market strategies that scale from idea to global impact. Whether refining an incentive mechanism, stress-testing a protocol's security model, or mentoring executives on disciplined operating rhythms, Joe is known for turning complex challenges into decisive advantages, empowering ventures to build with confidence and clarity.",
+    image: "", // Espacio para imagen futura
+    linkedin: "https://www.linkedin.com/in/jross87/"
   },
   {
-    name: "Dr. Emily Watson",
-    role: "Head of Cryptography",
-    bio: "PhD in Post-Quantum Cryptography, published researcher in lattice-based systems.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+    name: "Rick Schlesinger",
+    role: "Strategic Advisor",
+    bio: "Rick is a seasoned entrepreneur, founder, investor, and strategic advisor. He has established multiple web3 technology companies, invested in numerous startups, advised over 30 web3 companies, and provided board-level strategic guidance to innovative companies in the technology and fintech sectors. Rick currently serves as Venture Partner with DNA where he spearheads transformative deal advisory for its portfolio of cutting-edge investments. With a sharp focus on AI innovation, tokenomic design, and validating/mining opportunities, Rick leads strategic initiatives that position DNA at the forefront of technological advancement and market disruption. Rick began his fulltime web3 journey by participating in the decentralized global launch of the EOS blockchain. Rick founded EOS New York in 2017, an independent validator node which would become the leading validator node on the delegated-proof-of-stake blockchain. Under Rick's leadership, EOS New York became recognized for its role in running critical technology infrastructure across North America, Europe, and Africa, as well as actively leading governance and crypto-economic initiatives across the network. Rick's team would go on to be leading validator nodes across 6 different blockchains. The business was acquired in 2020. In addition to successfully running validator nodes, Rick was the co-editor of the original Chintai whitepaper, early investor, and is an ongoing advisor. Chintai is a leader in the Real World Asset (RWA) tokenization space, offering blockchain-as-a-service solutions for regulated digital assets like real estate, funds, equities, and commodities. Chintai provides a fully compliant tokenization issuance and secondary marketplace experience bringing billions of RWA's onto the blockchain. Before Rick's entrepreneurial ventures, Rick advised Fortune 500 companies on multi-billion dollar M&A deals as a strategy consultant with global consulting firm Ernst & Young. Rick holds a Bachelor of Science in Economics and Finance from Drexel University.",
+    image: "", // Espacio para imagen futura
+    linkedin: "https://www.linkedin.com/in/rschlesinger"
+  },
+  {
+    name: "Jameson Lopp",
+    role: "Technical Advisor",
+    bio: "Jameson has been building multisig wallets since 2015. In addition to Casa he also founded Mensa's Bitcoin Special Interest Group, the Triangle Bitcoin & Business meetup, and several open source Bitcoin projects. He enjoys researching various aspects of the ecosystem and giving presentations about what he has learned the hard way while trying to write robust software that can withstand both adversaries and unsophisticated users.",
+    image: "", // Espacio para imagen futura
     linkedin: "#"
-  }*/
+  }
 ];
 
 export const advisors: TeamMember[] = [
