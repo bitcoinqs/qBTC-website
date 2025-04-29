@@ -1,8 +1,13 @@
+import dnaImage from '../assets/dna.jpg';
 export type Company = {
   name: string;
   logo: string;
   website: string;
 };
+
+
+
+
 
 export const investors: Company[] = [
   {
@@ -29,8 +34,8 @@ export const investors: Company[] = [
 
 export const partners: Company[] = [
   {
-    name: "Bitcoin Core",
-    logo: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=200&h=100&fit=crop&q=80",
+    name: "DNA",
+    logo: dnaImage,
     website: "#"
   },
   {
