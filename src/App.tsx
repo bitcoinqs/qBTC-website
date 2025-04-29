@@ -12,6 +12,9 @@ import WalletsPage from './pages/WalletsPage';
 import WalletDashboard from './pages/WalletDashboard';
 import FAQPage from './pages/FAQPage';
 import TeamPage from './pages/TeamPage';
+import LitePaperPage from './pages/LitePaperPage';
+import QDayPage from './pages/QDayPage';
+import QuantumTheftPage from './pages/QuantumTheftPage';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -29,6 +32,9 @@ export default function App() {
             <Route path="/exchanges" element={<ExchangesPage />} />
             <Route path="/wallets" element={<WalletsPage />} />
             <Route path="/dashboard" element={<WalletDashboard />} />
+            <Route path="/lite-paper" element={<LitePaperPage />} />
+            <Route path="/q-day" element={<QDayPage />} />
+            <Route path="/quantum-theft" element={<QuantumTheftPage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/team" element={<TeamPage />} />
           </Routes>

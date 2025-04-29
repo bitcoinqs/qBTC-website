@@ -5,7 +5,7 @@ import { useWalletContext } from '../context/WalletContext';
 import { useWallet } from '../hooks/useWallet';
 import { websocketManager } from "../utils/websocketManager";
 import Clarity from '@microsoft/clarity';
-import logo from '../assets/logo.svg'
+import logo from '../assets/logos/Symbol-Left_TwoLines_Logo_ORANGE.svg'
 
 export default function Navbar() {
   const { wallet, disconnect } = useWalletContext();
@@ -90,9 +90,8 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center" onClick={handleLinkClick}>
-            <img src={logo} alt="qBTC" className="h-8 w-8" />
-            <span className="ml-2 text-xl font-bold text-gray-900">qBTC</span>
-          </Link>
+              <img src={logo} alt="BitcoinQS" className="h-12" />
+            </Link>
           </div>
 
           <div className="hidden md:flex md:items-center md:space-x-8">
@@ -118,6 +117,15 @@ export default function Navbar() {
             <Link to="/team" className="text-gray-700 hover:text-orange-500">
               Team
             </Link> 
+            <Link to="/lite-paper" className="text-gray-700 hover:text-orange-500">
+              Lite Paper
+            </Link>
+            <Link to="/q-day" className="text-gray-700 hover:text-orange-500">
+              What is Q Day
+            </Link>
+            <Link to="/quantum-theft" className="text-gray-700 hover:text-orange-500">
+              Quantum Theft
+            </Link>
             <Link to="/faq" className="text-gray-700 hover:text-orange-500">
               FAQ
             </Link>
@@ -161,8 +169,17 @@ export default function Navbar() {
             <Link to="/wallets" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Wallets
             </Link>
-           <Link to="/team" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/team" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               Team
+            </Link>
+            <Link to="/lite-paper" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+              Lite Paper
+            </Link>
+            <Link to="/q-day" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+              What is Q Day
+            </Link>
+            <Link to="/quantum-theft" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+              Quantum Theft
             </Link>
             <Link to="/faq" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
               FAQ
