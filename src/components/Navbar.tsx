@@ -13,12 +13,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { closeConnectionsForWallet } = useWallet();
-
+  
   const isDashboard = location.pathname === '/dashboard';
 
   useEffect(() => {
-
     const projectId = "pv57r64nxz"
     Clarity.init(projectId);
     function handleClickOutside(event: MouseEvent) {
@@ -38,7 +36,9 @@ export default function Navbar() {
   const handleDisconnect = () => {
     disconnect();
     const walletAddress = localStorage.getItem("bqs.address");
-    websocketManager.closeConnectionsForWallet(walletAddress);
+    if (walletAddress) {
+      websocketManager.closeConnectionsForWallet(walletAddress);
+    }
     localStorage.removeItem("bqs.address")
     localStorage.removeItem("bqs.encryptedPrivateKey")
     localStorage.removeItem("bqs.salt")
