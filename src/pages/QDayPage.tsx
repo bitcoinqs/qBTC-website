@@ -25,6 +25,8 @@ export default function QDayPage() {
 
             <p className="mb-4 text-gray-700">Q-Day is the anticipated future moment when quantum computers gain the power to break these cryptographic algorithms.
             </p>
+            <p className="mb-4 text-gray-700">The future of Bitcoin is Quantum Safe Secure your Bitcoin against quantum threats with Quantum Safe Bitcoin qBTC. The first Quantum Safe Proof of Work roll up designed to protect your Bitcoin in the quantum era.
+            </p>
             {/* Bitcointalk Image */}
             <div className="mt-12">
               <img 
@@ -36,8 +38,7 @@ export default function QDayPage() {
             <br></br>
 
 
-            <p className="mb-4 text-gray-700">The future of Bitcoin is Quantum Safe Secure your Bitcoin against quantum threats with Quantum Safe Bitcoin qBTC. The first Quantum Safe Proof of Work roll up designed to protect your Bitcoin in the quantum era.
-            </p>
+            
 
 
         
