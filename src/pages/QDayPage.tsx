@@ -13,7 +13,8 @@ import tweet6 from '../assets/tweets/6.jpg';
 import tweet7 from '../assets/tweets/7.jpg';
 import tweet8 from '../assets/tweets/8.jpg';
 import tweet9 from '../assets/tweets/9.jpg';
-const tweets = [tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet7, tweet8, tweet9];
+import tweet10 from '../assets/tweets/10.jpg';
+const tweets = [tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet7, tweet8, tweet9, tweet10];
 
 export default function QDayPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,7 +22,7 @@ export default function QDayPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % tweets.length);
-    }, 3000); // Change every 3 seconds tweets picture box
+    }, 6000); // Change every 6 seconds tweets picture box
 
     return () => clearInterval(interval);
   }, []);
