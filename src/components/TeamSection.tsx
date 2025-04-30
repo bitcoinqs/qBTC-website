@@ -19,7 +19,7 @@ export default function TeamSection({ title, description, members }: Props) {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className={`grid ${members.length === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-4xl mx-auto' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'} gap-8`}>
           {members.map((member) => (
             <TeamMemberCard key={member.name} member={member} />
           ))}
