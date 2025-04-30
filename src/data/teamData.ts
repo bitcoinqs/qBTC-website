@@ -5,6 +5,7 @@ import joe from '../assets/team/joe.png';
 import rick from '../assets/team/rick.jpg';
 import jameson from '../assets/team/jameson.jpg';
 import gmoney from '../assets/team/gmoney.jpg';
+import scott from '../assets/team/scott.jpg';
 
 export const coreTeam: TeamMember[] = [
   
@@ -51,6 +52,13 @@ export const advisors: TeamMember[] = [
     bio: "20 years cybersecurity experience for leading worldwide companies.",
     image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
+  },
+  { 
+    name: "Scott Walker",
+    role: "Technical Advisor",
+    bio: "An Investor and Serial Entrepreneur. In 2012 he fell in love with Bitcoin. With early Investments in ETH, BTC, and dozens of successful launches Walker is one of the most experienced and successful investors in the space.",
+    image: scott,
+    linkedin: "https://www.linkedin.com/in/scott-walker-8128817/"
   }
   
 ];
