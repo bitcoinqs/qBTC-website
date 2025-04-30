@@ -19,7 +19,7 @@ export default function CompanySection({ title, description, companies }: Props)
         </div>
         
         <div className="mt-12">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className={`grid ${companies.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-2 md:grid-cols-4'} gap-8`}>
             {companies.map((company) => (
               <a
                 key={company.name}
