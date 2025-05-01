@@ -90,43 +90,37 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center" onClick={handleLinkClick}>
-              <img src={logo} alt="BitcoinQS" className="h-12" />
+              <img 
+                src={logo} 
+                alt="BitcoinQS" 
+                className="h-12 [filter:invert(56%)_sepia(75%)_saturate(4948%)_hue-rotate(360deg)_brightness(102%)_contrast(95%)]" 
+              />
             </Link>
           </div>
 
-          <div className="hidden md:flex md:items-center md:space-x-8">
-   
-            <Link to="/security" className="text-gray-700 hover:text-orange-500">
+          <div className="hidden md:flex md:items-center md:space-x-4 lg:space-x-6">
+            <Link to="/security" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Security
             </Link>
-            {/* <Link to="/docs" className="text-gray-700 hover:text-orange-500">
-              Docs
-            </Link>*/}
-            <Link to="/explorer" className="text-gray-700 hover:text-orange-500">
+            <Link to="/explorer" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Explorer
             </Link>
-            <Link to="/news" className="text-gray-700 hover:text-orange-500">
+            <Link to="/news" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               News
             </Link>
-           {/* <Link to="/exchanges" className="text-gray-700 hover:text-orange-500">
-              Exchanges
-            </Link> */}
-            <Link to="/wallets" className="text-gray-700 hover:text-orange-500">
+            <Link to="/wallets" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Wallets
             </Link>
-            <Link to="/team" className="text-gray-700 hover:text-orange-500">
+            <Link to="/team" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Team
             </Link> 
-            <Link to="/lite-paper" className="text-gray-700 hover:text-orange-500">
+            <Link to="/lite-paper" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Lite Paper
             </Link>
-            <Link to="/q-day" className="text-gray-700 hover:text-orange-500">
-              What is Q Day
-            </Link>
-            <Link to="/quantum-theft" className="text-gray-700 hover:text-orange-500">
+            <Link to="/quantum-theft" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Quantum Theft
             </Link>
-            <Link to="/faq" className="text-gray-700 hover:text-orange-500">
+            <Link to="/faq" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               FAQ
             </Link>
             {renderWalletButton()}
@@ -149,42 +143,32 @@ export default function Navbar() {
 
       {isOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-     
-            <Link to="/security" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+          <div className="px-2 pt-2 pb-3 space-y-2 flex flex-col items-center">
+            <Link to="/security" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Security
             </Link>
-           {/* <Link to="/docs" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
-              Docs
-            </Link> */}
-            <Link to="/explorer" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/explorer" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Explorer
             </Link>
-            <Link to="/news" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/news" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               News
             </Link>
-            {/*<Link to="/exchanges" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
-              Exchanges
-            </Link>*/}
-            <Link to="/wallets" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/wallets" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Wallets
             </Link>
-            <Link to="/team" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/team" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Team
             </Link>
-            <Link to="/lite-paper" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/lite-paper" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Lite Paper
             </Link>
-            <Link to="/q-day" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
-              What is Q Day
-            </Link>
-            <Link to="/quantum-theft" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/quantum-theft" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Quantum Theft
             </Link>
-            <Link to="/faq" className="block px-3 py-2 text-gray-700 hover:text-orange-500">
+            <Link to="/faq" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               FAQ
             </Link>
-            <div className="px-3 py-2">
+            <div className="w-full flex justify-center px-3 py-2">
               {renderWalletButton()}
             </div>
           </div>
