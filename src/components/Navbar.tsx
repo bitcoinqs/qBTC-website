@@ -99,12 +99,12 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex md:items-center md:space-x-4 lg:space-x-6">
-            <Link to="/security" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
+        {/*    <Link to="/security" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Security
             </Link>
             <Link to="/explorer" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Explorer
-            </Link>
+            </Link> */}
             <Link to="/news" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               News
             </Link>
@@ -114,12 +114,12 @@ export default function Navbar() {
             <Link to="/team" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Team
             </Link> 
-            <Link to="/lite-paper" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
+            {/* <Link to="/lite-paper" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Lite Paper
-            </Link>
+            </Link> 
             <Link to="/quantum-theft" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Quantum Theft
-            </Link>
+            </Link>*/}
             <Link to="/faq" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               FAQ
             </Link>
@@ -144,12 +144,12 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-2 flex flex-col items-center">
-            <Link to="/security" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
+           {/*  <Link to="/security" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Security
-            </Link>
+            </Link> 
             <Link to="/explorer" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Explorer
-            </Link>
+            </Link>*/}
             <Link to="/news" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               News
             </Link>
@@ -159,12 +159,12 @@ export default function Navbar() {
             <Link to="/team" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Team
             </Link>
-            <Link to="/lite-paper" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
+           {/* <Link to="/lite-paper" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Lite Paper
             </Link>
             <Link to="/quantum-theft" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Quantum Theft
-            </Link>
+            </Link> */}
             <Link to="/faq" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               FAQ
             </Link>
