@@ -25,16 +25,16 @@ export default function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/security" element={<SecurityPage />} />
-            {/*<Route path="/docs" element={<DocsPage />} />*/}
-            <Route path="/explorer" element={<ExplorerPage />} />
+            {/*<Route path="/security" element={<SecurityPage />} /> 
+            <Route path="/docs" element={<DocsPage />} />
+            <Route path="/explorer" element={<ExplorerPage />} />*/}
             <Route path="/news" element={<NewsPage />} />
-            <Route path="/exchanges" element={<ExchangesPage />} />
+            {/*<Route path="/exchanges" element={<ExchangesPage />} />*/}
             <Route path="/wallets" element={<WalletsPage />} />
             <Route path="/dashboard" element={<WalletDashboard />} />
-            <Route path="/lite-paper" element={<LitePaperPage />} />
-            <Route path="/q-day" element={<QDayPage />} />
-            <Route path="/quantum-theft" element={<QuantumTheftPage />} />
+           {/* <Route path="/lite-paper" element={<LitePaperPage />} />*/}
+            {/*  <Route path="/q-day" element={<QDayPage />} />*/}
+           {/* <Route path="/quantum-theft" element={<QuantumTheftPage />} />*/}
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/team" element={<TeamPage />} />
           </Routes>
