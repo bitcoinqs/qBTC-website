@@ -8,7 +8,20 @@ import gmoney from '../assets/team/gmoney.jpg';
 import scott from '../assets/team/scott.jpg';
 
 export const coreTeam: TeamMember[] = [
-  
+  {
+    name: "Jameson Lopp",
+    role: "Technical Advisor",
+    bio: "Jameson has been building multisig wallets since 2015. In addition to Casa he also founded Mensa's Bitcoin Special Interest Group, the Triangle Bitcoin & Business meetup, and several open source Bitcoin projects. He enjoys researching various aspects of the ecosystem and giving presentations about what he has learned the hard way while trying to write robust software that can withstand both adversaries and unsophisticated users.",
+    image: jameson,
+    linkedin: "#"
+  },
+  { 
+    name: "Dr. Axel York Poschmann",
+    role: "Technical Advisor",
+    bio: "VP Product at PQShild the leading Post Quantum company",
+    image: axel,
+    linkedin: "https://www.linkedin.com/in/dr-axel-york-poschmann/"
+  },
   {
     name: "Garrett aka 'GMONEY'",
     role: "Strategic Advisor",
@@ -29,20 +42,7 @@ export const coreTeam: TeamMember[] = [
     image: rick,
     linkedin: "https://www.linkedin.com/in/rschlesinger"
   },
-  {
-    name: "Jameson Lopp",
-    role: "Technical Advisor",
-    bio: "Jameson has been building multisig wallets since 2015. In addition to Casa he also founded Mensa's Bitcoin Special Interest Group, the Triangle Bitcoin & Business meetup, and several open source Bitcoin projects. He enjoys researching various aspects of the ecosystem and giving presentations about what he has learned the hard way while trying to write robust software that can withstand both adversaries and unsophisticated users.",
-    image: jameson,
-    linkedin: "#"
-  },
-  { 
-    name: "Dr. Axel York Poschmann",
-    role: "Technical Advisor",
-    bio: "VP Product at PQShild the leading Post Quantum company",
-    image: axel,
-    linkedin: "https://www.linkedin.com/in/dr-axel-york-poschmann/"
-  }
+
 ];
 
 export const advisors: TeamMember[] = [
@@ -55,7 +55,7 @@ export const advisors: TeamMember[] = [
   },
   { 
     name: "Scott Walker",
-    role: "Technical Advisor",
+    role: "Chief Advisor",
     bio: "An Investor and Serial Entrepreneur. In 2012 he fell in love with Bitcoin. With early Investments in ETH, BTC, and dozens of successful launches Walker is one of the most experienced and successful investors in the space.",
     image: scott,
     linkedin: "https://www.linkedin.com/in/scott-walker-8128817/"
