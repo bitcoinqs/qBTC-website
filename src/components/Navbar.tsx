@@ -101,10 +101,10 @@ export default function Navbar() {
           <div className="hidden md:flex md:items-center md:space-x-4 lg:space-x-6">
         {/*    <Link to="/security" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Security
-            </Link>
+            </Link>*/}
             <Link to="/explorer" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Explorer
-            </Link> */}
+            </Link> 
             <Link to="/news" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               News
             </Link>
@@ -146,10 +146,10 @@ export default function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-2 flex flex-col items-center">
            {/*  <Link to="/security" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Security
-            </Link> 
+            </Link> */}
             <Link to="/explorer" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Explorer
-            </Link>*/}
+            </Link>
             <Link to="/news" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               News
             </Link>
