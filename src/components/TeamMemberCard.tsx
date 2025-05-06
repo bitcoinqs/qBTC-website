@@ -28,9 +28,13 @@ export default function TeamMemberCard({ member }: Props) {
       <div className="p-6 flex flex-col h-full">
         {/* Name and Role */}
         <div className="mb-4">
-          <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-          <p className="text-sm text-orange-500 font-medium">{member.role}</p>
-        </div>
+      <div className="h-12">
+        <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
+      </div>
+      <div className="w-full border-b border-gray-200 mt-2 mb-3"></div>
+      <p className="text-sm text-orange-500 font-medium leading-5">{member.role}</p>
+    </div>
+
 
         {/* Bio */}
         <div className="flex-grow">
