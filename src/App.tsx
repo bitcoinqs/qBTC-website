@@ -48,9 +48,11 @@ export default function App() {
             {/* <Route path="/exchanges" element={<ExchangesPage />} /> */}
             <Route path="/wallets" element={<WalletsPage />} />
             <Route path="/dashboard" element={<WalletDashboard />} />
-            {/* <Route path="/lite-paper" element={<LitePaperPage />} /> */}
+
             <Route path="/q-day" element={<QDayPage />} />
-            {/* <Route path="/quantum-theft" element={<QuantumTheftPage />} /> */}
+
+            <Route path="/q-day" element={<QDayPage />} />
+
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/team" element={<TeamPage />} />
           </Routes>

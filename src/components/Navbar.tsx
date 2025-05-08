@@ -108,6 +108,9 @@ export default function Navbar() {
             <Link to="/news" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               News
             </Link>
+            <Link to="/q-day" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
+              Q Day
+            </Link>
             <Link to="/wallets" className="text-gray-700 hover:text-orange-500 px-2 py-1 rounded-md hover:bg-gray-50">
               Wallets
             </Link>
@@ -152,6 +155,9 @@ export default function Navbar() {
             </Link>
             <Link to="/news" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               News
+            </Link>
+            <Link to="/q-day" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
+              Q Day
             </Link>
             <Link to="/wallets" className="block w-full text-center px-3 py-2 text-gray-700 hover:text-orange-500 hover:bg-gray-50 rounded-md">
               Wallets
