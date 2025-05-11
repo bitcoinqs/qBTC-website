@@ -33,7 +33,7 @@ export const technicalFAQs = [
   },
      {
     question: "How do you ensure that nobody can re-order the qBTC chain?",
-    answer: "qBTC batches 10 blockstransactions at a time, performs a Merkle Root and posts the Merkle Root  to the Bitcoin mainnet. Anyone can confirm their qBTC balance is represented in the Bitcoin mainnet Merkle Root."
+    answer: "qBTC batches 10 blocks at a time, performs a Merkle Root and posts the Merkle Root  to the Bitcoin mainnet. Anyone can confirm their qBTC balance is represented in the Bitcoin mainnet Merkle Root."
   },
   {
     question: "Will qBTC be compromised if Bitcoin Mainnet is compromised due to a quantum attack?",
@@ -52,7 +52,7 @@ export const walletFAQs = [
   },
   {
     question: "Do you have access to my keys?",
-    answer: "qBTC is non-custodial and maintains the ethos of Bitcoin - not your keys, not your coins. Neither this website nor anyone other than the end users has access to the quantum safe private keys. Users can generate key pairs completely trustlessly using open source software."
+    answer: "qBTC is non-custodial and maintains the ethos of Bitcoin - not your keys, not your coins. Neither this website nor anyone other than you has access to your quantum safe private keys. Users can generate key pairs completely trustlessly using open source software - including on air gapped computers or offline devices"
   },
   {
     question: "Are my qBTC assets safe against quantum attacks?",

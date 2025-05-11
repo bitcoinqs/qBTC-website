@@ -6,6 +6,7 @@ import rick from '../assets/team/rick.jpg';
 import jameson from '../assets/team/jameson.jpg';
 import gmoney from '../assets/team/gmoney.jpg';
 import scott from '../assets/team/scott.jpg';
+
 import ronit from '../assets/team/ronit.jpg';
 export const coreTeam: TeamMember[] = [
   {
@@ -14,6 +15,13 @@ export const coreTeam: TeamMember[] = [
     bio: "Jameson has been building multisig wallets since 2015. In addition to Casa he also founded Mensa's Bitcoin Special Interest Group, the Triangle Bitcoin & Business meetup, and several open source Bitcoin projects. He enjoys researching various aspects of the ecosystem and giving presentations about what he has learned the hard way while trying to write robust software that can withstand both adversaries and unsophisticated users.",
     image: jameson,
     linkedin: "#"
+  },
+   { 
+    name: "Ronit Ghose",
+    role: "Technical Advisor",
+    bio: "Ronit runs the Future of Finance team at Citibank and prior to this, he was Citi's Global Head of Banks Research and Co-Head of Fintech Research. He is the lead author of Citi's cutting-edge GPS Fintech report series. He is also an Advisory Board member at the Centre for Financial Technology at Imperial College Business School and sits on the advisory board of various technology startups and venture capital firms in the UK, Middle East and Africa. He is based in Dubai, the UAE",
+    image: ronit,
+    linkedin: "https://ae.linkedin.com/in/ronit-ghose-86033610"
   },
   { 
     name: "Dr. Axel York Poschmann",
