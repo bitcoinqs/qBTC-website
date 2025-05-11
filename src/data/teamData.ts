@@ -6,9 +6,8 @@ import rick from '../assets/team/rick.jpg';
 import jameson from '../assets/team/jameson.jpg';
 import gmoney from '../assets/team/gmoney.jpg';
 import scott from '../assets/team/scott.jpg';
-import ronit from '../assets/team/ronit.png';
 
-
+import ronit from '../assets/team/ronit.jpg';
 export const coreTeam: TeamMember[] = [
   {
     name: "Jameson Lopp",
@@ -50,7 +49,13 @@ export const coreTeam: TeamMember[] = [
     bio: "Rick is a seasoned entrepreneur, founder, investor, and strategic advisor. He has established multiple web3 technology companies, invested in numerous startups, advised over 30 web3 companies, and provided board-level strategic guidance to innovative companies in the technology and fintech sectors. Rick currently serves as Venture Partner with DNA where he spearheads transformative deal advisory for its portfolio of cutting-edge investments. With a sharp focus on AI innovation, tokenomic design, and validating/mining opportunities, Rick leads strategic initiatives that position DNA at the forefront of technological advancement and market disruption. Rick began his fulltime web3 journey by participating in the decentralized global launch of the EOS blockchain. Rick founded EOS New York in 2017, an independent validator node which would become the leading validator node on the delegated-proof-of-stake blockchain. Under Rick's leadership, EOS New York became recognized for its role in running critical technology infrastructure across North America, Europe, and Africa, as well as actively leading governance and crypto-economic initiatives across the network. Rick's team would go on to be leading validator nodes across 6 different blockchains. The business was acquired in 2020. In addition to successfully running validator nodes, Rick was the co-editor of the original Chintai whitepaper, early investor, and is an ongoing advisor. Chintai is a leader in the Real World Asset (RWA) tokenization space, offering blockchain-as-a-service solutions for regulated digital assets like real estate, funds, equities, and commodities. Chintai provides a fully compliant tokenization issuance and secondary marketplace experience bringing billions of RWA's onto the blockchain. Before Rick's entrepreneurial ventures, Rick advised Fortune 500 companies on multi-billion dollar M&A deals as a strategy consultant with global consulting firm Ernst & Young. Rick holds a Bachelor of Science in Economics and Finance from Drexel University.",
     image: rick,
     linkedin: "https://www.linkedin.com/in/rschlesinger"
-  },
+  },{
+    name: "Ronit Ghose",
+    role: "Strategic Advisor",
+    bio: "Ronit is the author of Future Money, a book exploring the past, present, and future of money. He leads Citi’s *Future of Finance* think tank, which focuses on the intersection of finance and technology, analyzing key trends shaping the industry. Since July 2021, he has also served as *Global Head of Banks Research & Co-Head of FinTech at Citibank*, bringing deep expertise in banking, fintech, and financial innovation. In addition to his role at Citi, he serves on the advisory boards of several technology and venture capital firms, as well as a leading university. With extensive experience in finance, emerging technologies, AI, crypto, digital assets, investing, and payments, he is a recognized thought leader in the space. Earlier in his career, Ronit worked as a bag carrier for a former UK Prime Minister, gaining firsthand experience at the intersection of policy and finance.",
+    image: ronit,
+    linkedin: "https://www.linkedin.com/in/ronit-ghose-86033610/"
+  }
 
 ];
 
@@ -58,7 +63,7 @@ export const advisors: TeamMember[] = [
   {
     name: "Christian Papathanasiou",
     role: "Chief Scientist",
-    bio: "20 years cybersecurity experience for leading worldwide companies.",
+    bio: "Christian Papathanasiou is the Chief Architect behind qBTC, the world’s first quantum‑safe implementation of Bitcoin. With more than two decades of hands‑on cybersecurity experience, he began his career as a penetration tester for global financial institutions such as Citibank, Misys, and the Royal Bank of Scotland. Christian’s research has been featured by outlets including Forbes, Reuters, and Dark Reading, and he has spoken at premier security conferences such as Black Hat and DEF CON. As a contributing author to the European Union Agency for Cybersecurity (ENISA) guidelines for secure mobile development, he was a pioneer in Android security during its formative years. A founding member of the UK Digital Currency Association and an early participant in the Bitcoin community, Christian wrote his first line of code at age 12 and has since served as Chief Security Officer for three leading technology companies. Today, he brings together deep expertise in offensive security, cryptography, and distributed systems to deliver qBTC — a next‑generation, post‑quantum secure form of Bitcoin designed to withstand the era of quantum computing.20 years cybersecurity experience for leading worldwide companies.",
     image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
   },
