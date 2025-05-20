@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Calendar, Clock, AlertTriangle } from 'lucide-react';
+import { Calendar, Clock, AlertTriangle, X } from 'lucide-react';
 
-import bitcointalkImage from '../assets/bitcointalk.jpg';
+import bitcointalkImage from '../assets/tweets/11.jpg';
+import introVideo from '../assets/video/qbtcintro.mp4';
 
 // Importar imágenes de tweets
 import tweet1 from '../assets/tweets/1.jpg';
@@ -10,25 +11,69 @@ import tweet3 from '../assets/tweets/3.jpg';
 import tweet4 from '../assets/tweets/4.jpg';
 import tweet5 from '../assets/tweets/5.jpg';
 import tweet6 from '../assets/tweets/6.jpg';
-import tweet7 from '../assets/tweets/7.jpg';
+//import tweet7 from '../assets/tweets/7.jpg';
 import tweet8 from '../assets/tweets/8.jpg';
 import tweet9 from '../assets/tweets/9.jpg';
 import tweet10 from '../assets/tweets/10.jpg';
-const tweets = [tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet7, tweet8, tweet9, tweet10];
+import tweet12 from '../assets/tweets/12.jpg';
+const tweets = [tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet8, tweet9, tweet10, tweet12];
 
 export default function QDayPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % tweets.length);
     }, 6000); // Change every 6 seconds tweets picture box
 
+    // Check if this is the first visit
+    const hasVisited = localStorage.getItem('hasVisitedQDay');
+    if (!hasVisited) {
+      setShowVideoModal(true);
+      localStorage.setItem('hasVisitedQDay', 'true');
+    }
+
     return () => clearInterval(interval);
   }, []);
 
+  const closeModal = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    setShowVideoModal(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
+      {showVideoModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg max-w-4xl w-full mx-4 overflow-hidden shadow-2xl">
+            <div className="p-4 bg-orange-600 text-white flex justify-between items-center">
+              <h2 className="text-xl font-bold">Donalrd Trump's 41st United States Secretary of Commerce - Howard W. Lutnick</h2>
+              <button 
+                onClick={closeModal}
+                className="p-1 hover:bg-orange-700 rounded-full transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <div className="p-4">
+              <video 
+                ref={videoRef}
+                controls
+                autoPlay
+                className="w-full"
+              >
+                <source src={introVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-6">What is Q Day</h1>
@@ -81,6 +126,25 @@ export default function QDayPage() {
                 ))}
               </div>
             </div>
+
+            <div className="mt-16 flex justify-center">
+              <div className="bg-white rounded-lg max-w-4xl w-full overflow-hidden shadow-2xl">
+                <div className="p-4 bg-orange-600 text-white flex justify-between items-center">
+                  <h2 className="text-xl font-bold">Donalrd Trump's 41st United States Secretary of Commerce - Howard W. Lutnick</h2>
+                </div>
+                <div className="p-4">
+                  <video 
+                    ref={videoRef}
+                    controls
+                    className="w-full"
+                  >
+                    <source src={introVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
