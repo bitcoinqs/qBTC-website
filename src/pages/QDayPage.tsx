@@ -51,7 +51,7 @@ export default function QDayPage() {
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg max-w-4xl w-full mx-4 overflow-hidden shadow-2xl">
             <div className="p-4 bg-orange-600 text-white flex justify-between items-center">
-              <h2 className="text-xl font-bold">Donalrd Trump's 41st United States Secretary of Commerce - Howard W. Lutnick</h2>
+              <h2 className="text-xl font-bold">Donald Trump's 41st United States Secretary of Commerce - Howard W. Lutnick</h2>
               <button 
                 onClick={closeModal}
                 className="p-1 hover:bg-orange-700 rounded-full transition-colors"
@@ -130,7 +130,7 @@ export default function QDayPage() {
             <div className="mt-16 flex justify-center">
               <div className="bg-white rounded-lg max-w-4xl w-full overflow-hidden shadow-2xl">
                 <div className="p-4 bg-orange-600 text-white flex justify-between items-center">
-                  <h2 className="text-xl font-bold">Donalrd Trump's 41st United States Secretary of Commerce - Howard W. Lutnick</h2>
+                  <h2 className="text-xl font-bold">Donald Trump's 41st United States Secretary of Commerce - Howard W. Lutnick</h2>
                 </div>
                 <div className="p-4">
                   <video 
