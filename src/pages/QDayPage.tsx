@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, Clock, AlertTriangle, X } from 'lucide-react';
 
-import bitcointalkImage from '../assets/tweets/11.jpg';
+import bitcointalkImage from '../assets/bitcointalk.jpg';
 import introVideo from '../assets/video/qbtcintro.mp4';
 
 // Importar imágenes de tweets
@@ -10,13 +10,13 @@ import tweet2 from '../assets/tweets/2.jpg';
 import tweet3 from '../assets/tweets/3.jpg';
 import tweet4 from '../assets/tweets/4.jpg';
 import tweet5 from '../assets/tweets/5.jpg';
-import tweet6 from '../assets/tweets/6.jpg';
-//import tweet7 from '../assets/tweets/7.jpg';
+//import tweet6 from '../assets/tweets/6.jpg';
+import tweet7 from '../assets/tweets/7.jpg';
 import tweet8 from '../assets/tweets/8.jpg';
 import tweet9 from '../assets/tweets/9.jpg';
 import tweet10 from '../assets/tweets/10.jpg';
 import tweet12 from '../assets/tweets/12.jpg';
-const tweets = [tweet1, tweet2, tweet3, tweet4, tweet5, tweet6, tweet8, tweet9, tweet10, tweet12];
+const tweets = [tweet1, tweet2, tweet3, tweet4, tweet5, tweet7, tweet8, tweet9, tweet10, tweet12];
 
 export default function QDayPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
