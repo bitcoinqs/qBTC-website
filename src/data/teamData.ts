@@ -9,7 +9,6 @@ import scott from '../assets/team/scott.jpg';
 import ronit from '../assets/team/ronit.png';
 import ian from '../assets/team/Ian.jpg'
 
-
 export const coreTeam: TeamMember[] = [
   {
     name: "Jameson Lopp",
@@ -60,13 +59,15 @@ export const coreTeam: TeamMember[] = [
     linkedin: "https://www.linkedin.com/in/ian-smith-a83021314/"
   },
 
+  }
+
 ];
 
 export const advisors: TeamMember[] = [
   {
     name: "Christian Papathanasiou",
     role: "Chief Scientist",
-    bio: "20 years cybersecurity experience for leading worldwide companies.",
+    bio: "Christian Papathanasiou is the Chief Architect behind qBTC, the world’s first quantum‑safe implementation of Bitcoin. With more than two decades of hands‑on cybersecurity experience, he began his career as a penetration tester for global financial institutions such as Citibank, Misys, and the Royal Bank of Scotland. Christian’s research has been featured by outlets including Forbes, Reuters, and Dark Reading, and he has spoken at premier security conferences such as Black Hat and DEF CON. As a contributing author to the European Union Agency for Cybersecurity (ENISA) guidelines for secure mobile development, he was a pioneer in Android security during its formative years. A founding member of the UK Digital Currency Association and an early participant in the Bitcoin community, Christian wrote his first line of code at age 12 and has since served as Chief Security Officer for three leading technology companies. Today, he brings together deep expertise in offensive security, cryptography, and distributed systems to deliver qBTC — a next‑generation, post‑quantum secure form of Bitcoin designed to withstand the era of quantum computing.20 years cybersecurity experience for leading worldwide companies.",
     image: chris,
     linkedin: "http://linkedin.com/in/papathanasiou"
   },
