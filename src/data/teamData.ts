@@ -58,9 +58,6 @@ export const coreTeam: TeamMember[] = [
     image: ian,
     linkedin: "https://www.linkedin.com/in/ian-smith-a83021314/"
   },
-
-  }
-
 ];
 
 export const advisors: TeamMember[] = [
