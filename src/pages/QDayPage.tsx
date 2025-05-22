@@ -48,7 +48,7 @@ export default function QDayPage() {
               Q-Day is the anticipated future moment when quantum computers gain the power to break these cryptographic algorithms.
             </p>
             <p className="mb-4 text-gray-700">
-              The future of Bitcoin is Quantum Safe Secure your Bitcoin against quantum threats with Quantum Safe Bitcoin qBTC. The first Quantum Safe Proof of Work roll up designed to protect your Bitcoin in the quantum era.
+              The future of Bitcoin is Quantum Safe Secure your Bitcoin against quantum threats with Quantum Safe Bitcoin qBTC. The first Quantum Safe Proof of Work side chain  designed to protect your Bitcoin in the quantum era.
             </p>
             
             {/* Bitcointalk Image */}

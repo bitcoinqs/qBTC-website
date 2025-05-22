@@ -15,7 +15,7 @@ export default function Hero() {
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                 Secure your Bitcoin against quantum threats with Quantum Safe Bitcoin qBTC. 
-                The first Quantum Safe Proof of Work roll up designed to protect your Bitcoin in the quantum era.
+                The first Quantum Safe Proof of Work Side Chain  designed to protect your Bitcoin in the quantum era.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
