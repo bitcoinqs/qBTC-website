@@ -11,7 +11,7 @@ const news = [
   date: 'May 11 2025',
   category: 'Conference',
   excerpt: 'Quantum Safe Bitcoin will be officially announced at Bitcoin 2025 with a live devnet launch and open source release.',
-  content: `We're excited to announce that qBTC — the quantum-safe Bitcoin proof-of-work rollup — will be officially unveiled at the Bitcoin 2025 conference in Las Vegas. The first talk will take place on Wednesday, May 28th, introducing qBTC as a post-quantum Layer 2 secured by Bitcoin L1.
+  content: `We're excited to announce that qBTC — the quantum-safe Bitcoin proof-of-work side chain — will be officially unveiled at the Bitcoin 2025 conference in Las Vegas. The first talk will take place on Wednesday, May 28th, introducing qBTC as a post-quantum Layer 2 secured by Bitcoin L1.
 
 On Thursday, May 29th, our team will participate in a panel discussion focused on making Bitcoin UTXOs quantum resistant, where we’ll share insights into our cryptographic architecture and migration paths.
 

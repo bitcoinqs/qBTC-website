@@ -2,11 +2,11 @@
 export const generalFAQs = [
   {
     question: "What is qBTC?",
-    answer: "qBTC is a quantum-safe proof-of-work rollup, designed to protect assets against  quantum computing threats while maintaining compatibility with the existing Bitcoin network."
+    answer: "qBTC is a quantum-safe proof-of-work side chain, designed to protect assets against  quantum computing threats while maintaining compatibility with the existing Bitcoin network."
   },
   {
     question: "How does qBTC work?",
-    answer: "qBTC implements post-quantum cryptographic algorithms on a proof-of-work rollup network that runs parallel to Bitcoin's main chain, providing quantum-resistant security while preserving Bitcoin's core features."
+    answer: "qBTC implements post-quantum cryptographic algorithms on a proof-of-work side chain network that runs parallel to Bitcoin's main chain, providing quantum-resistant security while preserving Bitcoin's core features."
   },
   {
     question: "Is qBTC compatible with regular Bitcoin?",
@@ -25,7 +25,7 @@ export const technicalFAQs = [
   },
   {
     question: "What are the transaction fees?",
-    answer: "Transaction fees on the qBTC network are typically less than than Bitcoin's main chain, as our proof-of-work rollup solution enables more efficient processing while maintaining security."
+    answer: "Transaction fees on the qBTC network are typically less than than Bitcoin's main chain, as our proof-of-work side chain solution enables more efficient processing while maintaining security."
   },
    {
     question: "How fast is qBTC ?",
