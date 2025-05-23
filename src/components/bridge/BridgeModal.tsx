@@ -51,7 +51,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
 
     if (selectedDirection === 'btc-to-bqs') {
       try {
-        console.log(`${apiUrl}/worker`)
+        console.log(`${bridgeurl}/worker`)
         const response = await axios.post(`https://${bridgeurl}/worker`, {
           request_type: 'get_bridge_address',
           wallet_address: walletAddress,
@@ -70,7 +70,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
         }
       } catch (error) {
         console.error('Error fetching bridge address:', error);
-        alert('Unable to fetch bridge address. Please try again later.');
+        alert('Unable to fetch bridge address. Please try again later.', error);
         return;
       }
     }
