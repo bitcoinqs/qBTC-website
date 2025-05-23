@@ -46,6 +46,8 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     setStep('processing');
     setProcessingStatus('waiting');
 
+    alert(bridgeurl)
+
 
   
 
