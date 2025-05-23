@@ -7,7 +7,7 @@ import BridgeProgress from './BridgeProgress';
 import { useWallet } from '../../hooks/useWallet';
 import axios from 'axios';
 const env = import.meta.env.VITE_ENV;
-const apiUrl = import.meta.env.VITE_API_URL;
+const bridgeurl = import.meta.env.BRIDGE_URL;
 import { ml_dsa87 } from '@noble/post-quantum/ml-dsa';
 import { utf8ToBytes } from '@noble/post-quantum/utils';
 
@@ -52,7 +52,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     if (selectedDirection === 'btc-to-bqs') {
       try {
         console.log(`${apiUrl}/worker`)
-        const response = await axios.post(`https://${apiUrl}/worker`, {
+        const response = await axios.post(`https://${bridgeurl}/worker`, {
           request_type: 'get_bridge_address',
           wallet_address: walletAddress,
           network,
