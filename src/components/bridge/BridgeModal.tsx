@@ -7,7 +7,7 @@ import BridgeProgress from './BridgeProgress';
 import { useWallet } from '../../hooks/useWallet';
 import axios from 'axios';
 const env = import.meta.env.VITE_ENV;
-const bridgeurl = import.meta.env.BRIDGE_URL;
+const bridgeurl = import.meta.env.VITE_BRIDGE_URL;
 import { ml_dsa87 } from '@noble/post-quantum/ml-dsa';
 import { utf8ToBytes } from '@noble/post-quantum/utils';
 
