@@ -8,6 +8,7 @@ import { useWallet } from '../../hooks/useWallet';
 import axios from 'axios';
 const env = import.meta.env.VITE_ENV;
 const bridgeurl = import.meta.env.VITE_BRIDGE_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 import { ml_dsa87 } from '@noble/post-quantum/ml-dsa';
 import { utf8ToBytes } from '@noble/post-quantum/utils';
 
