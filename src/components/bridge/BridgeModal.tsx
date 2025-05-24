@@ -68,7 +68,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
         }
       } catch (error) {
         console.error('Error fetching bridge address:', error);
-        alert('Unable to fetch bridge address. Please try again later.', error);
+        alert(error)
         return;
       }
     }
