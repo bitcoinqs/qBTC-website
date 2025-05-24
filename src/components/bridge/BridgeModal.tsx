@@ -46,14 +46,10 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
     setStep('processing');
     setProcessingStatus('waiting');
 
-    alert(bridgeurl)
-
-
   
 
     if (selectedDirection === 'btc-to-bqs') {
       try {
-        console.log(`${bridgeurl}/worker`)
         const response = await axios.post(`https://${bridgeurl}/worker`, {
           request_type: 'get_bridge_address',
           wallet_address: walletAddress,
