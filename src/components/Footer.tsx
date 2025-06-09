@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-white">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center space-x-6 md:order-2">
-          <a href="https://github.com/bitcoinqs" className="text-gray-400 hover:text-gray-500">
+          <a href="https://github.com/q-btc" className="text-gray-400 hover:text-gray-500">
             <span className="sr-only">GitHub</span>
             <Github className="h-6 w-6" />
           </a>
