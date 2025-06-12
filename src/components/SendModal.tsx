@@ -209,7 +209,7 @@ const handlePasswordSubmit = async () => {
             {step === 'processing' && 'Processing Transaction'}
             {step === 'success' && 'Transaction Complete'}
             {step === 'error' && 'Transaction Failed'}
-            {step === 'form' && 'Send BQS'}
+            {step === 'form' && 'Send qBTC'}
           </h3>
           {step !== 'processing' && (
             <button onClick={handleClose} className="text-gray-400 hover:text-gray-500">
@@ -223,7 +223,7 @@ const handlePasswordSubmit = async () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                  Amount (BQS)
+                  Amount (qBTC)
                 </label>
                 <div className="mt-1">
                   <input
@@ -260,19 +260,19 @@ const handlePasswordSubmit = async () => {
                 <div className="bg-gray-50 rounded-lg p-4 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Amount:</span>
-                    <span className="text-gray-900">{amount} BQS</span>
+                    <span className="text-gray-900">{amount} qBTC</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Network Fee:</span>
-                    <span className="text-gray-900">{fees.network} BQS</span>
+                    <span className="text-gray-900">{fees.network} qBTC</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Bridge Fee:</span>
-                    <span className="text-gray-900">{fees.bridge} BQS</span>
+                    <span className="text-gray-900">{fees.bridge} qBTC</span>
                   </div>
                   <div className="border-t border-gray-200 pt-2 flex justify-between font-medium">
                     <span className="text-gray-900">Total:</span>
-                    <span className="text-gray-900">{total.toFixed(8)} BQS</span>
+                    <span className="text-gray-900">{total.toFixed(8)} qBTC</span>
                   </div>
                 </div>
               )}
@@ -283,7 +283,7 @@ const handlePasswordSubmit = async () => {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <div className="ml-3">
                       <p className="text-sm text-red-700">
-                        Insufficient funds. Available balance: {balance} BQS
+                        Insufficient funds. Available balance: {balance} qBTC
                       </p>
                     </div>
                   </div>
@@ -329,9 +329,9 @@ const handlePasswordSubmit = async () => {
                     <div className="mt-2 text-sm text-yellow-700">
                       <p>You are about to send:</p>
                       <div className="mt-2 space-y-1">
-                        <p>Amount: {amount} BQS</p>
-                        <p>Fees: {fees.total} BQS</p>
-                        <p className="font-medium">Total: {total.toFixed(8)} BQS</p>
+                        <p>Amount: {amount} qBTC</p>
+                        <p>Fees: {fees.total} qBTC</p>
+                        <p className="font-medium">Total: {total.toFixed(8)} qBTC</p>
                         <p className="mt-2">To: {address}</p>
                       </div>
                       <p className="mt-2">This action cannot be undone.</p>
@@ -450,15 +450,15 @@ const handlePasswordSubmit = async () => {
                 <dl className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <dt className="text-gray-500">Amount:</dt>
-                    <dd className="text-gray-900">{amount} BQS</dd>
+                    <dd className="text-gray-900">{amount} qBTC</dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-gray-500">Fees:</dt>
-                    <dd className="text-gray-900">{fees.total} BQS</dd>
+                    <dd className="text-gray-900">{fees.total} qBTC</dd>
                   </div>
                   <div className="flex justify-between font-medium">
                     <dt className="text-gray-900">Total:</dt>
-                    <dd className="text-gray-900">{total.toFixed(8)} BQS</dd>
+                    <dd className="text-gray-900">{total.toFixed(8)} qBTC</dd>
                   </div>
                   <div className="pt-2 border-t border-gray-200">
                     <dt className="text-gray-500">Recipient:</dt>

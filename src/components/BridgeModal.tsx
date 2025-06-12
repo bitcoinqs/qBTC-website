@@ -140,7 +140,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
                   className="p-4 border rounded-lg text-center hover:border-orange-500"
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
-                  <span className="block font-medium">BTC to BQS</span>
+                  <span className="block font-medium">BTC to qBTC</span>
                   <span className="text-sm text-gray-500">Bridge Bitcoin to BitcoinQS</span>
                 </button>
                 <button
@@ -148,7 +148,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
                   className="p-4 border rounded-lg text-center hover:border-orange-500"
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
-                  <span className="block font-medium">BQS to BTC</span>
+                  <span className="block font-medium">qBTC to BTC</span>
                   <span className="text-sm text-gray-500">Bridge BitcoinQS to Bitcoin</span>
                 </button>
               </div>
