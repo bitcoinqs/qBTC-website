@@ -112,7 +112,7 @@ export default function Security() {
             
             <div className="prose prose-orange max-w-none">
               <p className="lead text-justify">
-                BitcoinQS is designed as a <strong>1:1 Bitcoin-pegged quantum-safe layer</strong> that ensures users can redeem BQS for BTC at any time. The system does not introduce new supply via mining, unlike Bitcoin L1, but rather <strong>collects fees through transactions</strong>. This model ensures a <strong>fixed supply</strong>, where BQS in circulation is always backed by BTC locked on the Bitcoin main chain.
+                BitcoinQS is designed as a <strong>1:1 Bitcoin-pegged quantum-safe layer</strong> that ensures users can redeem qBTC for BTC at any time. The system does not introduce new supply via mining, unlike Bitcoin L1, but rather <strong>collects fees through transactions</strong>. This model ensures a <strong>fixed supply</strong>, where qBTC in circulation is always backed by BTC locked on the Bitcoin main chain.
               </p>
 
               <div className="bg-orange-50 border-l-4 border-orange-500 p-4 my-8">
@@ -133,7 +133,7 @@ export default function Security() {
                     <h4 className="font-semibold">Validators</h4>
                   </div>
                   <p className="text-gray-600 text-justify">
-                    Independent entities that validate BQS transactions and ensure consistency between Bitcoin L1 and BQS.
+                    Independent entities that validate qBTC transactions and ensure consistency between Bitcoin L1 and qBTC.
                   </p>
                 </div>
                 
@@ -143,7 +143,7 @@ export default function Security() {
                     <h4 className="font-semibold">Bitcoin L1 Anchoring</h4>
                   </div>
                   <p className="text-gray-600 text-justify">
-                    Every BQS transaction is periodically anchored to Bitcoin, ensuring immutability and transparency.
+                    Every qBTC transaction is periodically anchored to Bitcoin, ensuring immutability and transparency.
                   </p>
                 </div>
               </div>
@@ -156,13 +156,13 @@ export default function Security() {
                   <div className="flex items-start">
                     <Coins className="h-5 w-5 text-orange-500 mt-1 mr-3 flex-shrink-0" />
                     <p className="text-gray-600 text-justify">
-                      Instead of miners securing the network, <strong>validators stake BQS to participate in block validation</strong>.
+                      Instead of miners securing the network, <strong>validators stake qBTC to participate in block validation</strong>.
                     </p>
                   </div>
                   <div className="flex items-start">
                     <Clock className="h-5 w-5 text-orange-500 mt-1 mr-3 flex-shrink-0" />
                     <p className="text-gray-600 text-justify">
-                      Validators earn both transaction fees and inflation rewards through a controlled issuance of new BQS.
+                      Validators earn both transaction fees and inflation rewards through a controlled issuance of new qBTC.
                     </p>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ export default function Security() {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phase</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">New BQS Issuance per Year</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">New qBTC Issuance per Year</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reduction Rate</th>
                     </tr>
                   </thead>
@@ -220,7 +220,7 @@ export default function Security() {
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <h4 className="text-lg font-semibold mb-4">For Users in the Future (No Bitcoin Peg)</h4>
                   <ul className="space-y-2 text-gray-600 text-justify">
-                    <li>• BQS becomes self-sovereign</li>
+                    <li>• qBTC becomes self-sovereign</li>
                     <li>• Security via staking-based model</li>
                     <li>• Transaction Fees + Controlled Inflation</li>
                     <li>• Algorithmically controlled issuance</li>
@@ -237,7 +237,7 @@ export default function Security() {
                   </li>
                   <li className="flex items-start">
                     <Lock className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
-                    <span className="text-justify">Once Bitcoin L1 is no longer viable, BQS transitions into a <strong>staking-based economy</strong> with <strong>controlled inflation</strong>.</span>
+                    <span className="text-justify">Once Bitcoin L1 is no longer viable, qBTC transitions into a <strong>staking-based economy</strong> with <strong>controlled inflation</strong>.</span>
                   </li>
                   <li className="flex items-start">
                     <Network className="h-5 w-5 mt-1 mr-2 flex-shrink-0" />
