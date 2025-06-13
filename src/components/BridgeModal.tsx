@@ -141,7 +141,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
                   <span className="block font-medium">BTC to qBTC</span>
-                  <span className="text-sm text-gray-500">Bridge Bitcoin to BitcoinQS</span>
+                  <span className="text-sm text-gray-500">Bridge Bitcoin to qBTC</span>
                 </button>
                 <button
                   onClick={() => handleStartBridge('bqs-to-btc')}
@@ -149,7 +149,7 @@ export default function BridgeModal({ isOpen, onClose, network, wallet }: Props)
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
                   <span className="block font-medium">qBTC to BTC</span>
-                  <span className="text-sm text-gray-500">Bridge BitcoinQS to Bitcoin</span>
+                  <span className="text-sm text-gray-500">Bridge qBTC  to Bitcoin</span>
                 </button>
               </div>
             </div>

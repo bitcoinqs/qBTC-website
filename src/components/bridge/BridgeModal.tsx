@@ -487,7 +487,7 @@ const serializeTransaction = (sender: string, receiver: string, amount: string, 
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
                   <span className="block font-medium">BTC to BQS</span>
-                  <span className="text-sm text-gray-500">Bridge Bitcoin to BitcoinQS</span>
+                  <span className="text-sm text-gray-500">Bridge Bitcoin to qBTC</span>
                 </button>
                 <button
                   onClick={() => handleStartBridge('bqs-to-btc')}
@@ -495,7 +495,7 @@ const serializeTransaction = (sender: string, receiver: string, amount: string, 
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
                   <span className="block font-medium">BQS to BTC</span>
-                  <span className="text-sm text-gray-500">Bridge BitcoinQS to Bitcoin</span>
+                  <span className="text-sm text-gray-500">Bridge qBTC to Bitcoin</span>
                 </button>
               </div>
             </div>
