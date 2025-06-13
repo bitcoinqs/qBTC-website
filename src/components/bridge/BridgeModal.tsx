@@ -486,7 +486,7 @@ const serializeTransaction = (sender: string, receiver: string, amount: string, 
                   className={`p-4 border rounded-lg text-center hover:border-${networkColor}-500`}
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
-                  <span className="block font-medium">BTC to BQS</span>
+                  <span className="block font-medium">BTC to qBTC</span>
                   <span className="text-sm text-gray-500">Bridge Bitcoin to qBTC</span>
                 </button>
                 <button
@@ -494,7 +494,7 @@ const serializeTransaction = (sender: string, receiver: string, amount: string, 
                   className={`p-4 border rounded-lg text-center hover:border-${networkColor}-500`}
                 >
                   <ArrowRightLeft className="h-6 w-6 mx-auto mb-2" />
-                  <span className="block font-medium">BQS to BTC</span>
+                  <span className="block font-medium">qBTC to BTC</span>
                   <span className="text-sm text-gray-500">Bridge qBTC to Bitcoin</span>
                 </button>
               </div>
