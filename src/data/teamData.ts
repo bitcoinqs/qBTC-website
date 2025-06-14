@@ -8,6 +8,7 @@ import gmoney from '../assets/team/gmoney.jpg';
 import scott from '../assets/team/scott.jpg';
 import ronit from '../assets/team/ronit.png';
 import ian from '../assets/team/Ian.jpg'
+import vrypan from '../assets/team/vrypan.png'
 
 export const coreTeam: TeamMember[] = [
   {
@@ -74,6 +75,13 @@ export const advisors: TeamMember[] = [
     bio: "An Investor and Serial Entrepreneur. In 2012 he fell in love with Bitcoin. With early Investments in ETH, BTC, and dozens of successful launches Walker is one of the most experienced and successful investors in the space.",
     image: scott,
     linkedin: "https://www.linkedin.com/in/scott-walker-8128817/"
+  },
+  { 
+    name: "Panagiotis Vryonis",
+    role: "Senior Software Engineer",
+    bio: "Panagiotis Vryonis has been building web infrastructure for nearly three decades. He is an advocate of Open Source Software, decentralization and censorship-resistant protocols.",
+    image: vrypan,
+    linkedin: "https://www.linkedin.com/in/vrypan/"
   }
   
 ];
